@@ -8,4 +8,8 @@ public class GameEngine {
     public GameEngine() {
         this.board = new Board();
     }
+
+    public Board getBoard() {
+        return board;
+    }
 }

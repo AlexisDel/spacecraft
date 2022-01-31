@@ -1,16 +1,16 @@
 package Model;
 
 public class GameTime extends Thread{
-    private int horloge;
+    private int clock;
     GameTime(){
-        this.horloge = 0;
+        this.clock = 0;
     }
     @Override
     public void run(){
         while(true){
-            this.horloge++;
+            this.clock++;
             try {
-                sleep(GameConstants.Tic);
+                sleep(GameConstants.TICK);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

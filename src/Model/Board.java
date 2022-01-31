@@ -13,9 +13,10 @@ public class Board {
         this.board = new Entity[GameConstants.BOARD_COLS][GameConstants.BOARD_ROWS];
         this.addEntity(new Character(), new Point(0,0));
         this.addEntity(new Character(), new Point(0,1));
+        this.addEntity(new Character(), new Point(10, 10));
     }
 
-    public Entity[][] getBoard() {
+    public Entity[][] getArray() {
         return board;
     }
 
