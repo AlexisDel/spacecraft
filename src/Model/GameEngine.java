@@ -10,6 +10,6 @@ public class GameEngine {
     }
 
     public Board getBoard() {
-        return board;
+        return this.board;
     }
 }

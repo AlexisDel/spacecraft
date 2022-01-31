@@ -1,5 +1,4 @@
 package View;
-
 import Model.GameEngine;
 
 public class View {
@@ -8,9 +7,10 @@ public class View {
     private BoardView boardView;
 
     public View(GameEngine gameEngine) {
-        gui = new GUI("SpaceCraft");
-        boardView = new BoardView(gameEngine.getBoard());
+        this.gui = new GUI("StarCraft");
+        this.boardView = new BoardView(gameEngine.getBoard());
+        this.gui.add(boardView);
+        this.gui.setVisible(true);
 
-        gui.add(boardView);
     }
 }
