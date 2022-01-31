@@ -5,7 +5,8 @@ public class Board {
     private Entity[][] board;
 
     public Board() {
-        this.board = new Entity[gameConstants.BOARD_WIDTH][gameConstants.BOARD_HEIGHT];
+
+        this.board = new Entity[GameConstants.BOARD_WIDTH][GameConstants.BOARD_HEIGHT];
     }
 
     public Entity[][] getBoard() {

@@ -1,10 +1,11 @@
 package Model;
+/**modèle principal du jeu*/
 
-public class gameEngine {
+public class GameEngine {
 
     private Board board;
 
-    public gameEngine() {
+    public GameEngine() {
         this.board = new Board();
     }
 }
