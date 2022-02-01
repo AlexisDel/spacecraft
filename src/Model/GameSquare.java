@@ -5,4 +5,9 @@ package Model;
  */
 public interface GameSquare {
 
+    /**
+     * Renvoie vrai si la case peut accueillir des entités
+     */
+    boolean isContainer();
+
 }

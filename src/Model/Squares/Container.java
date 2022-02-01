@@ -17,6 +17,11 @@ public abstract class Container implements GameSquare {
         this.entities = new ArrayList<>();
     }
 
+    @Override
+    public boolean isContainer() {
+        return true;
+    }
+
     // Ajoute une entity sur une case
     public void addEntity(Entity entity){
         entities.add(entity);
