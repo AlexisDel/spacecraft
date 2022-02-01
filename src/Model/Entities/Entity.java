@@ -1,4 +1,7 @@
 package Model.Entities;
 
-public class Entity {
+/**
+ * Classe abstraite représentant une entité
+ */
+public abstract class Entity {
 }
