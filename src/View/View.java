@@ -7,7 +7,7 @@ public class View {
     private BoardView boardView;
 
     public View(GameEngine gameEngine) {
-        this.gui = new GUI("StarCraft");
+        this.gui = new GUI("SpaceCraft");
         this.boardView = new BoardView(gameEngine.getBoard());
         this.gui.add(boardView);
         this.gui.setVisible(true);

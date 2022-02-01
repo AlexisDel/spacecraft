@@ -3,6 +3,9 @@ package View;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Classe de création de la fenêtre
+ */
 public class GUI extends JFrame {
 
     public GUI(String name) {
