@@ -23,7 +23,9 @@ public class GameBoard {
         changeCellType(new Building(), 9, 9);
         changeCellType(new Building(), 9, 0);
         changeCellType(new Building(), 0, 9);
-        getGameSquare(0,0).addEntityToSquare(new Alien(), 3, 3);
+        changeCellType(new Building(), 10, 10);
+        getSquare(0,0).addEntityToSquare(new Alien(), 3, 3);
+        getSquare(12, 12).addEntityToSquare(new Alien(), 0, 0);
     }
 
     /**
@@ -48,7 +50,7 @@ public class GameBoard {
         this.board[x][y] = gameSquare;
     }
 
-    public GameSquare getGameSquare(int x, int y) {
+    public GameSquare getSquare(int x, int y) {
         return board[x][y];
     }
 }

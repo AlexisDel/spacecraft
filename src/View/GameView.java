@@ -1,5 +1,6 @@
 package View;
 
+import Controller.GameController;
 import Model.GameEngine;
 
 import javax.swing.*;
@@ -45,10 +46,18 @@ public class GameView implements Runnable{
             boardPanel.repaint();
 
             try {
-                sleep(100);
+                sleep(1000/ViewConstants.FPS);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public BoardPanel getBoardPanel() {
+        return boardPanel;
+    }
+
+    public void setController(GameController gameController) {
+        getBoardPanel().addKeyListener(gameController);
     }
 }
