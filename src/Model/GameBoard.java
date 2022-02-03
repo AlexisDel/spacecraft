@@ -1,5 +1,6 @@
 package Model;
 
+import Model.Entities.Character.Alien;
 import Model.Squares.Containers.Building;
 import Model.Squares.Containers.Land;
 
@@ -19,8 +20,10 @@ public class GameBoard {
         changeCellType(new Building(), 1, 1);
         changeCellType(new Building(), 3, 5);
         changeCellType(new Building(), 3, 0);
-
-        printBoardConsole();
+        changeCellType(new Building(), 9, 9);
+        changeCellType(new Building(), 9, 0);
+        changeCellType(new Building(), 0, 9);
+        board[0][0].addEntity(new Alien(), 3, 3);
     }
 
     /**
@@ -45,17 +48,8 @@ public class GameBoard {
         this.board[x][y] = gameSquare;
     }
 
-    public void printBoardConsole(){
-        for(int i = 0; i < GameConstants.BOARD_WIDTH; i++){
-            for(int j = 0; j < GameConstants.BOARD_HEIGHT; j++){
-                if(this.board[i][j] instanceof Building){
-                    System.out.print("X");
-                }
-                else {
-                    System.out.print("O");
-                }
-            }
-            System.out.println();
-        }
+
+    public GameSquare[][] getBoard() {
+        return board;
     }
 }

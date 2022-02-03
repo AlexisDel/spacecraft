@@ -3,32 +3,26 @@ package Model.Squares;
 import Model.Entities.Entity;
 import Model.GameSquare;
 
-import java.util.ArrayList;
-
 /**
  * Classe abstraite représentant toutes les cases pouvant accueillir des entités
  */
-public abstract class Container implements GameSquare {
+public abstract class Container {
 
     // Liste des entities
-    ArrayList<Entity> entities;
+    Entity[][] entities;
 
     public Container() {
-        this.entities = new ArrayList<>();
-    }
-
-    @Override
-    public boolean isContainer() {
-        return true;
+        this.entities = new Entity[4][4];
     }
 
     // Ajoute une entity sur une case
-    public void addEntity(Entity entity){
-        entities.add(entity);
+    public boolean addEntity(Entity entity, int x, int y){
+        entities[x][y] = entity;
+        return true;
     }
 
     // Getter de la liste des entités sur la case
-    public ArrayList<Entity> getEntities() {
+    public Entity[][] getEntities() {
         return this.entities;
     }
 

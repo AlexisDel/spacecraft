@@ -11,4 +11,8 @@ public class GameEngine {
     public GameEngine() {
         this.gameBoard = new GameBoard();
     }
+
+    public GameBoard getGameBoard() {
+        return gameBoard;
+    }
 }

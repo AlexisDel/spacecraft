@@ -5,6 +5,6 @@ public class Main {
 
     public static void main(String[] args) {
         GameEngine gameEngine = new GameEngine();
-        GameView gameView = new GameView();
+        GameView gameView = new GameView(gameEngine);
     }
 }

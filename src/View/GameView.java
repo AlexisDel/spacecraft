@@ -1,7 +1,11 @@
 package View;
 
+import Model.GameEngine;
+
 import javax.swing.*;
 import java.awt.*;
+
+import static java.lang.Thread.sleep;
 
 public class GameView implements Runnable{
 
@@ -9,21 +13,26 @@ public class GameView implements Runnable{
     private Thread displayUpdateThread;
     private BoardPanel boardPanel;
 
-    public GameView() {
+    private GameEngine gameEngine;
+
+    public GameView(GameEngine gameEngine) {
+
+        this.gameEngine = gameEngine;
+
         window = new JFrame();
         initWindow();
 
-        BoardPanel boardPanel = new BoardPanel();
+        boardPanel = new BoardPanel(gameEngine);
         window.add(boardPanel, BorderLayout.WEST);
 
         startGameViewThread();
+        window.pack();
         window.setVisible(true);
     }
 
     private void initWindow() {
         window.setTitle("Spacecraft");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setSize(ViewConstants.WINDOW_WIDTH, ViewConstants.WINDOW_HEIGHT);
         window.setResizable(false);
 
     }
@@ -35,6 +44,15 @@ public class GameView implements Runnable{
 
     @Override
     public void run() {
-        System.out.println("game is running");
+        // TODO use isGameRunning instead
+        while(true){
+            //boardPanel.repaint();
+
+            try {
+                sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
