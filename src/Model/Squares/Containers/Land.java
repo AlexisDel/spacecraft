@@ -1,7 +1,5 @@
 package Model.Squares.Containers;
 
-import Model.Entities.Character.Alien;
-import Model.Entities.Entity;
 import Model.GameSquare;
 import Model.Squares.Container;
 
@@ -20,15 +18,14 @@ public class Land extends Container implements GameSquare {
     }
 
     @Override
-    public void draw(Graphics2D g, int i, int j) {
+    public void draw(Graphics2D g, int x, int y) {
         g.setColor(Color.ORANGE);
-        g.fillRect(i*tileSize*scaleSquare, j*tileSize*scaleSquare, tileSize*scaleSquare, tileSize*scaleSquare);
+        g.fillRect(x, y, tileSize*scaleSquare, tileSize*scaleSquare);
 
-        for(int x = 0; x < 4; x++){
-            for(int y = 0; y < 4; y++){
-                if(this.getEntities()[x][y] instanceof Alien){
-                    g.setColor(Color.GREEN);
-                    g.fillRect(i*tileSize*4+(x*tileSize), j*tileSize*4+(y*tileSize), tileSize, tileSize);
+        for(int i = 0; i < 4; i++){
+            for(int j = 0; j < 4; j++){
+                if(getEntities()[i][j] != null){
+                    getEntities()[i][j].draw(g, x+(i*tileSize), y+(j*tileSize));
                 }
             }
         }

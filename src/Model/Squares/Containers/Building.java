@@ -18,8 +18,8 @@ public class Building extends Container implements GameSquare {
     }
 
     @Override
-    public void draw(Graphics2D g, int i, int j) {
+    public void draw(Graphics2D g, int x, int y) {
         g.setColor(Color.RED);
-        g.fillRect(i*tileSize*scaleSquare, j*tileSize*scaleSquare, tileSize*scaleSquare, tileSize*scaleSquare);
+        g.fillRect(x, y, tileSize*scaleSquare, tileSize*scaleSquare);
     }
 }

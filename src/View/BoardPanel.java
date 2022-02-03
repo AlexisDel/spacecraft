@@ -1,11 +1,6 @@
 package View;
 
-import Model.Entities.Character.Alien;
-import Model.Entities.Entity;
 import Model.GameEngine;
-import Model.GameSquare;
-import Model.Squares.Containers.Building;
-import Model.Squares.Containers.Land;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,7 +40,7 @@ public class BoardPanel extends JPanel {
         // Parcours le plateau du jeu
         for(int i = 0; i < maxBoardViewRow; i++){
             for(int j = 0; j < maxBoardViewColumn; j++){
-                gameEngine.getGameBoard().getBoard()[i][j].draw(g2, i, j);
+                gameEngine.getGameBoard().getBoard()[i][j].draw(g2, i*tileSize*scaleSquare, j*tileSize*scaleSquare);
             }
         }
         // Dispose of this graphics context and release any system ressources that it is using

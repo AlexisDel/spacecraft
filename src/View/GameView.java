@@ -13,11 +13,7 @@ public class GameView implements Runnable{
     private Thread displayUpdateThread;
     private BoardPanel boardPanel;
 
-    private GameEngine gameEngine;
-
     public GameView(GameEngine gameEngine) {
-
-        this.gameEngine = gameEngine;
 
         window = new JFrame();
         initWindow();
@@ -25,7 +21,9 @@ public class GameView implements Runnable{
         boardPanel = new BoardPanel(gameEngine);
         window.add(boardPanel, BorderLayout.WEST);
 
-        startGameViewThread();
+        displayUpdateThread = new Thread(this);
+        displayUpdateThread.start();
+
         window.pack();
         window.setVisible(true);
     }
@@ -37,16 +35,11 @@ public class GameView implements Runnable{
 
     }
 
-    private void startGameViewThread() {
-        displayUpdateThread = new Thread(this);
-        displayUpdateThread.start();
-    }
-
     @Override
     public void run() {
         // TODO use isGameRunning instead
         while(true){
-            //boardPanel.repaint();
+            boardPanel.repaint();
 
             try {
                 sleep(100);
