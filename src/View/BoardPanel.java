@@ -7,20 +7,20 @@ import java.awt.*;
 
 public class BoardPanel extends JPanel {
 
-    // Taille d'une case en pixel
+    // Taille d'une case en pixel (unité de base)
     public static final int tileSize = 16;
+    public static final int scale = 4;
+    // Taille d'une case du tableau en pixel
+    public static final int boardTileSize = tileSize * scale;
 
     // Nombre de cases par colonne
     private final int maxBoardViewColumn = 10;
     // Nombre de cases par ligne
     private final int maxBoardViewRow = 10;
 
-    // Un conteneur du model
-    public static final int scaleSquare = 4;
-
     // 1024 pixels display
-    private final int BoardViewWidth = tileSize * maxBoardViewColumn * scaleSquare;
-    private final int BoardViewHeight = tileSize * maxBoardViewRow * scaleSquare;
+    private final int BoardViewWidth = boardTileSize * maxBoardViewColumn;
+    private final int BoardViewHeight = boardTileSize * maxBoardViewRow;
 
     private GameEngine gameEngine;
 
@@ -40,7 +40,7 @@ public class BoardPanel extends JPanel {
         // Parcours le plateau du jeu
         for(int i = 0; i < maxBoardViewRow; i++){
             for(int j = 0; j < maxBoardViewColumn; j++){
-                gameEngine.getGameBoard().getBoard()[i][j].draw(g2, i*tileSize*scaleSquare, j*tileSize*scaleSquare);
+                gameEngine.getGameBoard().getGameSquare(i,j).draw(g2, i* boardTileSize, j* boardTileSize);
             }
         }
         // Dispose of this graphics context and release any system ressources that it is using

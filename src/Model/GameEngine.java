@@ -6,13 +6,20 @@ package Model;
 public class GameEngine {
 
     // Le plateau du jeu
-    GameBoard gameBoard;
+    private GameBoard gameBoard;
+    private boolean isGameRunning;
 
     public GameEngine() {
-        this.gameBoard = new GameBoard();
+        gameBoard = new GameBoard();
+        isGameRunning = true;
+
     }
 
     public GameBoard getGameBoard() {
         return gameBoard;
+    }
+
+    public boolean isGameRunning() {
+        return isGameRunning;
     }
 }

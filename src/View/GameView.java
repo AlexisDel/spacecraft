@@ -13,7 +13,11 @@ public class GameView implements Runnable{
     private Thread displayUpdateThread;
     private BoardPanel boardPanel;
 
+    private GameEngine gameEngine;
+
     public GameView(GameEngine gameEngine) {
+
+        this.gameEngine = gameEngine;
 
         window = new JFrame();
         initWindow();
@@ -37,8 +41,7 @@ public class GameView implements Runnable{
 
     @Override
     public void run() {
-        // TODO use isGameRunning instead
-        while(true){
+        while(gameEngine.isGameRunning()){
             boardPanel.repaint();
 
             try {

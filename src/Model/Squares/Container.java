@@ -1,7 +1,6 @@
 package Model.Squares;
 
 import Model.Entities.Entity;
-import Model.GameSquare;
 
 /**
  * Classe abstraite représentant toutes les cases pouvant accueillir des entités
@@ -16,7 +15,7 @@ public abstract class Container {
     }
 
     // Ajoute une entity sur une case
-    public boolean addEntity(Entity entity, int x, int y){
+    public boolean addEntityToSquare(Entity entity, int x, int y){
         entities[x][y] = entity;
         return true;
     }

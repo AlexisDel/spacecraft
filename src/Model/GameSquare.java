@@ -9,7 +9,7 @@ import java.awt.*;
  */
 public interface GameSquare {
 
-    public boolean addEntity(Entity entity, int i, int j);
+    boolean addEntityToSquare(Entity entity, int x, int y);
 
     Entity[][] getEntities();
 
