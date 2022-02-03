@@ -10,9 +10,10 @@ public class BoardPanel extends JPanel {
 
     // Taille d'une case en pixel (unité de base = taille d'une entités)
     public static final int tileSize = 16;
-    public static final int scale = 4;
+    // Nombre de tile pour un carré du jeu (GameSquare)
+    public static final int tileToSquare = 4;
     // Taille d'une case du tableau en pixel
-    public static final int boardTileSize = tileSize * scale;
+    public static final int boardTileSize = tileSize * tileToSquare;
 
     // Nombre de cases par colonne
     private final int maxBoardViewColumn = 10;
@@ -59,6 +60,22 @@ public class BoardPanel extends JPanel {
         if (currentX < GameConstants.BOARD_HEIGHT - 1){
             currentX++;
         }
+    }
+
+    public void ClickedTile(int mouseX, int mouseY) {
+
+        int x = mouseX + (currentX*boardTileSize);
+        int y = mouseY + (currentY*boardTileSize);
+
+        System.out.println("raw : "+x+", "+y);
+
+        int caseX = x/boardTileSize;
+        int caseY = y/boardTileSize;
+        int localX = (x%boardTileSize)/tileSize;
+        int localY = (y%boardTileSize)/tileSize;
+
+        System.out.println("board : "+caseX+", "+caseY);
+        System.out.println("local : "+localX+", "+localY);
 
     }
 
@@ -75,4 +92,5 @@ public class BoardPanel extends JPanel {
         // Dispose of this graphics context and release any system ressources that it is using
         g2.dispose();
     }
+
 }

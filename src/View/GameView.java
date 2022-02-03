@@ -1,6 +1,6 @@
 package View;
 
-import Controller.GameController;
+import Controller.BoardController;
 import Model.GameEngine;
 
 import javax.swing.*;
@@ -57,7 +57,8 @@ public class GameView implements Runnable{
         return boardPanel;
     }
 
-    public void setController(GameController gameController) {
-        getBoardPanel().addKeyListener(gameController);
+    public void setBoardController(BoardController boardController) {
+        getBoardPanel().addKeyListener(boardController);
+        getBoardPanel().addMouseListener(boardController);
     }
 }

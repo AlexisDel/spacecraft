@@ -4,12 +4,14 @@ import View.GameView;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class GameController implements KeyListener {
+public class BoardController implements KeyListener, MouseListener {
 
     GameView gameView;
 
-    public GameController(GameView gameView) {
+    public BoardController(GameView gameView) {
         this.gameView = gameView;
 
     }
@@ -33,6 +35,31 @@ public class GameController implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
+
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        gameView.getBoardPanel().ClickedTile(e.getX(), e.getY());
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
 
     }
 }
