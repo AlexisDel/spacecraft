@@ -30,4 +30,19 @@ public class Land extends Container implements GameSquare {
             }
         }
     }
+
+    @Override
+    public void clicked(int localX, int localY) {
+        System.out.println("Land !");
+
+        // TODO : discuter de l'implémentation (click direct sur entity?)
+        for(int i = 0; i < 4; i++){
+            for(int j = 0; j < 4; j++){
+                if(getEntities()[i][j] != null){
+                    System.out.println("entity");
+                }
+            }
+        }
+
+    }
 }
