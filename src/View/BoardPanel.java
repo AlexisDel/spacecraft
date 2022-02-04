@@ -62,21 +62,8 @@ public class BoardPanel extends JPanel {
         }
     }
 
-    public void ClickedTile(int mouseX, int mouseY) {
-
-        int x = mouseX + (currentX*boardTileSize);
-        int y = mouseY + (currentY*boardTileSize);
-
-        System.out.println("raw : "+x+", "+y);
-
-        int caseX = x/boardTileSize;
-        int caseY = y/boardTileSize;
-        int localX = (x%boardTileSize)/tileSize;
-        int localY = (y%boardTileSize)/tileSize;
-
-        System.out.println("board : "+caseX+", "+caseY);
-        System.out.println("local : "+localX+", "+localY);
-
+    public void ClickTile(int mouseX, int mouseY) {
+        gameEngine.getGameBoard().getSquare(mouseX/boardTileSize, mouseY/boardTileSize).clicked((mouseX%boardTileSize)/tileSize, (mouseY%boardTileSize)/tileSize);
     }
 
     public void paintComponent(Graphics g){

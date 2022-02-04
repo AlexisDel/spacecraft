@@ -21,4 +21,9 @@ public class Mountain extends NotContainer implements GameSquare {
         g.setColor(Color.GRAY);
         g.fillRect(x, y, boardTileSize, boardTileSize);
     }
+
+    @Override
+    public void clicked(int localX, int localY) {
+
+    }
 }

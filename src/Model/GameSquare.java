@@ -14,4 +14,6 @@ public interface GameSquare {
     Entity[][] getEntities();
 
     void draw(Graphics2D g, int x, int y);
+
+    void clicked(int localX, int localY);
 }

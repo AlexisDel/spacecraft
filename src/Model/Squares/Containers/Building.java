@@ -21,4 +21,9 @@ public class Building extends Container implements GameSquare {
         g.setColor(Color.RED);
         g.fillRect(x, y, boardTileSize, boardTileSize);
     }
+
+    @Override
+    public void clicked(int localX, int localY) {
+        System.out.println("Building !");
+    }
 }
