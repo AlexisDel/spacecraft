@@ -8,17 +8,17 @@ import java.awt.*;
 
 public class BoardPanel extends JPanel {
 
-    // Taille d'une case en pixel (unité de base = taille d'une entités)
-    public static final int tileSize = 16;
+    // Taille d'une case en pixel (unité de base = taille d'des entités)
+    private int tileSize = 16;
     // Nombre de tile pour un carré du jeu (GameSquare)
-    public static final int tileToSquare = 4;
+    private int tileToSquare = 4;
     // Taille d'une case du tableau en pixel
-    public static final int boardTileSize = tileSize * tileToSquare;
+    private int boardTileSize = tileSize * tileToSquare;
 
     // Nombre de cases par colonne
-    private final int maxBoardViewColumn = 10;
+    private int maxBoardViewColumn = 10;
     // Nombre de cases par ligne
-    private final int maxBoardViewRow = 10;
+    private int maxBoardViewRow = 10;
 
     private final int BoardViewWidth = boardTileSize * maxBoardViewColumn;
     private final int BoardViewHeight = boardTileSize * maxBoardViewRow;
@@ -30,7 +30,7 @@ public class BoardPanel extends JPanel {
 
     public BoardPanel(GameEngine gameEngine) {
         this.gameEngine = gameEngine;
-        this.setPreferredSize(new Dimension(BoardViewWidth, BoardViewHeight));
+        this.setPreferredSize(new Dimension(640, 640));
         this.setBackground(Color.BLACK);
         this.setFocusable(true);
         // All the drawing from this component will be done in an offscreen painting buffer
@@ -45,7 +45,7 @@ public class BoardPanel extends JPanel {
     }
 
     public void moveDown(){
-        if(currentY < GameConstants.BOARD_WIDTH - 1){
+        if(currentY < GameConstants.BOARD_WIDTH - maxBoardViewRow){
             currentY++;
         }
     }
@@ -57,7 +57,7 @@ public class BoardPanel extends JPanel {
     }
 
     public void moveRight() {
-        if (currentX < GameConstants.BOARD_HEIGHT - 1){
+        if (currentX < GameConstants.BOARD_HEIGHT - maxBoardViewColumn){
             currentX++;
         }
     }
@@ -73,7 +73,7 @@ public class BoardPanel extends JPanel {
         // Parcours le plateau du jeu
         for(int i = currentX; i < maxBoardViewRow+currentX; i++){
             for(int j = currentY; j < maxBoardViewColumn+currentY; j++){
-                gameEngine.getGameBoard().getSquare(i,j).draw(g2, (i-currentX)*boardTileSize, (j-currentY)*boardTileSize);
+                gameEngine.getGameBoard().getSquare(i,j).draw(g2, (i-currentX)*boardTileSize, (j-currentY)*boardTileSize, boardTileSize, tileSize);
             }
         }
         // Dispose of this graphics context and release any system ressources that it is using

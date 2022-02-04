@@ -13,7 +13,7 @@ public interface GameSquare {
 
     Entity[][] getEntities();
 
-    void draw(Graphics2D g, int x, int y);
+    void draw(Graphics2D g, int x, int y, int boardTileSize, int tileSize);
 
     void clicked(int localX, int localY);
 }

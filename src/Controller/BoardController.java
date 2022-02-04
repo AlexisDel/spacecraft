@@ -25,10 +25,10 @@ public class BoardController implements KeyListener, MouseListener {
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
         switch (code){
-            case KeyEvent.VK_UP -> gameView.getBoardPanel().moveUp();
-            case KeyEvent.VK_DOWN -> gameView.getBoardPanel().moveDown();
-            case KeyEvent.VK_LEFT -> gameView.getBoardPanel().moveLeft();
-            case KeyEvent.VK_RIGHT -> gameView.getBoardPanel().moveRight();
+            case KeyEvent.VK_Z -> gameView.getBoardPanel().moveUp();
+            case KeyEvent.VK_Q -> gameView.getBoardPanel().moveLeft();
+            case KeyEvent.VK_S -> gameView.getBoardPanel().moveDown();
+            case KeyEvent.VK_D -> gameView.getBoardPanel().moveRight();
         }
 
     }

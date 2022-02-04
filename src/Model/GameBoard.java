@@ -16,8 +16,9 @@ public class GameBoard {
      */
     public GameBoard() {
         this.board = new GameSquare[GameConstants.BOARD_WIDTH][GameConstants.BOARD_HEIGHT];
-        //this.board = (new RandomLandGeneration()).getBoard();
-        this.initBoard();
+        this.board = (new RandomLandGeneration()).getBoard();
+        //this.initBoard();
+        getSquare(1,5).addEntityToSquare(new Alien(), 0,0);
         changeCellType(new Building(), 1, 1);
         changeCellType(new Building(), 3, 5);
         changeCellType(new Building(), 3, 12);
