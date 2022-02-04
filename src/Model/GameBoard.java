@@ -16,22 +16,26 @@ public class GameBoard {
      */
     public GameBoard() {
         this.board = new GameSquare[GameConstants.BOARD_WIDTH][GameConstants.BOARD_HEIGHT];
+        //this.board = (new RandomLandGeneration()).getBoard();
         this.initBoard();
         changeCellType(new Building(), 1, 1);
         changeCellType(new Building(), 3, 5);
-        changeCellType(new Building(), 3, 0);
+        changeCellType(new Building(), 3, 12);
         changeCellType(new Building(), 9, 9);
-        changeCellType(new Building(), 9, 0);
-        changeCellType(new Building(), 0, 9);
+        changeCellType(new Building(), 9, 55);
+        changeCellType(new Building(), 12, 9);
         changeCellType(new Building(), 10, 10);
         getSquare(0,0).addEntityToSquare(new Alien(), 3, 3);
         getSquare(12, 12).addEntityToSquare(new Alien(), 0, 0);
+        for(int i = 1; i < GameConstants.BOARD_WIDTH - 1; i++){
+            changeCellType(new Building(), i, i);
+        }
     }
 
     /**
      * Fonction permettant d'initialiser le plateau du jeu
      */
-    private void initBoard(){
+    public void initBoard(){
         // Pour chaque case du plateau
         for(int i = 0; i < GameConstants.BOARD_WIDTH; i++){
             for(int j = 0; j < GameConstants.BOARD_HEIGHT; j++){
