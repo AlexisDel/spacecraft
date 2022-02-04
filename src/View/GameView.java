@@ -22,9 +22,11 @@ public class GameView implements Runnable{
 
         window = new JFrame();
         initWindow();
-
+        /** adds the board panel to the window*/
         boardPanel = new BoardPanel(gameEngine);
         window.add(boardPanel, BorderLayout.WEST);
+        /** adds the control panel to the window*/
+        window.add(new ControlPanel(), BorderLayout.EAST);
 
         displayUpdateThread = new Thread(this);
         displayUpdateThread.start();
