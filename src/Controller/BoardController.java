@@ -29,6 +29,8 @@ public class BoardController implements KeyListener, MouseListener {
             case KeyEvent.VK_Q -> gameView.getBoardPanel().moveLeft();
             case KeyEvent.VK_S -> gameView.getBoardPanel().moveDown();
             case KeyEvent.VK_D -> gameView.getBoardPanel().moveRight();
+            case KeyEvent.VK_UP -> gameView.getBoardPanel().zoomIn();
+            case KeyEvent.VK_DOWN -> gameView.getBoardPanel().zoomOut();
         }
 
     }

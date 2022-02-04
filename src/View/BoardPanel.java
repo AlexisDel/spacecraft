@@ -27,6 +27,7 @@ public class BoardPanel extends JPanel {
 
     private int currentX = 0;
     private int currentY = 0;
+    private int zoomScaleFactor = 1;
 
     public BoardPanel(GameEngine gameEngine) {
         this.gameEngine = gameEngine;
@@ -80,4 +81,54 @@ public class BoardPanel extends JPanel {
         g2.dispose();
     }
 
+
+    public void zoomIn() {
+        if(zoomScaleFactor > 1){
+            zoomScaleFactor--;
+            updateZoomScaleFactor();
+        }
+    }
+
+    public void zoomOut(){
+        if(zoomScaleFactor < 3){
+            zoomScaleFactor++;
+            updateZoomScaleFactor();
+        }
+
+    }
+
+    private void updateZoomScaleFactor(){
+        switch (zoomScaleFactor) {
+            case 1 -> defaultZoom();
+            case 2 -> halfScreen();
+            case 3 -> fullScreen();
+        }
+    }
+
+    private void defaultZoom(){
+        tileSize = 16;
+        boardTileSize = 64;
+        maxBoardViewColumn = 10;
+        maxBoardViewRow = 10;
+        currentX = 0;
+        currentY = 0;
+    }
+
+    private void halfScreen(){
+        tileSize = 8;
+        boardTileSize = 32;
+        maxBoardViewColumn = 20;
+        maxBoardViewRow = 20;
+        currentX = 0;
+        currentY = 0;
+    }
+
+    private void fullScreen() {
+        tileSize = 4;
+        boardTileSize = 16;
+        maxBoardViewColumn = 40;
+        maxBoardViewRow = 40;
+        currentX = 0;
+        currentY = 0;
+    }
 }

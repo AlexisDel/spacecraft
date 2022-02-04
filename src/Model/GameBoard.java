@@ -23,14 +23,11 @@ public class GameBoard {
         changeCellType(new Building(), 3, 5);
         changeCellType(new Building(), 3, 12);
         changeCellType(new Building(), 9, 9);
-        changeCellType(new Building(), 9, 55);
+        changeCellType(new Building(), 9, 32);
         changeCellType(new Building(), 12, 9);
         changeCellType(new Building(), 10, 10);
         getSquare(0,0).addEntityToSquare(new Alien(), 3, 3);
         getSquare(12, 12).addEntityToSquare(new Alien(), 0, 0);
-        for(int i = 1; i < GameConstants.BOARD_WIDTH - 1; i++){
-            changeCellType(new Building(), i, i);
-        }
     }
 
     /**
