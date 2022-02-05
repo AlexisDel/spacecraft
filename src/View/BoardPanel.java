@@ -64,7 +64,13 @@ public class BoardPanel extends JPanel {
     }
 
     public void ClickTile(int mouseX, int mouseY) {
-        gameEngine.getGameBoard().getSquare(mouseX/boardTileSize, mouseY/boardTileSize).clicked((mouseX%boardTileSize)/tileSize, (mouseY%boardTileSize)/tileSize);
+
+        int x = mouseX/boardTileSize + currentX;
+        int y = mouseY/boardTileSize + currentY;
+        int localX = (mouseX%boardTileSize)/tileSize;
+        int localY = (mouseY%boardTileSize)/tileSize;
+
+        gameEngine.getGameBoard().getSquare(x, y).clicked(localX, localY);
     }
 
     public void paintComponent(Graphics g){
