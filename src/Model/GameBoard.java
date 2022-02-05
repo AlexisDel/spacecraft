@@ -27,7 +27,8 @@ public class GameBoard {
         changeCellType(new Building(), 12, 9);
         changeCellType(new Building(), 10, 10);
         getSquare(0,0).addEntityToSquare(new Alien(), 3, 3);
-        getSquare(12, 12).addEntityToSquare(new Alien(), 0, 0);
+        getSquare(9, 2).addEntityToSquare(new Alien(), 0, 0);
+        getSquare(9, 2).addEntityToSquare(new Alien(), 1, 0);
     }
 
     /**

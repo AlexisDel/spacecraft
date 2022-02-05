@@ -1,10 +1,8 @@
 package Model;
 
-import Model.GameSquare;
 import Model.Squares.Containers.Land;
 import Model.Squares.NotContainers.Mountain;
 
-import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
@@ -13,7 +11,7 @@ public class RandomLandGeneration {
     private GameSquare[][] board;
 
     private static final int nbMountains = 5;
-    private static int pourcent = 10;
+    private static int pourcent = 50;
     private final int borneMax;
     private final int borneMin;
 
@@ -22,7 +20,8 @@ public class RandomLandGeneration {
      * initialise les attributs privés puis génère un terrain aléatoire
      */
     public RandomLandGeneration() {
-        int[] probs = this.probas(nbMountains, pourcent);
+        // Calcul des bornes pour les probabilités
+        int[] probs = this.probas(pourcent);
         this.borneMax = probs[1];
         this.borneMin = probs[0];
         this.board = new GameSquare[GameConstants.BOARD_HEIGHT][GameConstants.BOARD_WIDTH];
@@ -38,23 +37,19 @@ public class RandomLandGeneration {
     /**
      * fonction renvoyant les paramètres pour les probabilités lors de la génération des montagnes
      *
-     * @param nbMountains le nombre de chaînes de mantagnes souhaitées
      * @param pourcent    la proportion moyenne de montagne sur la map (en pourcentage, donc inferieur à 100)
      * @return un tableau à 2 dimensions
      */
-    int[] probas(int nbMountains, int pourcent) {
-        if (pourcent > 100) {
-            assert false;
-        }
+    int[] probas(int pourcent) {
+        assert pourcent <= 100;
         int[] res = new int[2];
-        res[0] = pourcent*GameConstants.BOARD_HEIGHT * GameConstants.BOARD_WIDTH - 100*nbMountains;
+        res[0] = pourcent*GameConstants.BOARD_HEIGHT * GameConstants.BOARD_WIDTH - 100* RandomLandGeneration.nbMountains;
         res[1] = pourcent*GameConstants.BOARD_HEIGHT * GameConstants.BOARD_WIDTH;
         return res;
     }
 
     /**
      * ajoute une entitée au plateau
-     *
      * @param GameSquare
      * @param pos        toDo : check que la case soit vide
      */
@@ -62,6 +57,11 @@ public class RandomLandGeneration {
         this.board[pos.x][pos.y] = GameSquare;
     }
 
+    /**
+     * renvoie vrai ssi un point est dans la grille
+     * @param p
+     * @return
+     */
     public boolean isInBoard(Point p) {
         return p.x < GameConstants.BOARD_HEIGHT && p.y < GameConstants.BOARD_WIDTH && p.x >= 0 && p.y >= 0;
     }
@@ -104,12 +104,19 @@ public class RandomLandGeneration {
                 newX = rand.nextInt(GameConstants.BOARD_HEIGHT);
                 newY = rand.nextInt(GameConstants.BOARD_WIDTH);
             }
-            System.out.println(new Point(newX, newY));
             mountains = this.generateMountain(new Point(newX, newY), mountains);
         }
 
         // Appel à la fonction clear mountains qui rend le graph formé par la grille convexe.
         this.clearMountains(mountains);
+
+        for (int i = 0; i < GameConstants.BOARD_HEIGHT; i++) {
+            for (int j = 0; j < GameConstants.BOARD_WIDTH; j++) {
+                    if(mountains.get(i).get(j).equals(Color.color.notseen)){
+                }
+            }
+        }
+
 
         // On applique à board la génération effectuée
 
@@ -190,8 +197,6 @@ public class RandomLandGeneration {
                 mountains = this.generateMountain(neighbors.get(rand.nextInt(tmp)), mountains);
             }
         }
-        else {
-        }
         return mountains;
     }
 
@@ -203,44 +208,48 @@ public class RandomLandGeneration {
 
     public void clearMountains(ArrayList<ArrayList<Color.color>> mountains) {
         Random rand = new Random();
+        Point colorStartingPoint = new Point(0,0);
         // Coloration du tableau mountains
         // Corp de cette fonction. Quand on trouve un point non vue, on le relie à un point vue et on recommanbce à 0.
-        this.coloration(mountains);
+
+        // On commence par colorier une première case :
+        boolean flag = true;
+        for(int i = 0; flag&&(i < GameConstants.BOARD_HEIGHT); i++){
+            for(int j = 0; flag&&(j < GameConstants.BOARD_WIDTH); j++){
+                if(mountains.get(i).get(j).equals(Color.color.notseen)){
+                    mountains.get(i).set(j, Color.color.seen);
+                    colorStartingPoint = new Point(i, j);
+                    flag = false;
+                }
+            }
+        }
+        // Puis on colorie une première fois
+        this.coloration(mountains, colorStartingPoint);
+        // On parcours le tableau coloré
         for (int i = 0; i < GameConstants.BOARD_HEIGHT; i++) {
             for (int j = 0; j < GameConstants.BOARD_WIDTH; j++) {
+                // Si on trouve une case non colorée:
                 if (mountains.get(i).get(j).equals(Color.color.notseen)) {
+                    // On trouve une case colorée proche
                     Point toJoin = this.nearestSeenTile(mountains, new Point(i, j));
+                    // On relie ces deux cases
                     this.dig(mountains, new Point(i, j), toJoin);
-                    this.coloration(mountains);
+                    // On recolore
+                    this.coloration(mountains, new Point(i, j));
                 }
             }
         }
     }
 
     /**
-     * fonction de coloration dui graph
+     * fonction de coloration du graph
      * @param mountains
+     * @param colorStartingPoint
      */
-    public void coloration(ArrayList<ArrayList<Color.color>> mountains){
-        boolean flag = true;
-        for(int i = 0; flag&&(i < GameConstants.BOARD_HEIGHT); i++){
-            for(int j = 0; flag&&(j < GameConstants.BOARD_WIDTH); j++){
-                if(mountains.get(i).get(j).equals(Color.color.notseen)){
-                    mountains.get(i).set(i, Color.color.seen);
-                    flag = false;
-                }
-            }
-        }
+    public void coloration(ArrayList<ArrayList<Color.color>> mountains, Point colorStartingPoint){
+        // appel à l'heuristique de coloration pour éviter au plus les stacks overflow lors de l'appel à path
         heuristiqueColoration(mountains);
-        Random rand = new Random();
-        Point colorStartingPoint = new Point(rand.nextInt(GameConstants.BOARD_HEIGHT), rand.nextInt(GameConstants.BOARD_WIDTH));
-        // On veut que le point de départ de la coloration soit pas une montagne
-        while (mountains.get(colorStartingPoint.x).get(colorStartingPoint.y) == Color.color.mountain) {
-            colorStartingPoint = new Point(rand.nextInt(GameConstants.BOARD_HEIGHT), rand.nextInt(GameConstants.BOARD_WIDTH));
-        }
-        System.out.println("search");
         path(mountains, colorStartingPoint);
-        System.out.println("done");
     }
 
     /**
@@ -268,7 +277,9 @@ public class RandomLandGeneration {
         // On parcours le tableau lignes par lignes de gauche à droite
         for(int i = 1; i < GameConstants.BOARD_HEIGHT - 1; i++){
             for(int j = 1; j < GameConstants.BOARD_WIDTH - 1; j++){
+                // Si une case a été vue
                 if(mountains.get(i).get(j).equals(Color.color.seen)){
+                    // On colorie si besoin chacun de ses voisins
                     if(isInBoard(new Point(i + 1, j)) && mountains.get(i + 1).get(j).equals(Color.color.notseen)){
                         mountains.get(i + 1).set(j, Color.color.seen);
                     }
@@ -406,6 +417,31 @@ public class RandomLandGeneration {
      */
     public GameSquare[][] getBoard() {
         return board;
+    }
+
+    /**
+     * fonction d'affichage de la grille générée pour le debbogage
+     * @param mountains
+     */
+    private void printMountains(ArrayList<ArrayList<Color.color>> mountains){
+        System.out.println("grille de montagnes générée : ");
+        for (int i = 0; i < GameConstants.BOARD_HEIGHT; i++) {
+            for (int j = 0; j < GameConstants.BOARD_WIDTH; j++) {
+                // Si on trouve une case non colorée:
+                if (mountains.get(j).get(i).equals(Color.color.notseen)) {
+                    System.out.print("x");
+                }
+                // Si on trouve une case colorée
+                if (mountains.get(j).get(i).equals(Color.color.seen)) {
+                    System.out.print("o");
+                }
+                // Si on trouve une montagne
+                if (mountains.get(j).get(i).equals(Color.color.mountain)) {
+                    System.out.print("M");
+                }
+            }
+            System.out.println("");
+        }
     }
 }
 
