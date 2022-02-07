@@ -1,5 +1,6 @@
 package View;
 
+import Model.GameEngine;
 import View.Squares.LandView;
 import View.Squares.MountainView;
 import View.Squares.RocketView;

@@ -11,6 +11,5 @@ public class GameEngine {
      * Constructeur
      */
     public GameEngine() {
-        this.gameBoard = new GameBoard();
-    }
+        this.gameBoard = new GameBoard(); }
 }

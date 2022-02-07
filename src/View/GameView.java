@@ -44,7 +44,7 @@ public class GameView implements Runnable{
 
     @Override
     public void run() {
-        while(gameEngine.isGameRunning()){
+        while(true){
             boardPanel.repaint();
 
             try {
