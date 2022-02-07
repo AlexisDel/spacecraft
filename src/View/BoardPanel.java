@@ -1,11 +1,8 @@
 package View;
 
 import Model.GameEngine;
-import Model.Layer0.Land;
-import Model.Layer0.Mountain;
-import Model.Layer0.Parcel;
-import View.Tiles.LandView;
-import View.Tiles.MountainView;
+import Model.Layer1.Entities.Entity;
+import Model.Layer1.Structures.Structure;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,9 +16,9 @@ public class BoardPanel extends JPanel {
     private int tileSize = 16;
 
     // Nombre de cases par colonne
-    private int maxBoardViewColumn = 10;
+    private int maxBoardViewColumn = 40;
     // Nombre de cases par ligne
-    private int maxBoardViewRow = 10;
+    private int maxBoardViewRow = 40;
 
     private final int BoardViewWidth = tileSize * maxBoardViewColumn;
     private final int BoardViewHeight = tileSize * maxBoardViewRow;
@@ -40,26 +37,6 @@ public class BoardPanel extends JPanel {
         // All the drawing from this component will be done in an offscreen painting buffer
         // tl;dr : improves game's rendering performance
         this.setDoubleBuffered(true);
-
-        initViews();
-    }
-
-    public void initViews(){
-        // TODO : TileManager
-        LandView landView = new LandView(this);
-        MountainView mountainView = new MountainView(this);
-
-        for(int i = 0; i < BOARD_WIDTH; i++){
-            for(int j = 0; j < BOARD_HEIGHT; j++){
-                Parcel parcel = gameEngine.getGameBoard().getTerrain()[i][j];
-                if(parcel instanceof Land){
-                    parcel.setView(landView);
-                }
-                else if (parcel instanceof Mountain){
-                    parcel.setView(mountainView);
-                }
-            }
-        }
 
     }
 
@@ -99,20 +76,24 @@ public class BoardPanel extends JPanel {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
 
-        // Test
-        for(int i = 0; i < BOARD_WIDTH; i++){
-            for(int j = 0; j < BOARD_HEIGHT; j++){
-                gameEngine.getGameBoard().getTerrain()[i][j].getView().draw(g2, i, j);
-
-            }
-        }
-
-        // Parcours le plateau du jeu
+        // Layer 0
+        // Dessine seulement ce qui est affiché
         for(int i = currentX; i < maxBoardViewRow+currentX; i++){
             for(int j = currentY; j < maxBoardViewColumn+currentY; j++){
-                //gameEngine.getGameBoard().getSquare(i,j).getView().draw(g2, (i-currentX)*boardTileSize, (j-currentY)*boardTileSize);
+                gameEngine.getGameBoard().getTerrain()[i][j].getView().draw(g2, (i-currentX), (j-currentY), tileSize);
             }
         }
+
+        //TODO: optimisation ne pas dessiner si hors de l'écran (prendre en compte la taille)
+        // Layer 1
+        for(Structure structure : gameEngine.getGameBoard().getStructures()){
+            structure.getView().draw(g2, tileSize, currentX, currentY);
+        }
+        // Layer 2
+        for(Entity entity : gameEngine.getGameBoard().getEntities()){
+            entity.getView().draw(g2, tileSize, currentX, currentY);
+        }
+
         // Dispose of this graphics context and release any system ressources that it is using
         g2.dispose();
     }
@@ -143,29 +124,25 @@ public class BoardPanel extends JPanel {
 
     private void defaultZoom(){
         tileSize = 16;
-        maxBoardViewColumn = 10;
-        maxBoardViewRow = 10;
-        currentX = 0;
-        currentY = 0;
-    }
-
-    private void halfScreen(){
-        tileSize = 8;
-        maxBoardViewColumn = 20;
-        maxBoardViewRow = 20;
-        currentX = 0;
-        currentY = 0;
-    }
-
-    private void fullScreen() {
-        tileSize = 4;
         maxBoardViewColumn = 40;
         maxBoardViewRow = 40;
         currentX = 0;
         currentY = 0;
     }
 
-    public int getTileSize() {
-        return tileSize;
+    private void halfScreen(){
+        tileSize = 8;
+        maxBoardViewColumn = 80;
+        maxBoardViewRow = 80;
+        currentX = 0;
+        currentY = 0;
+    }
+
+    private void fullScreen() {
+        tileSize = 4;
+        maxBoardViewColumn = 160;
+        maxBoardViewRow = 160;
+        currentX = 0;
+        currentY = 0;
     }
 }

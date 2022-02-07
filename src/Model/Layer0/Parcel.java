@@ -16,8 +16,9 @@ public abstract class Parcel {
      * Constructeur
      * @param canBeCrossed indique si la case peut être traversée par une entité
      */
-    public Parcel(boolean canBeCrossed) {
+    public Parcel(boolean canBeCrossed, TileView view) {
         this.canBeCrossed = canBeCrossed;
+        this.view = view;
     }
 
     public boolean canBeCrossed() {
@@ -26,9 +27,5 @@ public abstract class Parcel {
 
     public TileView getView() {
         return view;
-    }
-
-    public void setView(TileView view) {
-        this.view = view;
     }
 }

@@ -1,5 +1,7 @@
 package Model.Layer1.Entities;
 
+import View.Tiles.TileView;
+
 import java.awt.*;
 
 /**

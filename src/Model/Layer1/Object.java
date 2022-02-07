@@ -1,5 +1,7 @@
 package Model.Layer1;
 
+import View.Tiles.ObjectView;
+
 import java.awt.*;
 
 /**
@@ -7,6 +9,9 @@ import java.awt.*;
  * et des dimensions
  */
 public abstract class Object {
+
+    ObjectView view;
+
     private int healthPoints;
     private Point coordinate;
     private Dimension dimension;
@@ -22,6 +27,11 @@ public abstract class Object {
         this.coordinate=coordinate;
         this.dimension=dimension;
     }
+
+    protected void setView(ObjectView view){
+        this.view = view;
+    }
+
     /** getters*/
     public int getHealthPoints() {
         return healthPoints;
@@ -33,6 +43,10 @@ public abstract class Object {
 
     public Point getCoordinate() {
         return coordinate;
+    }
+
+    public ObjectView getView() {
+        return view;
     }
 }
 

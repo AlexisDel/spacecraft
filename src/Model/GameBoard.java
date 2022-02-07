@@ -1,9 +1,12 @@
 package Model;
 
 import Model.Layer0.Parcel;
+import Model.Layer1.Entities.Alien;
 import Model.Layer1.Entities.Entity;
+import Model.Layer1.Structures.Spacecraft;
 import Model.Layer1.Structures.Structure;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class GameBoard {
@@ -24,6 +27,11 @@ public class GameBoard {
         gameTerrain = new GameTerrain();
         structures = new ArrayList<>();
         entities = new ArrayList<>();
+
+        //TODO : test
+        structures.add(new Spacecraft(new Point(0,0), new Dimension(4, 4), 1000, 10));
+        structures.add(new Spacecraft(new Point(4,4), new Dimension(4, 4), 1000, 10));
+        entities.add(new Alien(new Point(0,5), new Dimension(1,1), 150, 10));
     }
 
     /**

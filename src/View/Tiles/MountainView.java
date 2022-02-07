@@ -1,19 +1,12 @@
 package View.Tiles;
 
-import View.BoardPanel;
-
 import java.awt.*;
 
 public class MountainView implements TileView{
-    BoardPanel boardPanel;
-
-    public MountainView(BoardPanel boardPanel) {
-        this.boardPanel = boardPanel;
-    }
 
     @Override
-    public void draw(Graphics2D g, int x, int y) {
+    public void draw(Graphics2D g, int x, int y, int tileSize) {
         g.setColor(Color.GRAY);
-        g.fillRect(x*boardPanel.getTileSize(), y*boardPanel.getTileSize(), boardPanel.getTileSize(), boardPanel.getTileSize());
+        g.fillRect(x*tileSize, y*tileSize, tileSize, tileSize);
     }
 }

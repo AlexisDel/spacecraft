@@ -6,7 +6,9 @@ import Model.Layer1.Object;
 import java.awt.*;
 import java.util.ArrayList;
 
-/** Cette classe décrit tout structure, y compris Buildings*/
+/**
+ * Classe décrivant les structure, notamment les bâtiments
+ */
 
 public abstract class Structure extends Object {
     private int capacity;
@@ -20,7 +22,7 @@ public abstract class Structure extends Object {
      * @param capacity nombre max d'occupants
      */
     public Structure(Point coordinate, Dimension dimension, int healthPoints, int capacity){
-        super(coordinate, dimension,healthPoints);
+        super(coordinate, dimension, healthPoints);
         this.capacity=capacity;
         this.occupants= new ArrayList<Entity>();
     }

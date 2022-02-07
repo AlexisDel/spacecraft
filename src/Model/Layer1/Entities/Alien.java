@@ -1,5 +1,7 @@
 package Model.Layer1.Entities;
 
+import View.Tiles.AlienView;
+
 import java.awt.*;
 
 /**
@@ -15,5 +17,6 @@ public class Alien extends Entity{
      */
     public Alien(Point coordinate, Dimension dimension, int healthPoints, int speed) {
         super(coordinate, dimension, healthPoints, speed);
+        setView(new AlienView(this));
     }
 }
