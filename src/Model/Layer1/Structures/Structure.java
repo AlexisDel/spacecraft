@@ -13,14 +13,14 @@ public abstract class Structure extends Object {
     private ArrayList<Entity> occupants;
 
     /**
-     * Constructor
+     * Constructeur
      * @param coordinate coordonnées globales de la structure
      * @param dimension width et size de la structure
-     * @param healthpoints points de vie de la structure
+     * @param healthPoints points de vie de la structure
      * @param capacity nombre max d'occupants
      */
-    public Structure(Point coordinate, Dimension dimension, int healthpoints, int capacity){
-        super(coordinate, dimension,healthpoints);
+    public Structure(Point coordinate, Dimension dimension, int healthPoints, int capacity){
+        super(coordinate, dimension,healthPoints);
         this.capacity=capacity;
         this.occupants= new ArrayList<Entity>();
     }
