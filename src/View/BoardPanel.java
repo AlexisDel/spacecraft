@@ -2,6 +2,13 @@ package View;
 
 import Model.GameConstants;
 import Model.GameEngine;
+import Model.GameSquare;
+import Model.Squares.Containers.Buildings.Rocket;
+import Model.Squares.Containers.Land;
+import Model.Squares.NotContainers.Mountain;
+import View.Squares.LandView;
+import View.Squares.MountainView;
+import View.Squares.RocketView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,6 +44,27 @@ public class BoardPanel extends JPanel {
         // All the drawing from this component will be done in an offscreen painting buffer
         // tl;dr : improves game's rendering performance
         this.setDoubleBuffered(true);
+
+        // TODO : TileManager
+        LandView landView = new LandView(this);
+        MountainView mountainView = new MountainView(this);
+        RocketView rocketView = new RocketView(this);
+
+        for(int i = 0; i < GameConstants.BOARD_WIDTH; i++){
+            for(int j = 0; j < GameConstants.BOARD_HEIGHT; j++){
+                GameSquare square = gameEngine.getGameBoard().getSquare(i,j);
+                if(square instanceof Land){
+                    square.setView(landView);
+                }
+                else if (square instanceof Mountain){
+                    square.setView(mountainView);
+                }
+                else if (square instanceof Rocket){
+                    square.setView(rocketView);
+                }
+            }
+        }
+
     }
 
     public void moveUp(){
@@ -80,7 +108,7 @@ public class BoardPanel extends JPanel {
         // Parcours le plateau du jeu
         for(int i = currentX; i < maxBoardViewRow+currentX; i++){
             for(int j = currentY; j < maxBoardViewColumn+currentY; j++){
-                gameEngine.getGameBoard().getSquare(i,j).draw(g2, (i-currentX)*boardTileSize, (j-currentY)*boardTileSize, boardTileSize, tileSize);
+                gameEngine.getGameBoard().getSquare(i,j).getView().draw(g2, (i-currentX)*boardTileSize, (j-currentY)*boardTileSize);
             }
         }
         // Dispose of this graphics context and release any system ressources that it is using
@@ -136,5 +164,13 @@ public class BoardPanel extends JPanel {
         maxBoardViewRow = 40;
         currentX = 0;
         currentY = 0;
+    }
+
+    public int getTileSize() {
+        return tileSize;
+    }
+
+    public int getBoardTileSize() {
+        return boardTileSize;
     }
 }
