@@ -1,7 +1,7 @@
-package Model.Layer1;
+package Model.Layer1.Structures;
 
-import Model.Layer2.Entity;
-import Model.Object;
+import Model.Layer1.Entities.Entity;
+import Model.Layer1.Object;
 
 import java.awt.*;
 import java.util.ArrayList;

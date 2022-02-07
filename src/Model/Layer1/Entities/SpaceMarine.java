@@ -1,4 +1,4 @@
-package Model.Layer2;
+package Model.Layer1.Entities;
 
 import java.awt.*;
 

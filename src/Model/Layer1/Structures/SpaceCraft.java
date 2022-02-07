@@ -1,4 +1,4 @@
-package Model.Layer1;
+package Model.Layer1.Structures;
 import java.awt.*;
 
 /** Cette classe correponde a celle du Vaiseau Spatial*/

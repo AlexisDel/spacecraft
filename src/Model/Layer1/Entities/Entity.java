@@ -1,6 +1,6 @@
-package Model.Layer2;
+package Model.Layer1.Entities;
 
-import Model.Object;
+import Model.Layer1.Object;
 
 import java.awt.*;
 /**Cette classe regroupe les entités du jeu: les objets qui peuvent bouger */
