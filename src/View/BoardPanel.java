@@ -1,29 +1,30 @@
 package View;
 
 import Model.GameEngine;
-import View.Squares.LandView;
-import View.Squares.MountainView;
-import View.Squares.RocketView;
+import Model.Layer0.Land;
+import Model.Layer0.Mountain;
+import Model.Layer0.Parcel;
+import View.Tiles.LandView;
+import View.Tiles.MountainView;
 
 import javax.swing.*;
 import java.awt.*;
 
+import static Model.GameConstants.BOARD_HEIGHT;
+import static Model.GameConstants.BOARD_WIDTH;
+
 public class BoardPanel extends JPanel {
 
-    // Taille d'une case en pixel (unité de base = taille d'des entités)
+    // Taille d'une case en pixel (unité de base = taille des entités)
     private int tileSize = 16;
-    // Nombre de tile pour un carré du jeu (GameSquare)
-    private int tileToSquare = 4;
-    // Taille d'une case du tableau en pixel
-    private int boardTileSize = tileSize * tileToSquare;
 
     // Nombre de cases par colonne
     private int maxBoardViewColumn = 10;
     // Nombre de cases par ligne
     private int maxBoardViewRow = 10;
 
-    private final int BoardViewWidth = boardTileSize * maxBoardViewColumn;
-    private final int BoardViewHeight = boardTileSize * maxBoardViewRow;
+    private final int BoardViewWidth = tileSize * maxBoardViewColumn;
+    private final int BoardViewHeight = tileSize * maxBoardViewRow;
 
     private GameEngine gameEngine;
 
@@ -40,22 +41,22 @@ public class BoardPanel extends JPanel {
         // tl;dr : improves game's rendering performance
         this.setDoubleBuffered(true);
 
+        initViews();
+    }
+
+    public void initViews(){
         // TODO : TileManager
         LandView landView = new LandView(this);
         MountainView mountainView = new MountainView(this);
-        RocketView rocketView = new RocketView(this);
 
-        for(int i = 0; i < GameConstants.BOARD_WIDTH; i++){
-            for(int j = 0; j < GameConstants.BOARD_HEIGHT; j++){
-                GameSquare square = gameEngine.getGameBoard().getSquare(i,j);
-                if(square instanceof Land){
-                    square.setView(landView);
+        for(int i = 0; i < BOARD_WIDTH; i++){
+            for(int j = 0; j < BOARD_HEIGHT; j++){
+                Parcel parcel = gameEngine.getGameBoard().getTerrain()[i][j];
+                if(parcel instanceof Land){
+                    parcel.setView(landView);
                 }
-                else if (square instanceof Mountain){
-                    square.setView(mountainView);
-                }
-                else if (square instanceof Rocket){
-                    square.setView(rocketView);
+                else if (parcel instanceof Mountain){
+                    parcel.setView(mountainView);
                 }
             }
         }
@@ -69,7 +70,7 @@ public class BoardPanel extends JPanel {
     }
 
     public void moveDown(){
-        if(currentY < GameConstants.BOARD_WIDTH - maxBoardViewRow){
+        if(currentY < BOARD_WIDTH - maxBoardViewRow){
             currentY++;
         }
     }
@@ -81,29 +82,35 @@ public class BoardPanel extends JPanel {
     }
 
     public void moveRight() {
-        if (currentX < GameConstants.BOARD_HEIGHT - maxBoardViewColumn){
+        if (currentX < BOARD_HEIGHT - maxBoardViewColumn){
             currentX++;
         }
     }
 
     public void ClickTile(int mouseX, int mouseY) {
 
-        int x = mouseX/boardTileSize + currentX;
-        int y = mouseY/boardTileSize + currentY;
-        int localX = (mouseX%boardTileSize)/tileSize;
-        int localY = (mouseY%boardTileSize)/tileSize;
+        int x = mouseX/tileSize + currentX;
+        int y = mouseY/tileSize + currentY;
 
-        gameEngine.getGameBoard().getSquare(x, y).clicked(localX, localY);
+        //gameEngine.getGameBoard().getSquare(x, y).clicked(localX, localY);
     }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
 
+        // Test
+        for(int i = 0; i < BOARD_WIDTH; i++){
+            for(int j = 0; j < BOARD_HEIGHT; j++){
+                gameEngine.getGameBoard().getTerrain()[i][j].getView().draw(g2, i, j);
+
+            }
+        }
+
         // Parcours le plateau du jeu
         for(int i = currentX; i < maxBoardViewRow+currentX; i++){
             for(int j = currentY; j < maxBoardViewColumn+currentY; j++){
-                gameEngine.getGameBoard().getSquare(i,j).getView().draw(g2, (i-currentX)*boardTileSize, (j-currentY)*boardTileSize);
+                //gameEngine.getGameBoard().getSquare(i,j).getView().draw(g2, (i-currentX)*boardTileSize, (j-currentY)*boardTileSize);
             }
         }
         // Dispose of this graphics context and release any system ressources that it is using
@@ -136,7 +143,6 @@ public class BoardPanel extends JPanel {
 
     private void defaultZoom(){
         tileSize = 16;
-        boardTileSize = 64;
         maxBoardViewColumn = 10;
         maxBoardViewRow = 10;
         currentX = 0;
@@ -145,7 +151,6 @@ public class BoardPanel extends JPanel {
 
     private void halfScreen(){
         tileSize = 8;
-        boardTileSize = 32;
         maxBoardViewColumn = 20;
         maxBoardViewRow = 20;
         currentX = 0;
@@ -154,7 +159,6 @@ public class BoardPanel extends JPanel {
 
     private void fullScreen() {
         tileSize = 4;
-        boardTileSize = 16;
         maxBoardViewColumn = 40;
         maxBoardViewRow = 40;
         currentX = 0;
@@ -163,9 +167,5 @@ public class BoardPanel extends JPanel {
 
     public int getTileSize() {
         return tileSize;
-    }
-
-    public int getBoardTileSize() {
-        return boardTileSize;
     }
 }
