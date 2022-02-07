@@ -1,8 +1,8 @@
 package Model;
 
 import Model.Layer0.Parcel;
-import Model.Layer1.Structure;
-import Model.Layer2.Entity;
+import Model.Layer1.Entities.Entity;
+import Model.Layer1.Structures.Structure;
 
 import java.util.ArrayList;
 

@@ -3,10 +3,9 @@ package Model.Layer1;
 import java.awt.*;
 
 /**
-* Classe décrivant les objets de Layer1 et Layer2: objets avec des HealthPoints, des coordonnées
+* Classe décrivant les objets de Layer1 et Layer2: objets avec des healthPoints, des coordonnées
  * et des dimensions
  */
-
 public abstract class Object {
     private int healthPoints;
     private Point coordinate;
@@ -14,12 +13,12 @@ public abstract class Object {
 
     /**
      * Constructeur
-     * @param coordinate coordonnees globales du objet
+     * @param coordinate coordonnées globales de l'objet
      * @param dimension width et size du objet
-     * @param healthpoints points de vie du objet
+     * @param healthPoints points de vie de l'objet
      */
-    public Object(Point coordinate, Dimension dimension, int healthpoints){
-        this.healthPoints=healthpoints;
+    public Object(Point coordinate, Dimension dimension, int healthPoints){
+        this.healthPoints=healthPoints;
         this.coordinate=coordinate;
         this.dimension=dimension;
     }
@@ -36,3 +35,4 @@ public abstract class Object {
         return coordinate;
     }
 }
+
