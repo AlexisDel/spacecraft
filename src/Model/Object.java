@@ -1,12 +1,12 @@
 package Model;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 /**
  * Cette classe décrit les objets de Layer1 et Layer2: objets avec des HealthPoints, des coordonnées
  * et des dimensions
  */
+
 public abstract class Object {
     private int healthPoints;
     private Point coordinate;

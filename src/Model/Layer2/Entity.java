@@ -3,7 +3,7 @@ package Model.Layer2;
 import Model.Object;
 
 import java.awt.*;
-
+/**Cette classe regroupe les entités du jeu: les objets qui peuvent bouger */
 public abstract class Entity extends Object {
     /**Attributes*/
     private int speed;

@@ -2,6 +2,8 @@ package Model.Layer2;
 
 import java.awt.*;
 
+/** Cette classe décrit les characters du jeu qui sont des SpaceMarines */
+
 public class SpaceMarine extends Entity{
     /**
      * Constructor

@@ -2,6 +2,8 @@ package Model.Layer2;
 
 import java.awt.*;
 
+/** Cette classe décrit les characters du jeu qui sont des Aliens */
+
 public class Alien extends Entity{
     /**
      * Constructor
