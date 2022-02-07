@@ -1,11 +1,5 @@
 package View;
 
-import Model.GameConstants;
-import Model.GameEngine;
-import Model.GameSquare;
-import Model.Squares.Containers.Buildings.Rocket;
-import Model.Squares.Containers.Land;
-import Model.Squares.NotContainers.Mountain;
 import View.Squares.LandView;
 import View.Squares.MountainView;
 import View.Squares.RocketView;
