@@ -1,19 +1,16 @@
-package Model.Squares.NotContainers;
+package Model.Squares.Containers.Buildings;
 
 import Model.GameSquare;
-import Model.Squares.NotContainer;
+import Model.Squares.Containers.Building;
 import View.Squares.SquareView;
 
-/**
- * Case représentant une montagne
- */
-public class Mountain extends NotContainer implements GameSquare {
+public class Rocket extends Building implements GameSquare {
 
     SquareView view;
 
     @Override
     public void clicked(int localX, int localY) {
-        System.out.println("Mountain");
+        System.out.println("Rocket !");
     }
 
     @Override
