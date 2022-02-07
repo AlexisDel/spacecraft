@@ -3,7 +3,7 @@ package Model.Layer1;
 import java.awt.*;
 
 /**
- * Cette classe décrit les objets de Layer1 et Layer2: objets avec des HealthPoints, des coordonnées
+* Classe décrivant les objets de Layer1 et Layer2: objets avec des HealthPoints, des coordonnées
  * et des dimensions
  */
 
@@ -13,7 +13,7 @@ public abstract class Object {
     private Dimension dimension;
 
     /**
-     * Constructor
+     * Constructeur
      * @param coordinate coordonnees globales du objet
      * @param dimension width et size du objet
      * @param healthpoints points de vie du objet

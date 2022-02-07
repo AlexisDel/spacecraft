@@ -1,37 +1,49 @@
 package Model;
 
-import Model.Layer0.Land;
 import Model.Layer0.Parcel;
+import Model.Layer1.Structure;
+import Model.Layer2.Entity;
 
-import static Model.GameConstants.*;
+import java.util.ArrayList;
 
-/**
- * Classe représentant le terrain du jeu
- */
 public class GameBoard {
 
-    /** Tableau représentant le terrain de jeu */
-    Parcel[][] board;
+    /** Le terrain du jeu */
+    GameTerrain gameTerrain;
+    /** Liste représentant les structures qui sont sur le terrain de jeu
+     *  une structure étant un objet immobile */
+    ArrayList<Structure> structures;
+    /** Liste représentant les entités qui sont sur le terrain de jeu
+     *  une entité étant un objet que l'on peut déplacer sur la carte */
+    ArrayList<Entity> entities;
 
     /**
-     * Constructeur
+     * Constructeur, initialise les différentes couches qui composent notre terrain de jeu
      */
     public GameBoard() {
-        this.board = new Parcel[BOARD_WIDTH][BOARD_HEIGHT];
-        initBoard();
+        gameTerrain = new GameTerrain();
+        structures = new ArrayList<>();
+        entities = new ArrayList<>();
     }
 
     /**
-     * Initialise le terrain du jeu avec des parcel de terre et des montagnes
+     * @return Le tableau 2D représentant le terrain de jeu
      */
-    public void initBoard(){
-        // Pour chaque parcelle du terrain
-        for(int i = 0; i < BOARD_WIDTH; i++){
-            for(int j = 0; j < BOARD_HEIGHT; j++){
-                this.board[i][j] = new Land(true);
-            }
-        }
+    public Parcel[][] getTerrain() {
+        return gameTerrain.getTerrainFromGameTerrain();
     }
 
-    //TODO : Algo Thomas avec des jolis commentaire :)
+    /**
+     * @return La liste des structures présentes sur le terrain
+     */
+    public ArrayList<Structure> getStructures() {
+        return structures;
+    }
+
+    /**
+     * @return La liste des entités présentes sur le terrain
+     */
+    public ArrayList<Entity> getEntities() {
+        return entities;
+    }
 }
