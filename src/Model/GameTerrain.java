@@ -34,11 +34,7 @@ public class GameTerrain {
      */
     public void initTerrain(){
         // Pour chaque parcelle du terrain
-        for(int i = 0; i < BOARD_WIDTH; i++){
-            for(int j = 0; j < BOARD_HEIGHT; j++){
-                this.terrain[i][j] = new Land();
-            }
-        }
+        this.terrain = (new RandomLandGeneration()).getBoard();
     }
 
     //TODO : Algo Thomas avec des jolis commentaire :)

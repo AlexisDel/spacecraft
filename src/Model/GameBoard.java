@@ -29,9 +29,9 @@ public class GameBoard {
         entities = new ArrayList<>();
 
         //TODO : test
-        structures.add(new Spacecraft(new Point(0,0), new Dimension(4, 4), 1000, 10));
-        structures.add(new Spacecraft(new Point(4,4), new Dimension(4, 4), 1000, 10));
-        entities.add(new Alien(new Point(0,5), new Dimension(1,1), 150, 10));
+        //structures.add(new Spacecraft(new Point(4,12), new Dimension(4, 4), 1000, 10));
+        //structures.add(new Spacecraft(new Point(4,4), new Dimension(4, 4), 1000, 10));
+        //entities.add(new Alien(new Point(12,8), new Dimension(1,1), 150, 10));
     }
 
     /**

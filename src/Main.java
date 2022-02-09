@@ -2,6 +2,8 @@ import Controller.BoardController;
 import Model.GameEngine;
 import View.GameView;
 
+import java.util.Random;
+
 public class Main {
 
     public static void main(String[] args) {
