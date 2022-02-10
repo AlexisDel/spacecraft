@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class RandomLandGeneration {
-    private Parcel[][] board;
+    private final Parcel[][] board;
 
-    private static final int nbMountains = 2;
-    private static int pourcent = 50;
+    private static final int nbMountains = 10;
+    private static int pourcent = 20;
     private final int borneMax;
     private final int borneMin;
     private static final double div = 4;
@@ -113,7 +113,7 @@ public class RandomLandGeneration {
                 newX = this.rand.nextInt(dimH);
                 newY = this.rand.nextInt(dimW);
             }
-            mountains = this.generateMountain(new Point(newX, newY), mountains);
+            mountains = this.generateMountain(new Point(newX, newY), mountains, false);
         }
 
         // Appel à la fonction clear mountains qui rend le graph formé par la grille convexe.
@@ -160,23 +160,45 @@ public class RandomLandGeneration {
      * @param pos
      * @return
      */
-    public ArrayList<Point> getEmptyNeighbor(Point pos) {
+    public ArrayList<Point> getEmptyNeighbor(Point pos, ArrayList<ArrayList<Color.color>> mountains) {
         ArrayList<Point> res = new ArrayList<Point>(0);
         Point temp = pos;
         temp.translate(0, -1);
-        if (isInBoard(temp) && this.board[temp.x][temp.y] instanceof Land) {
+        if (isInBoard(temp) && !mountains.get(temp.x).get(temp.y).equals(Color.color.mountain)) {
             res.add((Point) temp.clone());
         }
         temp.translate(1, 1);
-        if (isInBoard(temp) && this.board[temp.x][temp.y] instanceof Land) {
+        if (isInBoard(temp) && !mountains.get(temp.x).get(temp.y).equals(Color.color.mountain)) {
             res.add((Point) temp.clone());
         }
         temp.translate(-1, 1);
-        if (isInBoard(temp) && this.board[temp.x][temp.y] instanceof Land) {
+        if (isInBoard(temp) && !mountains.get(temp.x).get(temp.y).equals(Color.color.mountain)) {
             res.add((Point) temp.clone());
         }
         temp.translate(-1, -1);
-        if (isInBoard(temp) && this.board[temp.x][temp.y] instanceof Land) {
+        if (isInBoard(temp) && !mountains.get(temp.x).get(temp.y).equals(Color.color.mountain)) {
+            res.add((Point) temp.clone());
+        }
+        return res;
+    }
+
+    public ArrayList<Point> getNeighbor(Point pos, ArrayList<ArrayList<Color.color>> mountains){
+        ArrayList<Point> res = new ArrayList<Point>(0);
+        Point temp = pos;
+        temp.translate(0, -1);
+        if (isInBoard(temp)) {
+            res.add((Point) temp.clone());
+        }
+        temp.translate(1, 1);
+        if (isInBoard(temp)) {
+            res.add((Point) temp.clone());
+        }
+        temp.translate(-1, 1);
+        if (isInBoard(temp)) {
+            res.add((Point) temp.clone());
+        }
+        temp.translate(-1, -1);
+        if (isInBoard(temp)) {
             res.add((Point) temp.clone());
         }
         return res;
@@ -191,21 +213,23 @@ public class RandomLandGeneration {
      *
      * todo : l'espérance de la génértion est biaisé par le cas où une nouvelle montagne doit être générée, mais elle n'a pas de voisins libres. à corriger.
      */
-    public ArrayList<ArrayList<Color.color>> generateMountain(Point pos, ArrayList<ArrayList<Color.color>> mountains) {
+    public ArrayList<ArrayList<Color.color>> generateMountain(Point pos, ArrayList<ArrayList<Color.color>> mountains, boolean forceGeneration) {
         // On veut créer une montagne autour du point pos
         mountains.get(pos.x).set(pos.y, Color.color.mountain);
         int shot = this.rand.nextInt(this.borneMax);
         // Si le tirage est inferieur à borneMin, alors bingo, on génère une montagne.
-        if (shot  <= this.borneMin) {
-            ArrayList<Point> neighbors = getEmptyNeighbor(pos);
-            int tmp = neighbors.size();
+        if (shot  <= this.borneMin || forceGeneration) {
+            ArrayList<Point> emptyNeighbors = getEmptyNeighbor(pos, mountains);
+            int tmp = emptyNeighbors.size();
             // Si la montagne générée à au moins un voisin libre, on sélectionne parmis les voisins le successeur pour la génération
             if (tmp > 0) {
-                mountains = this.generateMountain(neighbors.get(this.rand.nextInt(tmp)), mountains);
+                mountains = this.generateMountain(emptyNeighbors.get(this.rand.nextInt(tmp)), mountains, false);
             }
             // Sinon, on transmet l'information qu'il faut ajouter une montagne
             else{
-                System.out.println("yooo");
+                System.out.println("yo");
+                //ArrayList<Point> neighbors = getNeighbor(pos, mountains);
+                //mountains = this.generateMountain(neighbors.get(this.rand.nextInt(neighbors.size())), mountains, true);
             }
         }
         return mountains;
@@ -271,7 +295,7 @@ public class RandomLandGeneration {
         if (mountains.get(point.x).get(point.y).equals(Color.color.notseen)) {
             mountains.get(point.x).set(point.y, Color.color.seen);
         }
-        for (Point p : getEmptyNeighbor(point)) {
+        for (Point p : getEmptyNeighbor(point, mountains)) {
             if (mountains.get(p.x).get(p.y).equals(Color.color.notseen)) {
                 mountains.get(p.x).set(p.y, Color.color.seen);
                 path(mountains, p);
@@ -412,10 +436,10 @@ public class RandomLandGeneration {
      * @param end       todo : faire une meilleure fonction de reliemant
      */
     public void dig(ArrayList<ArrayList<Color.color>> mountains, Point start, Point end) {
-        for (int i = Math.min(start.x, end.x); i < Math.max(start.x, end.x); i++) {
+        for (int i = Math.min(start.x, end.x); i < Math.max(start.x, end.x) +  1; i++) {
             mountains.get(i).set(start.y, Color.color.seen);
         }
-        for (int i = Math.min(start.y, end.y); i < Math.max(start.y, end.y); i++) {
+        for (int i = Math.min(start.y, end.y); i < Math.max(start.y, end.y) + 1; i++) {
             mountains.get(end.x).set(i, Color.color.seen);
         }
     }
