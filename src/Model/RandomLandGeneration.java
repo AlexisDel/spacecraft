@@ -16,8 +16,8 @@ public class RandomLandGeneration {
     private final int borneMax;
     private final int borneMin;
     private static final double div = 4;
-    private final int dimH = (int) (GameConstants.BOARD_HEIGHT/div);
-    private final int dimW = (int) (GameConstants.BOARD_WIDTH/div);
+    private final int dimH = (int) (GameConstants.BOARD_SIZE /div);
+    private final int dimW = (int) (GameConstants.BOARD_SIZE /div);
     private final Random rand = new Random();
 
 
@@ -30,10 +30,10 @@ public class RandomLandGeneration {
         int[] probs = this.probas(pourcent);
         this.borneMax = probs[1];
         this.borneMin = probs[0];
-        this.board = new Parcel[GameConstants.BOARD_HEIGHT][GameConstants.BOARD_WIDTH];
+        this.board = new Parcel[GameConstants.BOARD_SIZE][GameConstants.BOARD_SIZE];
         // Pour chaque case du plateau
-        for(int i = 0; i < GameConstants.BOARD_WIDTH; i++){
-            for(int j = 0; j < GameConstants.BOARD_HEIGHT; j++){
+        for(int i = 0; i < GameConstants.BOARD_SIZE; i++){
+            for(int j = 0; j < GameConstants.BOARD_SIZE; j++){
                 this.board[i][j] = new Land();
             }
         }

@@ -42,7 +42,7 @@ public class BoardController implements KeyListener, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        gameView.getBoardPanel().ClickTile(e.getX(), e.getY());
+        gameView.getBoardPanel().clickTile(e.getX(), e.getY());
     }
 
     @Override

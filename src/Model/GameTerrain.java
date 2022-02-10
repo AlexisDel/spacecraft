@@ -1,10 +1,8 @@
 package Model;
 
-import Model.Layer0.Land;
 import Model.Layer0.Parcel;
 
-import static Model.GameConstants.BOARD_HEIGHT;
-import static Model.GameConstants.BOARD_WIDTH;
+import static Model.GameConstants.BOARD_SIZE;
 
 /**
  * Classe représentant le terrain du jeu
@@ -18,7 +16,7 @@ public class GameTerrain {
      * Constructeur, créer et initialise le terrain de jeu
      */
     public GameTerrain() {
-        this.terrain = new Parcel[BOARD_WIDTH][BOARD_HEIGHT];
+        this.terrain = new Parcel[GameConstants.BOARD_SIZE][BOARD_SIZE];
         initTerrain();
     }
 
