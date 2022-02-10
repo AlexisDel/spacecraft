@@ -4,18 +4,16 @@ import Model.Layer0.Mountain;
 
 import java.awt.*;
 
-public class MountainView implements ObjectView{
-
-    Mountain mountain;
+public class MountainView extends ObjectView{
 
     public MountainView(Mountain mountain) {
-        this.mountain = mountain;
+        super(mountain);
     }
 
     @Override
     public void draw(Graphics2D g, int tileSize, int displayX, int displayY) {
         g.setColor(Color.GRAY);
-        g.fillRect((mountain.getCoordinate().x-displayX)*tileSize, (mountain.getCoordinate().y-displayY)*tileSize, mountain.getDimension().width*tileSize, mountain.getDimension().height*tileSize);
+        g.fillRect((object.getCoordinate().x-displayX)*tileSize, (object.getCoordinate().y-displayY)*tileSize, object.getDimension().width*tileSize, object.getDimension().height*tileSize);
 
     }
 }

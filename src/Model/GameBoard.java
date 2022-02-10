@@ -31,6 +31,7 @@ public class GameBoard {
         //TODO : test
         structures.add(new Spacecraft(new Point(0,0), new Dimension(4, 4), 1000, 10));
         structures.add(new Spacecraft(new Point(4,4), new Dimension(4, 4), 1000, 10));
+        structures.add(new Spacecraft(new Point(156,156), new Dimension(4, 4), 1000, 10));
         entities.add(new Alien(new Point(0,5), 150, 10));
     }
 

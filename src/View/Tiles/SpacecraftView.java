@@ -4,18 +4,16 @@ import Model.Layer1.Structures.Spacecraft;
 
 import java.awt.*;
 
-public class SpacecraftView implements ObjectView{
-
-    Spacecraft spacecraft;
+public class SpacecraftView extends ObjectView{
 
     public SpacecraftView(Spacecraft spacecraft) {
-        this.spacecraft = spacecraft;
+        super(spacecraft);
     }
 
     @Override
     public void draw(Graphics2D g, int tileSize, int displayX, int displayY) {
         g.setColor(Color.BLUE);
-        g.fillRect((spacecraft.getCoordinate().x-displayX)*tileSize, (spacecraft.getCoordinate().y-displayY)*tileSize, spacecraft.getDimension().width*tileSize, spacecraft.getDimension().height*tileSize);
+        g.fillRect((object.getCoordinate().x-displayX)*tileSize, (object.getCoordinate().y-displayY)*tileSize, object.getDimension().width*tileSize, object.getDimension().height*tileSize);
 
     }
 }

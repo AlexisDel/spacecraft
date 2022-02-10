@@ -15,8 +15,8 @@ public class RandomLandGeneration {
     private static int pourcent = 20;
     private final int borneMax;
     private final int borneMin;
-    private final int dimH = (int) (GameConstants.BOARD_SIZE/ MOUNTAIN_SIZE);
-    private final int dimW = (int) (GameConstants.BOARD_SIZE/ MOUNTAIN_SIZE);
+    private final int dimH =  (GameConstants.BOARD_SIZE/ MOUNTAIN_SIZE);
+    private final int dimW =  (GameConstants.BOARD_SIZE/ MOUNTAIN_SIZE);
     private final Random rand = new Random();
 
 

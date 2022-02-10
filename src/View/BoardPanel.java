@@ -55,20 +55,24 @@ public class BoardPanel extends JPanel {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
 
-        // Layer 0
-        // Dessine seulement ce qui est affiché
-        for(Mountain mountain : gameEngine.getGameBoard().getMountains()){
-            mountain.getView().draw(g2, tileSize, displayX, displayY);
+        // Sand layer
+        for (Mountain mountain : gameEngine.getGameBoard().getMountains()){
+            if (mountain.getView().isDisplayed(displayX, displayY, maxBoardView)) {
+                mountain.getView().draw(g2, tileSize, displayX, displayY);
+            }
         }
 
-        //TODO: optimisation ne pas dessiner si hors de l'écran (prendre en compte la taille)
-        // Layer 1
-        for(Structure structure : gameEngine.getGameBoard().getStructures()){
-            structure.getView().draw(g2, tileSize, displayX, displayY);
+        // Structure layer
+        for (Structure structure : gameEngine.getGameBoard().getStructures()){
+            if (structure.getView().isDisplayed(displayX, displayY, maxBoardView)){
+                structure.getView().draw(g2, tileSize, displayX, displayY);
+            }
         }
-        // Layer 2
-        for(Entity entity : gameEngine.getGameBoard().getEntities()){
-            entity.getView().draw(g2, tileSize, displayX, displayY);
+        // Entity layer
+        for (Entity entity : gameEngine.getGameBoard().getEntities()){
+            if (entity.getView().isDisplayed(displayX, displayY, maxBoardView)){
+                entity.getView().draw(g2, tileSize, displayX, displayY);
+            }
         }
 
         // Dispose of this graphics context and release any system ressources that it is using
