@@ -11,7 +11,7 @@ import java.util.Random;
 public class RandomLandGeneration {
     private final Parcel[][] board;
 
-    private static final int nbMountains = 10;
+    private static final int nbMountains = 5;
     private static int pourcent = 20;
     private final int borneMax;
     private final int borneMin;
@@ -113,7 +113,7 @@ public class RandomLandGeneration {
                 newX = this.rand.nextInt(dimH);
                 newY = this.rand.nextInt(dimW);
             }
-            mountains = this.generateMountain(new Point(newX, newY), mountains, false);
+            mountains = this.generateMountain(new Point(newX, newY), mountains);
         }
 
         // Appel à la fonction clear mountains qui rend le graph formé par la grille convexe.
@@ -211,25 +211,23 @@ public class RandomLandGeneration {
      * @param mountains
      * @return ArrayList<ArrayList < Color>>
      *
-     * todo : l'espérance de la génértion est biaisé par le cas où une nouvelle montagne doit être générée, mais elle n'a pas de voisins libres. à corriger.
      */
-    public ArrayList<ArrayList<Color.color>> generateMountain(Point pos, ArrayList<ArrayList<Color.color>> mountains, boolean forceGeneration) {
+    public ArrayList<ArrayList<Color.color>> generateMountain(Point pos, ArrayList<ArrayList<Color.color>> mountains) {
         // On veut créer une montagne autour du point pos
         mountains.get(pos.x).set(pos.y, Color.color.mountain);
         int shot = this.rand.nextInt(this.borneMax);
         // Si le tirage est inferieur à borneMin, alors bingo, on génère une montagne.
-        if (shot  <= this.borneMin || forceGeneration) {
+        if (shot  <= this.borneMin) {
             ArrayList<Point> emptyNeighbors = getEmptyNeighbor(pos, mountains);
             int tmp = emptyNeighbors.size();
             // Si la montagne générée à au moins un voisin libre, on sélectionne parmis les voisins le successeur pour la génération
             if (tmp > 0) {
-                mountains = this.generateMountain(emptyNeighbors.get(this.rand.nextInt(tmp)), mountains, false);
+                mountains = this.generateMountain(emptyNeighbors.get(this.rand.nextInt(tmp)), mountains);
             }
             // Sinon, on transmet l'information qu'il faut ajouter une montagne
             else{
-                System.out.println("yo");
-                //ArrayList<Point> neighbors = getNeighbor(pos, mountains);
-                //mountains = this.generateMountain(neighbors.get(this.rand.nextInt(neighbors.size())), mountains, true);
+                Point newMountain = nearestColoredTile(mountains, pos, Color.color.notseen);
+                mountains = this.generateMountain(newMountain, mountains);
             }
         }
         return mountains;
@@ -265,7 +263,7 @@ public class RandomLandGeneration {
                 // Si on trouve une case non colorée:
                 if (mountains.get(i).get(j).equals(Color.color.notseen)) {
                     // On trouve une case colorée proche
-                    Point toJoin = this.nearestSeenTile(mountains, new Point(i, j));
+                    Point toJoin = this.nearestColoredTile(mountains, new Point(i, j), Color.color.seen);
                     // On relie ces deux cases
                     this.dig(mountains, new Point(i, j), toJoin);
                     // On recolore
@@ -395,32 +393,32 @@ public class RandomLandGeneration {
      * @param point
      * @return
      */
-    public Point nearestSeenTile(ArrayList<ArrayList<Color.color>> mountains, Point point) {
+    public Point nearestColoredTile(ArrayList<ArrayList<Color.color>> mountains, Point point, Color.color color) {
         // Point résultat (premier point autour de point déjà vue.
         Point res = (Point) point.clone();
         res.translate(0, -2);
         while (true) {
             while (res.y != point.y) {
                 res.translate(-1, 1);
-                if (isInBoard(res) && mountains.get(res.x).get(res.y).equals(Color.color.seen)) {
+                if (isInBoard(res) && mountains.get(res.x).get(res.y).equals(color)) {
                     return res;
                 }
             }
             while (res.x != point.x) {
                 res.translate(1, 1);
-                if (isInBoard(res) && mountains.get(res.x).get(res.y).equals(Color.color.seen)) {
+                if (isInBoard(res) && mountains.get(res.x).get(res.y).equals(color)) {
                     return res;
                 }
             }
             while (res.y != point.y) {
                 res.translate(1, -1);
-                if (isInBoard(res) && mountains.get(res.x).get(res.y).equals(Color.color.seen)) {
+                if (isInBoard(res) && mountains.get(res.x).get(res.y).equals(color)) {
                     return res;
                 }
             }
             while (res.x != point.x) {
                 res.translate(-1, -1);
-                if (isInBoard(res) && mountains.get(res.x).get(res.y).equals(Color.color.seen)) {
+                if (isInBoard(res) && mountains.get(res.x).get(res.y).equals(color)) {
                     return res;
                 }
             }
