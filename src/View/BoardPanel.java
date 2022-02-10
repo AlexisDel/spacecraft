@@ -1,6 +1,7 @@
 package View;
 
 import Model.GameEngine;
+import Model.Layer0.Mountain;
 import Model.Layer1.Entities.Entity;
 import Model.Layer1.Structures.Structure;
 
@@ -45,6 +46,9 @@ public class BoardPanel extends JPanel {
         // tl;dr : improves game's rendering performance
         this.setDoubleBuffered(true);
 
+        // Layer 0
+        this.setBackground(Color.ORANGE);
+
     }
 
     public void paintComponent(Graphics g){
@@ -53,10 +57,8 @@ public class BoardPanel extends JPanel {
 
         // Layer 0
         // Dessine seulement ce qui est affiché
-        for(int i = displayX; i < maxBoardView + displayX; i++){
-            for(int j = displayY; j < maxBoardView + displayY; j++){
-                gameEngine.getGameBoard().getTerrain()[i][j].getView().draw(g2, (i- displayX), (j- displayY), tileSize);
-            }
+        for(Mountain mountain : gameEngine.getGameBoard().getMountains()){
+            mountain.getView().draw(g2, tileSize, displayX, displayY);
         }
 
         //TODO: optimisation ne pas dessiner si hors de l'écran (prendre en compte la taille)
@@ -115,6 +117,7 @@ public class BoardPanel extends JPanel {
         }
     }
 
+    // TODO : ne pas reset la position de la caméra à chaque fois
     public void zoomIn() {
         if(maxBoardView/2 >= 40){
             tileSize*=2;

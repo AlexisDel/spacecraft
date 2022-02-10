@@ -1,6 +1,6 @@
 package Model;
 
-import Model.Layer0.Parcel;
+import Model.Layer0.Mountain;
 import Model.Layer1.Entities.Alien;
 import Model.Layer1.Entities.Entity;
 import Model.Layer1.Structures.Spacecraft;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class GameBoard {
 
     /** Le terrain du jeu */
-    GameTerrain gameTerrain;
+    ArrayList<Mountain> mountains;
     /** Liste représentant les structures qui sont sur le terrain de jeu
      *  une structure étant un objet immobile */
     ArrayList<Structure> structures;
@@ -24,7 +24,7 @@ public class GameBoard {
      * Constructeur, initialise les différentes couches qui composent notre terrain de jeu
      */
     public GameBoard() {
-        gameTerrain = new GameTerrain();
+        mountains = new RandomLandGeneration().getBoard();
         structures = new ArrayList<>();
         entities = new ArrayList<>();
 
@@ -35,10 +35,10 @@ public class GameBoard {
     }
 
     /**
-     * @return Le tableau 2D représentant le terrain de jeu
+     * @return La liste des montagnes présentes sur le terrain
      */
-    public Parcel[][] getTerrain() {
-        return gameTerrain.getTerrainFromGameTerrain();
+    public ArrayList<Mountain> getMountains() {
+        return mountains;
     }
 
     /**

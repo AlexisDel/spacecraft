@@ -1,12 +1,12 @@
 package Model;
 
-import Model.Layer0.Land;
 import Model.Layer0.Mountain;
-import Model.Layer0.Parcel;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
+
+import static Model.GameConstants.MOUNTAIN_SIZE;
 
 public class RandomLandGeneration {
     private final ArrayList<Mountain> board;
@@ -15,9 +15,8 @@ public class RandomLandGeneration {
     private static int pourcent = 20;
     private final int borneMax;
     private final int borneMin;
-    private static final double div = 4;
-    private final int dimH = (int) (GameConstants.BOARD_SIZE/div);
-    private final int dimW = (int) (GameConstants.BOARD_SIZE/div);
+    private final int dimH = (int) (GameConstants.BOARD_SIZE/ MOUNTAIN_SIZE);
+    private final int dimW = (int) (GameConstants.BOARD_SIZE/ MOUNTAIN_SIZE);
     private final Random rand = new Random();
 
 
@@ -109,7 +108,7 @@ public class RandomLandGeneration {
         for (int i = 0; i < dimH; i++) {
             for (int j = 0; j < dimW; j++) {
                 if (mountains.get(i).get(j).equals(Color.color.mountain)) {
-                    this.board.add(new Mountain(new Point(i, j)));
+                    this.board.add(new Mountain(new Point((int) (i* MOUNTAIN_SIZE), (int) (j* MOUNTAIN_SIZE))));
                 }
             }
         }

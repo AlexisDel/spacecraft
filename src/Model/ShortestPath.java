@@ -14,9 +14,9 @@ public class ShortestPath {
      * Constructeur de la classe
      */
     public ShortestPath(){
-        this.HitBox = new ArrayList<>(GameConstants.BOARD_WIDTH);
+        this.HitBox = new ArrayList<>(GameConstants.BOARD_SIZE);
         for(ArrayList<Boolean> l : this.HitBox){
-            l = new ArrayList<>(GameConstants.BOARD_HEIGHT);
+            l = new ArrayList<>(GameConstants.BOARD_SIZE);
             for(Boolean b : l){
                 b = Boolean.FALSE;
             }

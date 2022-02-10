@@ -1,6 +1,6 @@
 package Model.Layer1.Entities;
 
-import Model.Layer1.Object;
+import Model.Object;
 
 import java.awt.*;
 /**
@@ -9,6 +9,7 @@ import java.awt.*;
  */
 public abstract class Entity extends Object {
     /**Attributes*/
+    private int healthPoints;
     private int speed;
     /**
      * Constructeur
@@ -18,8 +19,13 @@ public abstract class Entity extends Object {
      * @param speed vitesse en ms de déplacement de l'entité
      */
     public Entity(Point coordinate, Dimension dimension, int healthPoints, int speed) {
-        super(coordinate, dimension, healthPoints);
-        this.speed= speed;
+        super(coordinate, dimension);
+        this.healthPoints = healthPoints;
+        this.speed = speed;
+    }
+
+    public int getHealthPoints() {
+        return healthPoints;
     }
 
     /** Cette méthode déplace l'entité */

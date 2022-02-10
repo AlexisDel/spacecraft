@@ -1,7 +1,7 @@
 package Model.Layer1.Structures;
 
 import Model.Layer1.Entities.Entity;
-import Model.Layer1.Object;
+import Model.Object;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -11,6 +11,7 @@ import java.util.ArrayList;
  */
 
 public abstract class Structure extends Object {
+    private int healthPoint;
     private int capacity;
     private ArrayList<Entity> occupants;
 
@@ -22,11 +23,15 @@ public abstract class Structure extends Object {
      * @param capacity nombre max d'occupants
      */
     public Structure(Point coordinate, Dimension dimension, int healthPoints, int capacity){
-        super(coordinate, dimension, healthPoints);
+        super(coordinate, dimension);
+        this.healthPoint = healthPoints;
         this.capacity=capacity;
         this.occupants= new ArrayList<Entity>();
     }
     /** getters*/
+    public int getHealthPoint() {
+        return healthPoint;
+    }
 
     /** getter de la capacité de la structure */
     public int getCapacity() {

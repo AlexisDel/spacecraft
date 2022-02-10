@@ -1,4 +1,4 @@
-package Model.Layer1;
+package Model;
 
 import View.Tiles.ObjectView;
 
@@ -12,7 +12,6 @@ public abstract class Object {
 
     ObjectView view;
 
-    private int healthPoints;
     private Point coordinate;
     private Dimension dimension;
 
@@ -20,10 +19,8 @@ public abstract class Object {
      * Constructeur
      * @param coordinate coordonnées globales de l'objet
      * @param dimension width et size du objet
-     * @param healthPoints points de vie de l'objet
      */
-    public Object(Point coordinate, Dimension dimension, int healthPoints){
-        this.healthPoints=healthPoints;
+    public Object(Point coordinate, Dimension dimension){
         this.coordinate=coordinate;
         this.dimension=dimension;
     }
@@ -33,9 +30,6 @@ public abstract class Object {
     }
 
     /** getters*/
-    public int getHealthPoints() {
-        return healthPoints;
-    }
 
     public Dimension getDimension() {
         return dimension;

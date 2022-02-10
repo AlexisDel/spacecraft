@@ -4,6 +4,9 @@ public class GameConstants {
 
     /** Hauteur du terrain de jeu */
     // 40 * 2^n
-    public static final int BOARD_SIZE = 40;
+    public static final int BOARD_SIZE = 320;
+    /** Dimension d'une montagne en nombre de case */
+    public static final int MOUNTAIN_SIZE = 4;
+
 
 }
