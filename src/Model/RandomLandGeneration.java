@@ -9,15 +9,15 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class RandomLandGeneration {
-    private final Parcel[][] board;
+    private final ArrayList<Mountain> board;
 
     private static final int nbMountains = 5;
     private static int pourcent = 20;
     private final int borneMax;
     private final int borneMin;
     private static final double div = 4;
-    private final int dimH = (int) (GameConstants.BOARD_SIZE /div);
-    private final int dimW = (int) (GameConstants.BOARD_SIZE /div);
+    private final int dimH = (int) (GameConstants.BOARD_SIZE/div);
+    private final int dimW = (int) (GameConstants.BOARD_SIZE/div);
     private final Random rand = new Random();
 
 
@@ -30,13 +30,7 @@ public class RandomLandGeneration {
         int[] probs = this.probas(pourcent);
         this.borneMax = probs[1];
         this.borneMin = probs[0];
-        this.board = new Parcel[GameConstants.BOARD_SIZE][GameConstants.BOARD_SIZE];
-        // Pour chaque case du plateau
-        for(int i = 0; i < GameConstants.BOARD_SIZE; i++){
-            for(int j = 0; j < GameConstants.BOARD_SIZE; j++){
-                this.board[i][j] = new Land();
-            }
-        }
+        this.board = new ArrayList<>();
 
         // Génération de la seed :
         long seed = this.rand.nextLong();
@@ -58,15 +52,6 @@ public class RandomLandGeneration {
         res[0] = pourcent*dimH*dimW - 100* RandomLandGeneration.nbMountains;
         res[1] = pourcent*dimH*dimW;
         return res;
-    }
-
-    /**
-     * ajoute une entitée au plateau
-     * @param parcel
-     * @param pos        toDo : check que la case soit vide
-     */
-    public void addGameSquare(Parcel parcel, Point pos) {
-        this.board[pos.x][pos.y] = parcel;
     }
 
     /**
@@ -109,7 +94,7 @@ public class RandomLandGeneration {
             newX = this.rand.nextInt(dimH);
             newY = this.rand.nextInt(dimW);
             // Le relief doit être à une case vide
-            while (!(this.board[newX][newY] instanceof Land)) {
+            while (!(mountains.get(newX).get(newY).equals(Color.color.notseen))) {
                 newX = this.rand.nextInt(dimH);
                 newY = this.rand.nextInt(dimW);
             }
@@ -124,21 +109,17 @@ public class RandomLandGeneration {
         for (int i = 0; i < dimH; i++) {
             for (int j = 0; j < dimW; j++) {
                 if (mountains.get(i).get(j).equals(Color.color.mountain)) {
-                    for(int dx = 0; dx < div; dx++){
-                        for(int dy = 0; dy < div; dy++){
-                            this.addGameSquare(new Mountain(), new Point((int) (div*i + dx), (int) (div*j + dy)));
-                        }
-                    }
+                    this.board.add(new Mountain(new Point(i, j)));
                 }
             }
         }
 
         // Génération aléatoire de la position du space ship
-//        int shipX = this.rand.nextInt(GameConstants.BOARD_HEIGHT);
-        //      int shipY = this.rand.nextInt(GameConstants.BOARD_WIDTH);
+//        int shipX = this.rand.nextInt(GameConstants.BOARD_SIZE);
+        //      int shipY = this.rand.nextInt(GameConstants.BOARD_SIZE);
         //    while (!(this.board[shipX][shipY] == null)) {
-        //      shipX = this.rand.nextInt(GameConstants.BOARD_HEIGHT);
-        //    shipY = this.rand.nextInt(GameConstants.BOARD_WIDTH);
+        //      shipX = this.rand.nextInt(GameConstants.BOARD_SIZE);
+        //    shipY = this.rand.nextInt(GameConstants.BOARD_SIZE);
         //}
         //this.addGameSquare(new SpaceShip(), new Point(shipX, shipY));
         // On ajoute 3 space marines, à max 2 cases de distance du space ship
@@ -447,7 +428,7 @@ public class RandomLandGeneration {
      *
      * @return
      */
-    public Parcel[][] getBoard() {
+    public ArrayList<Mountain> getBoard() {
         return board;
     }
 
