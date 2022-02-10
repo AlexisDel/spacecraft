@@ -21,6 +21,7 @@ public abstract class Entity extends Object {
         super(coordinate, dimension, healthPoints);
         this.speed= speed;
     }
+
     /** Cette méthode déplace l'entité */
     public void move(){}
 }

@@ -2,8 +2,8 @@ package Model;
 
 public class GameConstants {
 
-    /** Largeur du terrain de jeu */
-    public static final int BOARD_WIDTH = 160;
     /** Hauteur du terrain de jeu */
-    public static final int BOARD_HEIGHT = 160;
+    // 40 * 2^n
+    public static final int BOARD_SIZE = 40;
+
 }
