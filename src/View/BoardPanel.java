@@ -19,14 +19,11 @@ public class BoardPanel extends JPanel {
     private int tileSize = 16;
     // Nombre de cases par affiché en largeur et en hauteur
     private int maxBoardView = 40;
-    // Défini le nombre de "crans" du zoom
-    private int maxZoomScaleFactor = BOARD_SIZE/4;
 
     // Position de la fenêtre d'affichage (déplacement ZQSD)
     private int displayX = 0;
     private int displayY = 0;
-    // Valeur indiquant le zoom de l'affichage
-    private int zoomScaleFactor = 1;
+    private int displayMovementSpeed = 5;
 
     // Moteur du jeu
     private GameEngine gameEngine;
@@ -128,6 +125,7 @@ public class BoardPanel extends JPanel {
             maxBoardView/=2;
             displayX = 0;
             displayY = 0;
+            displayMovementSpeed++;
         }
     }
 
@@ -137,6 +135,22 @@ public class BoardPanel extends JPanel {
             maxBoardView *=2;
             displayX = 0;
             displayY = 0;
+            displayMovementSpeed--;
         }
+    }
+
+    public void moveViewportX(int x){
+        if (displayX+x >= 0 && displayX+x <= BOARD_SIZE - maxBoardView){
+            displayX+=x;
+        }
+    }
+    public void moveViewportY(int y){
+        if (displayY+y >= 0 && displayY+y <= BOARD_SIZE - maxBoardView){
+            displayY+=y;
+        }
+    }
+
+    public int getDisplayMovementSpeed() {
+        return displayMovementSpeed;
     }
 }

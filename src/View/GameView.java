@@ -62,5 +62,7 @@ public class GameView implements Runnable{
     public void setBoardController(BoardController boardController) {
         getBoardPanel().addKeyListener(boardController);
         getBoardPanel().addMouseListener(boardController);
+        getBoardPanel().addMouseMotionListener(boardController);
+        getBoardPanel().addMouseWheelListener(boardController);
     }
 }

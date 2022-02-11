@@ -2,12 +2,16 @@ package Controller;
 
 import View.GameView;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.*;
+import java.awt.event.*;
 
-public class BoardController implements KeyListener, MouseListener {
+import static java.lang.Math.abs;
+
+public class BoardController implements KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
+
+    private Point mousePt;
+    int mouseDraggedThresholdX = 0;
+    int mouseDraggedThresholdY = 0;
 
     GameView gameView;
 
@@ -32,7 +36,6 @@ public class BoardController implements KeyListener, MouseListener {
             case KeyEvent.VK_UP -> gameView.getBoardPanel().zoomIn();
             case KeyEvent.VK_DOWN -> gameView.getBoardPanel().zoomOut();
         }
-
     }
 
     @Override
@@ -47,12 +50,11 @@ public class BoardController implements KeyListener, MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        mousePt = e.getPoint();
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
     }
 
     @Override
@@ -63,5 +65,38 @@ public class BoardController implements KeyListener, MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
 
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        int dx = (e.getX() - mousePt.x);
+        int dy = (e.getY() - mousePt.y);
+        mouseDraggedThresholdX+=dx;
+        mouseDraggedThresholdY+=dy;
+        if (abs(mouseDraggedThresholdX) > gameView.getBoardPanel().getDisplayMovementSpeed()){
+            gameView.getBoardPanel().moveViewportX(-mouseDraggedThresholdX/gameView.getBoardPanel().getDisplayMovementSpeed());
+            mouseDraggedThresholdX = 0;
+        }
+        if (abs(mouseDraggedThresholdY) > gameView.getBoardPanel().getDisplayMovementSpeed()){
+            gameView.getBoardPanel().moveViewportY(-mouseDraggedThresholdY/gameView.getBoardPanel().getDisplayMovementSpeed());
+            mouseDraggedThresholdY = 0;
+        }
+        mousePt = e.getPoint();
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e) {
+        if (e.isControlDown()) {
+            if (e.getWheelRotation() < 0) {
+                gameView.getBoardPanel().zoomIn();
+            } else {
+                gameView.getBoardPanel().zoomOut();
+            }
+        }
     }
 }
