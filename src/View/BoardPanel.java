@@ -1,5 +1,6 @@
 package View;
 
+import Model.GameConstants;
 import Model.GameEngine;
 import Model.Layer0.Mountain;
 import Model.Layer1.Entities.Entity;
@@ -78,11 +79,11 @@ public class BoardPanel extends JPanel {
 
     /**
      * Méthode appelée lorsque l'utilisateur clique sur la fenêtre
-     * TODO ... (ce qu'elle fait, control panel...)
+     * Retourne les coordonnées du point cliqué sur la map.
      * @param mouseX coordonnée en abscisse du curseur dans le repère de la fenêtre lors du clic
      * @param mouseY coordonnée en ordonné du curseur dans le repère de la fenêtre lors du clic
      */
-    public void clickTile(int mouseX, int mouseY) {
+    public Point clickTile(int mouseX, int mouseY) {
 
         // Coordonnée x de la case sur laquelle le joueur a cliqué
         int x = mouseX/tileSize + displayX;
@@ -90,6 +91,7 @@ public class BoardPanel extends JPanel {
         int y = mouseY/tileSize + displayY;
 
         System.out.println("("+x+", "+y+")");
+        return new Point(x,y);
     }
 
     /* --------------------- Déplacement/Zoom de l'affichage ----------------------- */

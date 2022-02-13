@@ -1,13 +1,13 @@
 package Model.Layer1.Structures;
 
-import View.Tiles.SpacecraftView;
+import View.Tiles.SpaceshipView;
 
 import java.awt.*;
 
 /**
  * Cette classe représente le vaisseau spatial
  */
-public class Spacecraft extends Structure{
+public class Spaceship extends Structure{
 
     /**
      * Constructeur
@@ -16,8 +16,8 @@ public class Spacecraft extends Structure{
      * @param healthPoints points de vie de la structure
      * @param capacity     nombre max d'occupants
      */
-    public Spacecraft(Point coordinate, Dimension dimension, int healthPoints, int capacity) {
-        super(coordinate, dimension, healthPoints, capacity);
-        setView(new SpacecraftView(this));
+    public Spaceship(Point coordinate, Dimension dimension, int healthPoints, int capacity) {
+        super("Spaceship",coordinate, dimension, healthPoints, capacity,"./resources/spaceship.jpg");
+        setView(new SpaceshipView(this));
     }
 }

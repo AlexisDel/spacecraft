@@ -3,7 +3,8 @@ package Model;
 import Model.Layer0.Mountain;
 import Model.Layer1.Entities.Alien;
 import Model.Layer1.Entities.Entity;
-import Model.Layer1.Structures.Spacecraft;
+import Model.Layer1.Entities.SpaceMarine;
+import Model.Layer1.Structures.Spaceship;
 import Model.Layer1.Structures.Structure;
 
 import java.awt.*;
@@ -29,10 +30,11 @@ public class GameBoard {
         entities = new ArrayList<>();
 
         //TODO : test
-        structures.add(new Spacecraft(new Point(0,0), new Dimension(4, 4), 1000, 10));
-        structures.add(new Spacecraft(new Point(4,4), new Dimension(4, 4), 1000, 10));
-        structures.add(new Spacecraft(new Point(156,156), new Dimension(4, 4), 1000, 10));
+        structures.add(new Spaceship(new Point(0,0), new Dimension(4, 4), 1000, 10));
+        structures.add(new Spaceship(new Point(4,4), new Dimension(4, 4), 1000, 10));
+        structures.add(new Spaceship(new Point(156,156), new Dimension(4, 4), 1000, 10));
         entities.add(new Alien(new Point(0,5), 150, 10));
+        entities.add(new SpaceMarine(new Point(20,42),200,10));
     }
 
     /**

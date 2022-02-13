@@ -45,7 +45,10 @@ public class BoardController implements KeyListener, MouseListener, MouseMotionL
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        gameView.getBoardPanel().clickTile(e.getX(), e.getY());
+        /**Récupère les coordonnées du point cliqué et
+         *  les transmet à la view qui les transmet au control panel*/
+        Point clickedCoordinates= gameView.getBoardPanel().clickTile(e.getX(), e.getY());
+        gameView.setSelectedCoord(clickedCoordinates);
     }
 
     @Override

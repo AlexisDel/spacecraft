@@ -29,6 +29,12 @@ public abstract class Object {
         this.view = view;
     }
 
+    /** setter */
+
+    public void setCoordinate(Point coordinate) {
+        this.coordinate = coordinate;
+    }
+
     /** getters*/
 
     public Dimension getDimension() {
