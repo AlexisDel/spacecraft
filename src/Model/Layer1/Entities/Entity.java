@@ -1,5 +1,6 @@
 package Model.Layer1.Entities;
 
+import Model.GameBoard;
 import Model.Layer1.Layer1Object;
 
 import java.awt.*;
@@ -13,6 +14,7 @@ public abstract class Entity extends Layer1Object {
     /**Attributes*/
     private int speed;
     private ArrayList<Action>actions;
+    private GameBoard gameBoard;
     /**
      * Constructeur
      * @param coordinate   coordonnées globales de l'entité
@@ -20,8 +22,9 @@ public abstract class Entity extends Layer1Object {
      * @param healthPoints points de vie de l'entité
      * @param speed vitesse en ms de déplacement de l'entité
      */
-    public Entity(String name,Point coordinate, Dimension dimension, int healthPoints, int speed, String imagePath) {
+    public Entity(String name,Point coordinate, Dimension dimension, GameBoard gb, int healthPoints, int speed, String imagePath) {
         super(name, coordinate,dimension,healthPoints,imagePath);
+        this.gameBoard = gb;
         this.speed = speed;
         this.actions= new ArrayList<>();
     }
@@ -38,5 +41,13 @@ public abstract class Entity extends Layer1Object {
 
     public ArrayList<Action> getActions() {
         return actions;
+    }
+
+    /**
+     * getter de GameBoard
+     * @return
+     */
+    public GameBoard getGameBoard() {
+        return gameBoard;
     }
 }

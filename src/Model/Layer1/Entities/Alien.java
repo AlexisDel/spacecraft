@@ -1,5 +1,6 @@
 package Model.Layer1.Entities;
 
+import Model.GameBoard;
 import View.Tiles.AlienView;
 
 import java.awt.*;
@@ -14,10 +15,16 @@ public class Alien extends Entity{
      * @param healthPoints points de vie de l'alien
      * @param speed        vitesse en ms de déplacement de l'alien
      */
-    public Alien(Point coordinate, int healthPoints, int speed) {
-        super("Alien",coordinate, new Dimension(1,1), healthPoints, speed,"./resources/alien.jpeg");
+    public Alien(Point coordinate, int healthPoints, int speed, GameBoard gb) {
+        super("Alien",coordinate, new Dimension(1,1), gb, healthPoints, speed,"./resources/alien.jpeg");
         setView(new AlienView(this));
         super.addAction(Action.MOVE);
         super.addAction(Action.ATTACK);
+    }
+    @Override
+    public void move(Point p){
+        this.getGameBoard().getHitbox().empty(this.getCoordinate().x, this.getCoordinate().y);
+        this.setCoordinate(p);
+        this.getGameBoard().getHitbox().fill(p.x, p.y);
     }
 }
