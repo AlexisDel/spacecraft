@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * Cette classe regroupe les entités du jeu,
  * à savoir les objets qui peuvent être déplacé
  */
-public abstract class Entity extends Layer1Object {
+public abstract class Entity extends InteractiveItem {
     /**Attributes*/
     private int speed;
     private ArrayList<Action>actions;
@@ -22,10 +22,13 @@ public abstract class Entity extends Layer1Object {
      * @param healthPoints points de vie de l'entité
      * @param speed vitesse en ms de déplacement de l'entité
      */
-    public Entity(String name,Point coordinate, Dimension dimension, int healthPoints, int speed) {
+
+    // TODO fix le gameBoard
+    public Entity(String name,Point coordinate, Dimension dimension, int healthPoints, int speed, GameBoard gameBoard) {
         super(name, coordinate, dimension, healthPoints);
         this.speed = speed;
         this.actions= new ArrayList<>();
+        this.gameBoard = gameBoard;
     }
 
     /** Cette méthode déplace l'entité */
