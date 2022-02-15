@@ -1,9 +1,8 @@
 package View.ControlPanel;
 
-import Model.GameEngine;
 import Model.Layer1.Entities.Action;
 import Model.Layer1.Entities.Entity;
-import Model.Layer1.Layer1Object;
+import Model.Layer1.InteractiveItem;
 import Model.Layer1.Structures.Structure;
 
 import javax.swing.*;
@@ -13,13 +12,13 @@ import java.awt.event.ActionListener;
 
 public class StatsPanel extends JPanel implements ActionListener{
     /**Attributes*/
-    private MainControlPanel mainControlPanel;
+    private ControlPanel controlPanel;
     private JToolBar tools;
     private Action actionWaitingForCoordinates;
 
     /**Constructor*/
-    public StatsPanel(MainControlPanel mcp){
-        this.mainControlPanel=mcp;
+    public StatsPanel(ControlPanel mcp){
+        this.controlPanel =mcp;
 
         /**Debugging only */
         this.setOpaque(true);
@@ -64,7 +63,7 @@ public class StatsPanel extends JPanel implements ActionListener{
         this.tools.add(new JButton("Build"));
     }
 
-    public void update(Layer1Object object){
+    public void update(InteractiveItem object){
         //Cas entité
         if(object instanceof Entity){
             addEntityStats((Entity) object);
@@ -77,22 +76,22 @@ public class StatsPanel extends JPanel implements ActionListener{
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        Graphics2D g2= (Graphics2D)g;
+        Graphics2D g2 = (Graphics2D)g;
     }
     /** executes the code depending on which action was waiting for the coordinates*/
     public void coordinatesArrived(Point newCoord){
         switch (this.actionWaitingForCoordinates){
-            case MOVE -> { ((Entity) mainControlPanel.getSelectedL1Object()).move(newCoord);
-                System.out.println("MOVINNNN"+mainControlPanel.getSelectedL1Object().getName()+" TO "+newCoord.x +","+newCoord.y);}
+            case MOVE -> { ((Entity) controlPanel.getSelectedItem()).move(newCoord);
+                System.out.println("MOVINNNN"+ controlPanel.getSelectedItem().getName()+" TO "+newCoord.x +","+newCoord.y);}
         }
-        this.mainControlPanel.setWaitingForCoord(false);
+        this.controlPanel.setWaitingForCoord(false);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         switch(e.getActionCommand()) {
             case "MOVE":
-                this.mainControlPanel.setWaitingForCoord(true);
+                this.controlPanel.setWaitingForCoord(true);
                 this.actionWaitingForCoordinates=Action.MOVE;
         }
 

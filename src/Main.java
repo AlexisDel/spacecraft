@@ -2,11 +2,11 @@ import Controller.BoardController;
 import Model.GameEngine;
 import View.GameView;
 
-import java.util.Random;
+import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         GameEngine gameEngine = new GameEngine();
         GameView gameView = new GameView(gameEngine);
         BoardController boardController = new BoardController(gameView);

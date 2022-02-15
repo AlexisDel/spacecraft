@@ -1,6 +1,6 @@
 package Model.Layer1.Entities;
 
-import Model.Layer1.Layer1Object;
+import Model.Layer1.InteractiveItem;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * Cette classe regroupe les entités du jeu,
  * à savoir les objets qui peuvent être déplacé
  */
-public abstract class Entity extends Layer1Object {
+public abstract class Entity extends InteractiveItem {
     /**Attributes*/
     private int speed;
     private ArrayList<Action>actions;
@@ -20,8 +20,8 @@ public abstract class Entity extends Layer1Object {
      * @param healthPoints points de vie de l'entité
      * @param speed vitesse en ms de déplacement de l'entité
      */
-    public Entity(String name,Point coordinate, Dimension dimension, int healthPoints, int speed, String imagePath) {
-        super(name, coordinate,dimension,healthPoints,imagePath);
+    public Entity(String name,Point coordinate, Dimension dimension, int healthPoints, int speed) {
+        super(name, coordinate, dimension, healthPoints);
         this.speed = speed;
         this.actions= new ArrayList<>();
     }

@@ -1,6 +1,5 @@
-package View;
+package View.Board;
 
-import Model.GameConstants;
 import Model.GameEngine;
 import Model.Layer0.Mountain;
 import Model.Layer1.Entities.Entity;
@@ -10,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 
 import static Model.GameConstants.BOARD_SIZE;
+import static View.ViewConstants.BOARD_PANEL_HEIGHT;
+import static View.ViewConstants.BOARD_PANEL_WIDTH;
 
 /**
  * Classe représentant l'affichage du terrain de jeu
@@ -37,8 +38,7 @@ public class BoardPanel extends JPanel {
         this.gameEngine = gameEngine;
 
         /** Paramètre de l'affichage du terrain de jeu */
-        this.setPreferredSize(new Dimension(640, 640));
-        this.setBackground(Color.BLACK);
+        this.setPreferredSize(new Dimension(BOARD_PANEL_WIDTH, BOARD_PANEL_HEIGHT));
         this.setFocusable(true);
         // All the drawing from this component will be done in an offscreen painting buffer
         // tl;dr : improves game's rendering performance
@@ -55,21 +55,21 @@ public class BoardPanel extends JPanel {
 
         // Sand layer
         for (Mountain mountain : gameEngine.getGameBoard().getMountains()){
-            if (mountain.getView().isDisplayed(displayX, displayY, maxBoardView)) {
-                mountain.getView().draw(g2, tileSize, displayX, displayY);
+            if (mountain.getView().getTileView().isDisplayed(displayX, displayY, maxBoardView)) {
+                mountain.getView().getTileView().draw(g2, tileSize, displayX, displayY);
             }
         }
 
         // Structure layer
         for (Structure structure : gameEngine.getGameBoard().getStructures()){
-            if (structure.getView().isDisplayed(displayX, displayY, maxBoardView)){
-                structure.getView().draw(g2, tileSize, displayX, displayY);
+            if (structure.getView().getTileView().isDisplayed(displayX, displayY, maxBoardView)){
+                structure.getView().getTileView().draw(g2, tileSize, displayX, displayY);
             }
         }
         // Entity layer
         for (Entity entity : gameEngine.getGameBoard().getEntities()){
-            if (entity.getView().isDisplayed(displayX, displayY, maxBoardView)){
-                entity.getView().draw(g2, tileSize, displayX, displayY);
+            if (entity.getView().getTileView().isDisplayed(displayX, displayY, maxBoardView)){
+                entity.getView().getTileView().draw(g2, tileSize, displayX, displayY);
             }
         }
 
@@ -78,12 +78,12 @@ public class BoardPanel extends JPanel {
     }
 
     /**
-     * Méthode appelée lorsque l'utilisateur clique sur la fenêtre
+     * Méthode appelée lorsque l'utilisateur clique sur le terrain
      * Retourne les coordonnées du point cliqué sur la map.
      * @param mouseX coordonnée en abscisse du curseur dans le repère de la fenêtre lors du clic
      * @param mouseY coordonnée en ordonné du curseur dans le repère de la fenêtre lors du clic
      */
-    public Point clickTile(int mouseX, int mouseY) {
+    public Point getTileFromClick(int mouseX, int mouseY) {
 
         // Coordonnée x de la case sur laquelle le joueur a cliqué
         int x = mouseX/tileSize + displayX;

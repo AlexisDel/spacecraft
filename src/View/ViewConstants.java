@@ -6,8 +6,11 @@ public class ViewConstants {
 
     public static final int WINDOW_WIDTH = 940;
     public static final int WINDOW_HEIGHT = 640;
-    public static final int BOARDPANEL_WITDH= 64*12;
-    public static final int BOARDPANEL_HEIGHT= 64*12;
+    public static final int BOARD_PANEL_WIDTH = 640;
+    public static final int BOARD_PANEL_HEIGHT = 640;
+    public static final int CONTROL_PANEL_WIDTH = 300;
+    public static final int CONTROL_PANEL_HEIGHT = 640;
+
 
 
 }
