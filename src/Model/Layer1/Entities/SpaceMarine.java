@@ -1,6 +1,6 @@
 package Model.Layer1.Entities;
 
-import View.ItemsViews.SpaceMarineView;
+import View.Tiles.SpaceMarineView;
 
 import java.awt.*;
 
@@ -21,5 +21,11 @@ public class SpaceMarine extends Entity{
         setView(new SpaceMarineView(this));
         super.addAction(Action.MOVE);
         super.addAction(Action.ATTACK);
+    }
+    @Override
+    public void move(Point p){
+        this.getGameBoard().getHitbox().empty(this.getCoordinate().x, this.getCoordinate().y);
+        this.setCoordinate(p);
+        this.getGameBoard().getHitbox().fill(p.x, p.y);
     }
 }

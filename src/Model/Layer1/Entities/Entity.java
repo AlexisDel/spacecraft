@@ -1,5 +1,6 @@
 package Model.Layer1.Entities;
 
+import Model.GameBoard;
 import Model.Layer1.InteractiveItem;
 
 import java.awt.*;
@@ -9,10 +10,11 @@ import java.util.ArrayList;
  * Cette classe regroupe les entités du jeu,
  * à savoir les objets qui peuvent être déplacé
  */
-public abstract class Entity extends InteractiveItem {
+public abstract class Entity extends Layer1Object {
     /**Attributes*/
     private int speed;
     private ArrayList<Action>actions;
+    private GameBoard gameBoard;
     /**
      * Constructeur
      * @param coordinate   coordonnées globales de l'entité
@@ -38,5 +40,13 @@ public abstract class Entity extends InteractiveItem {
 
     public ArrayList<Action> getActions() {
         return actions;
+    }
+
+    /**
+     * getter de GameBoard
+     * @return
+     */
+    public GameBoard getGameBoard() {
+        return gameBoard;
     }
 }

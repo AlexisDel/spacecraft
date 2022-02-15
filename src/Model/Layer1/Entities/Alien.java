@@ -1,6 +1,6 @@
 package Model.Layer1.Entities;
 
-import View.ItemsViews.AlienView;
+import View.Tiles.AlienView;
 
 import java.awt.*;
 
@@ -19,5 +19,11 @@ public class Alien extends Entity{
         setView(new AlienView(this));
         super.addAction(Action.MOVE);
         super.addAction(Action.ATTACK);
+    }
+    @Override
+    public void move(Point p){
+        this.getGameBoard().getHitbox().empty(this.getCoordinate().x, this.getCoordinate().y);
+        this.setCoordinate(p);
+        this.getGameBoard().getHitbox().fill(p.x, p.y);
     }
 }
