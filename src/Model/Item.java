@@ -1,6 +1,6 @@
 package Model;
 
-import View.Tiles.ObjectView;
+import View.ItemsViews.ItemView;
 
 import java.awt.*;
 
@@ -8,9 +8,9 @@ import java.awt.*;
 * Classe décrivant les objets de Layer1 et Layer2: objets avec des healthPoints, des coordonnées
  * et des dimensions
  */
-public abstract class Object {
+public abstract class Item {
 
-    ObjectView view;
+    ItemView view;
 
     private Point coordinate;
     private Dimension dimension;
@@ -20,13 +20,9 @@ public abstract class Object {
      * @param coordinate coordonnées globales de l'objet
      * @param dimension width et size du objet
      */
-    public Object(Point coordinate, Dimension dimension){
+    public Item(Point coordinate, Dimension dimension){
         this.coordinate=coordinate;
         this.dimension=dimension;
-    }
-
-    protected void setView(ObjectView view){
-        this.view = view;
     }
 
     /** setter */
@@ -45,8 +41,13 @@ public abstract class Object {
         return coordinate;
     }
 
-    public ObjectView getView() {
+    /** Fonctions liées à la vue */
+    public ItemView getView() {
         return view;
+    }
+
+    protected void setView(ItemView view){
+        this.view = view;
     }
 }
 

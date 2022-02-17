@@ -1,15 +1,15 @@
-package View.Tiles;
+package View.Board.Tiles;
 
-import Model.Object;
+import Model.Item;
 
 import java.awt.*;
 
-public abstract class ObjectView {
+public abstract class ItemTile {
 
-    Object object;
+    Item item;
 
-    public ObjectView(Object object) {
-        this.object = object;
+    public ItemTile(Item item) {
+        this.item = item;
     }
 
     public abstract void draw(Graphics2D g, int tileSize, int displayX, int displayY);
@@ -17,19 +17,19 @@ public abstract class ObjectView {
     public boolean isDisplayed(int screenX, int screenY, int displayedGridSize){
 
         // À gauche de la fenêtre
-        if (object.getCoordinate().x + object.getDimension().width <= screenX){
+        if (item.getCoordinate().x + item.getDimension().width <= screenX){
             return false;
         }
         // À droite de la fenêtre
-        else if (object.getCoordinate().x >= screenX + displayedGridSize){
+        else if (item.getCoordinate().x >= screenX + displayedGridSize){
             return false;
         }
         // Au dessus de la fenêtre
-        else if (object.getCoordinate().y + object.getDimension().height <= screenY){
+        else if (item.getCoordinate().y + item.getDimension().height <= screenY){
             return false;
         }
         // En dessous de la fenêtre
-        else if (object.getCoordinate().y >= screenY + displayedGridSize){
+        else if (item.getCoordinate().y >= screenY + displayedGridSize){
             return false;
         }
         else {

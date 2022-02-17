@@ -1,8 +1,8 @@
 package Model.Layer0;
 
-import Model.Object;
-import View.Tiles.MountainView;
-import View.Tiles.ObjectView;
+import Model.Item;
+import View.Board.Tiles.ItemTile;
+import View.ItemsViews.MountainView;
 
 import java.awt.*;
 
@@ -11,9 +11,9 @@ import static Model.GameConstants.MOUNTAIN_SIZE;
 /**
  * Classe représentant une parcelle de montagne
  */
-public class Mountain extends Object {
+public class Mountain extends Item {
 
-    ObjectView view;
+    ItemTile view;
 
     /**
      * Constructeur

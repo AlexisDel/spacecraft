@@ -1,8 +1,7 @@
 package Model.Layer1.Structures;
 
 import Model.Layer1.Entities.Entity;
-import Model.Layer1.Layer1Object;
-import Model.Object;
+import Model.Layer1.InteractiveItem;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -11,7 +10,7 @@ import java.util.ArrayList;
  * Classe décrivant les structure, notamment les bâtiments
  */
 
-public abstract class Structure extends Layer1Object {
+public abstract class Structure extends InteractiveItem {
     private int capacity;
     /**Points occupés par le batiment
      * TODO tell Alexis about this for view change*/
@@ -25,8 +24,8 @@ public abstract class Structure extends Layer1Object {
      * @param healthPoints points de vie de la structure
      * @param capacity nombre max d'occupants
      */
-    public Structure(String name,Point coordinate, Dimension dimension, int healthPoints, int capacity, String imagePath){
-        super(name, coordinate, dimension,healthPoints,imagePath);
+    public Structure(String name,Point coordinate, Dimension dimension, int healthPoints, int capacity){
+        super(name, coordinate, dimension, healthPoints);
         //ajout des 4 points qui par defaut composent
         //TODO turn this to a methode fix the +1
         this.pointsOccupied= new ArrayList<>();

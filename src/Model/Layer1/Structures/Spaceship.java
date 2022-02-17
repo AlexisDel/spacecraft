@@ -1,6 +1,6 @@
 package Model.Layer1.Structures;
 
-import View.Tiles.SpaceshipView;
+import View.ItemsViews.SpaceshipView;
 
 import java.awt.*;
 
@@ -17,7 +17,7 @@ public class Spaceship extends Structure{
      * @param capacity     nombre max d'occupants
      */
     public Spaceship(Point coordinate, Dimension dimension, int healthPoints, int capacity) {
-        super("Spaceship",coordinate, dimension, healthPoints, capacity,"./resources/spaceship.jpg");
+        super("Spaceship",coordinate, dimension, healthPoints, capacity);
         setView(new SpaceshipView(this));
     }
 }

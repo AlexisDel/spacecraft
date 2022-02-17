@@ -2,10 +2,12 @@ package View;
 
 import Controller.BoardController;
 import Model.GameEngine;
-import View.ControlPanel.MainControlPanel;
+import View.Board.BoardPanel;
+import View.ControlPanel.ControlPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 import static java.lang.Thread.sleep;
 
@@ -14,11 +16,18 @@ public class GameView implements Runnable{
     private JFrame window;
     private Thread displayUpdateThread;
     private BoardPanel boardPanel;
-    private MainControlPanel controlpanel;
+    private ControlPanel controlPanel;
 
     private GameEngine gameEngine;
 
+    // TODO : transform to JFrame
     public GameView(GameEngine gameEngine) {
+
+        try {
+            new ImageManager();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         this.gameEngine = gameEngine;
 
@@ -28,8 +37,8 @@ public class GameView implements Runnable{
         boardPanel = new BoardPanel(gameEngine);
         window.add(boardPanel, BorderLayout.WEST);
         /** adds the control panel to the window*/
-        controlpanel=new MainControlPanel(gameEngine);
-        window.add(controlpanel, BorderLayout.EAST);
+        controlPanel = new ControlPanel(gameEngine);
+        window.add(controlPanel, BorderLayout.EAST);
 
         displayUpdateThread = new Thread(this);
         displayUpdateThread.start();
@@ -42,14 +51,13 @@ public class GameView implements Runnable{
         window.setTitle("Spacecraft");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
-
     }
 
     @Override
     public void run() {
         while(true){
             boardPanel.repaint();
-            controlpanel.repaint();
+            controlPanel.repaint();
             try {
                 sleep(1000/ViewConstants.FPS);
             } catch (InterruptedException e) {
@@ -58,19 +66,18 @@ public class GameView implements Runnable{
         }
     }
 
-    public BoardPanel getBoardPanel() {
-        return boardPanel;
-    }
-
     public void setBoardController(BoardController boardController) {
         getBoardPanel().addKeyListener(boardController);
         getBoardPanel().addMouseListener(boardController);
         getBoardPanel().addMouseMotionListener(boardController);
         getBoardPanel().addMouseWheelListener(boardController);
     }
-    /** Methodes pour le ControlPanel*/
-    public void setSelectedCoord(Point p){
-        controlpanel.setSelectedCoord(p);
+
+    public BoardPanel getBoardPanel() {
+        return boardPanel;
     }
 
+    public ControlPanel getControlPanel() {
+        return controlPanel;
+    }
 }

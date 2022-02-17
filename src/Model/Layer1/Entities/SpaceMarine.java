@@ -1,7 +1,7 @@
 package Model.Layer1.Entities;
 
 import Model.GameBoard;
-import View.Tiles.SpaceMarineView;
+import View.ItemsViews.SpaceMarineView;
 
 import java.awt.*;
 
@@ -17,8 +17,8 @@ public class SpaceMarine extends Entity{
      * @param healthPoints points de vie du SpaceMarine
      * @param speed        vitesse en ms du SpaceMarine
      */
-    public SpaceMarine(Point coordinate, int healthPoints, int speed, GameBoard gb) {
-        super("SpaceMarine",coordinate, new Dimension(1,1),gb, healthPoints, speed,"./resources/space_marine.jpg");
+    public SpaceMarine(Point coordinate, int healthPoints, int speed, GameBoard gameBoard) {
+        super("Space Marine",coordinate, new Dimension(1,1), healthPoints, speed, gameBoard);
         setView(new SpaceMarineView(this));
         super.addAction(Action.MOVE);
         super.addAction(Action.ATTACK);
