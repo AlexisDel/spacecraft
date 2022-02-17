@@ -1,7 +1,9 @@
-package Model.Mouvements;
+package Model.Mouvements.Algos;
+
+import Model.Mouvements.Direction;
+import Model.Mouvements.HitBoard;
 
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static java.lang.Math.pow;
@@ -137,30 +139,30 @@ public class ShortestPath {
         return res;
     }
 
-    Directions nextMove(Point start, Point end){
+    public Direction nextMove(Point start, Point end){
         Node Nstart = new Node(start.x, start.y);
         Node Nend = new Node(end.x, end.y);
         ArrayList<Point> track = this.backtrack(Nstart, Nend);
         assert track.size() != 0;
         if(track.size() == 1){
-            return Directions.NULL;
+            return Direction.NULL;
         }
         else{
             Point delta = new Point( start.y - track.get(track.size() - 1).x,start.y - track.get(track.size() - 1).y);
             if (new Point(1, 0).equals(delta)) {
-                return Directions.SOUTH;
+                return Direction.SOUTH;
             }
             else if (new Point(-1, 0).equals(delta)) {
-                return Directions.NULL;
+                return Direction.NULL;
             }
             else if (new Point(0, 1).equals(delta)) {
-                return Directions.EAST;
+                return Direction.EAST;
             }
             else if (new Point(0, -1).equals(delta)) {
-                return Directions.WEST;
+                return Direction.WEST;
             }
             else{
-                return Directions.NULL;
+                return Direction.NULL;
             }
         }
     }
@@ -171,7 +173,7 @@ public class ShortestPath {
      */
     public static void main(String[] args) {
         HitBoard hb1 = new HitBoard(2);
-        hb1.fill(1,1);
+        hb1.fill(new Point(1,1));
         System.out.println(hb1);
 
         ShortestPath sp = new ShortestPath(hb1);
@@ -183,19 +185,16 @@ public class ShortestPath {
         //--------------------------------------------
 
         HitBoard hb2 = new HitBoard(4);
-        hb2.fill(1,1);
-        hb2.fill(1,2);
-        hb2.fill(2,2);
-        hb2.fill(3,2);
+        hb2.fill(new Point(1,1));
+        hb2.fill(new Point(1,2));
+        hb2.fill(new Point(2,2));
+        hb2.fill(new Point(3,2));
         System.out.println(hb2);
         sp = new ShortestPath(hb2);
         start = new Node(3,3);
         end = new Node(2,1);
         test = sp.AStar(start, end);
         System.out.println(test);
-
-
-
     }
 
 

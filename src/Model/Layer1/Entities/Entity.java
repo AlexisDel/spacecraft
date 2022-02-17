@@ -1,7 +1,7 @@
 package Model.Layer1.Entities;
 
-import Model.GameBoard;
 import Model.Layer1.InteractiveItem;
+import Model.Mouvements.Direction;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -14,7 +14,6 @@ public abstract class Entity extends InteractiveItem {
     /**Attributes*/
     private int speed;
     private ArrayList<Action>actions;
-    private GameBoard gameBoard;
     /**
      * Constructeur
      * @param coordinate   coordonnées globales de l'entité
@@ -24,32 +23,29 @@ public abstract class Entity extends InteractiveItem {
      */
 
     // TODO fix le gameBoard
-    public Entity(String name,Point coordinate, Dimension dimension, int healthPoints, int speed, GameBoard gameBoard) {
+    public Entity(String name,Point coordinate, Dimension dimension, int healthPoints, int speed) {
         super(name, coordinate, dimension, healthPoints);
         this.speed = speed;
         this.actions= new ArrayList<>();
-        this.gameBoard = gameBoard;
     }
 
     /** Cette méthode déplace l'entité */
-    public void move(Point p){
-        super.setCoordinate(p);
+    public void move(Direction direction){
+        switch (direction){
+            case NORTH -> super.getCoordinate().translate(0, 1);
+            case SOUTH -> super.getCoordinate().translate(0, -1);
+            case EAST -> super.getCoordinate().translate(-1, 0);
+            case WEST -> super.getCoordinate().translate(1, 0);
+        }
     }
 
-    /**Ajoute une action a la liste d'actions de l'entité*/
+    // TODO supprimer si non utiliser
+    /**Ajoute une action à la liste d'actions de l'entité*/
     public void addAction(Action a){
         this.actions.add(a);
     }
 
     public ArrayList<Action> getActions() {
         return actions;
-    }
-
-    /**
-     * getter de GameBoard
-     * @return
-     */
-    public GameBoard getGameBoard() {
-        return gameBoard;
     }
 }

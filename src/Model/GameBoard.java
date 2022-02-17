@@ -6,7 +6,7 @@ import Model.Layer1.Entities.Entity;
 import Model.Layer1.Entities.SpaceMarine;
 import Model.Layer1.Structures.Spaceship;
 import Model.Layer1.Structures.Structure;
-import Model.Mouvements.AlienMouvement;
+import Model.Mouvements.HitBoard;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -93,10 +93,11 @@ public class GameBoard {
                 }
             }
         }
+        // TODO : to modularize
         structures.add(new Spaceship(new Point(shipX,shipY), new Dimension(4, 4), 1000, 10));
         for(int i = 0; i < 4; i++){
             for(int j = 0; j < 4; j++){
-                this.hitbox.fill(shipX + i, shipY + j);
+                this.hitbox.fill(new Point(shipX + i, shipY + j));
             }
         }
 
@@ -109,8 +110,8 @@ public class GameBoard {
                 newX = shipX - 3 + rand.nextInt(10);
                 newY = shipY - 3 + rand.nextInt(10);
                 }
-            entities.add(new SpaceMarine(new Point(newX,newY),200,10, this));
-            this.hitbox.fill(newX, newY);
+            entities.add(new SpaceMarine(new Point(newX,newY),200,10));
+            this.hitbox.fill(new Point(newX, newY));
         }
 
         // Enfin, on ajoute nbAliens alien dans le tableau
@@ -121,11 +122,9 @@ public class GameBoard {
                 newX = rand.nextInt(GameConstants.BOARD_SIZE);
                 newY = rand.nextInt(GameConstants.BOARD_SIZE);
             }
-            Alien tempAlien = new Alien(new Point(newX,newY), 150, 10, this);
+            Alien tempAlien = new Alien(new Point(newX,newY), 150, 10);
             entities.add(tempAlien);
-            this.hitbox.fill(newX, newY);
-            AlienMouvement am = new AlienMouvement(this, tempAlien);
-            am.start();
+            this.hitbox.fill(new Point(newX, newY));
         }
     }
 

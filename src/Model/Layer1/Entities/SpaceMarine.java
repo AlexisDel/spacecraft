@@ -1,6 +1,5 @@
 package Model.Layer1.Entities;
 
-import Model.GameBoard;
 import View.ItemsViews.SpaceMarineView;
 
 import java.awt.*;
@@ -17,16 +16,10 @@ public class SpaceMarine extends Entity{
      * @param healthPoints points de vie du SpaceMarine
      * @param speed        vitesse en ms du SpaceMarine
      */
-    public SpaceMarine(Point coordinate, int healthPoints, int speed, GameBoard gameBoard) {
-        super("Space Marine",coordinate, new Dimension(1,1), healthPoints, speed, gameBoard);
+    public SpaceMarine(Point coordinate, int healthPoints, int speed) {
+        super("Space Marine",coordinate, new Dimension(1,1), healthPoints, speed);
         setView(new SpaceMarineView(this));
         super.addAction(Action.MOVE);
         super.addAction(Action.ATTACK);
-    }
-    @Override
-    public void move(Point p){
-        this.getGameBoard().getHitbox().empty(this.getCoordinate().x, this.getCoordinate().y);
-        this.setCoordinate(p);
-        this.getGameBoard().getHitbox().fill(p.x, p.y);
     }
 }

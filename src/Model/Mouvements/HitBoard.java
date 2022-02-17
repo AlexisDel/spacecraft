@@ -3,8 +3,6 @@ package Model.Mouvements;
 import Model.GameBoard;
 import Model.GameConstants;
 import Model.Layer0.Mountain;
-import Model.Layer1.Entities.Entity;
-import Model.Layer1.Structures.Structure;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -72,21 +70,18 @@ public class HitBoard<Synchronised, synchronised> {
     }
 
     /**
-     * vide la case (x, y)
-     * @param x
-     * @param y
+     * vide la case de coordonnées (x, y)
+     * @param p
      */
-    public synchronized void empty(int x, int y){
-        this.hitbox.get(x).set(y, true);
+    public synchronized void empty(Point p){
+        this.hitbox.get(p.x).set(p.y, true);
     }
 
     /**
-     * remplie la case (x, y)
-     * @param x
-     * @param y
+     * remplie la case de coordonnées (x, y)
      */
-    public synchronized void fill(int x, int y){
-        this.hitbox.get(x).set(y, false);
+    public synchronized void fill(Point p){
+        this.hitbox.get(p.x).set(p.y, false);
     }
 
     public String toString(){

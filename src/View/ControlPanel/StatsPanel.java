@@ -80,10 +80,10 @@ public class StatsPanel extends JPanel implements ActionListener{
     }
     /** executes the code depending on which action was waiting for the coordinates*/
     public void coordinatesArrived(Point newCoord){
-        switch (this.actionWaitingForCoordinates){
+        /*switch (this.actionWaitingForCoordinates){
             case MOVE -> { ((Entity) controlPanel.getSelectedItem()).move(newCoord);
                 System.out.println("MOVINNNN"+ controlPanel.getSelectedItem().getName()+" TO "+newCoord.x +","+newCoord.y);}
-        }
+        }*/
         this.controlPanel.setWaitingForCoord(false);
     }
 
