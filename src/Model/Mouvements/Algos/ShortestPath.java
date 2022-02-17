@@ -30,7 +30,7 @@ public class ShortestPath {
      * @return
      */
     private double heuristic(Node p1, Node p2){
-        return Math.sqrt(pow((p1.getPosx() - p2.getPosy()), 2) + pow((p1.getPosx() - p2.getPosy()), 2));
+        return Math.sqrt(pow((p1.getPosx() - p2.getPosx()), 2) + pow((p1.getPosy() - p2.getPosy()), 2));
     }
 
     /**
@@ -41,9 +41,8 @@ public class ShortestPath {
      */
     private ArrayList<Point>AStar(Node start, Node end){
         // Initialisation de start
-        start.setG(0);
-        start.setH((int) heuristic(start, end));
-        start.setF(start.getG() + start.getH());
+        start.setH(heuristic(start, end));
+        start.setF(start.getH());
 
         // Initialisation de Open et Close
         ArrayList<Node> Open = new ArrayList<>();
@@ -61,8 +60,6 @@ public class ShortestPath {
                     currentNode = Open.get(i);
                     pos = i;
                 }
-                else{
-                }
             }
             // On retire currentNode de Open
             Open.remove(pos);
@@ -74,11 +71,11 @@ public class ShortestPath {
             // On ajoute le noeud courrant à close
             Close.add(currentNode);
             for(Node child : currentNode.getChild(this.hitbox)){
-                double cost = currentNode.getG() + this.heuristic(currentNode, end);
+                double cost = this.heuristic(currentNode, end);
                 // Pos pour potentiellement retirer l'enfant des listes
                 int posOpen = 0;
                 int posClose = 0;
-                // Si child est dans la liste Open, et à une plus petite fvalue, on ignore
+                // Si child est dans la liste Open, et à une plus petite fvalue, on l'enlève
                 boolean flag1 = true;
                 boolean notSeenOpen = true;
                 for(int i = 0; i < Open.size(); i++){
@@ -91,8 +88,9 @@ public class ShortestPath {
                         }
                     }
                 }
-                if(flag1 && !notSeenOpen)
+                if(!flag1) {
                     Open.remove(posOpen);
+                }
                 boolean flag2 = false;
                 boolean notSeenClose = true;
                 // Si child est dans Close mais et avec une plus petite valeur f, on ignore
@@ -106,13 +104,14 @@ public class ShortestPath {
                         }
                     }
                 }
-                if(flag2 && !notSeenClose)
+                if(flag2) {
                     Close.remove(posClose);
+                }
+
                 if(notSeenOpen && notSeenClose){
                     // On calcul les heuristiques de child
-                    child.setG(currentNode.getG());
                     child.setH(this.heuristic(child, end));
-                    child.setF(child.getG() + child.getH());
+                    child.setF(child.getH());
                     // On fixe le parent
                     child.setParent(currentNode);
                     Open.add(child);
@@ -142,7 +141,7 @@ public class ShortestPath {
     public Direction nextMove(Point start, Point end){
         Node Nstart = new Node(start.x, start.y);
         Node Nend = new Node(end.x, end.y);
-        ArrayList<Point> track = this.backtrack(Nstart, Nend);
+        ArrayList<Point> track = this.AStar(Nstart, Nend);
         assert track.size() != 0;
         if(track.size() == 1){
             return Direction.NULL;
@@ -195,6 +194,92 @@ public class ShortestPath {
         end = new Node(2,1);
         test = sp.AStar(start, end);
         System.out.println(test);
+        System.out.println("////////////////////////");
+
+        //--------------------------------------------
+
+        HitBoard hb3 = new HitBoard(2);
+        System.out.println(hb3);
+        sp = new ShortestPath((hb3));
+        start=  new Node(0,0);
+        end = new Node(0,0);
+        test = sp.AStar(start, end);
+        System.out.println(test);
+        System.out.println("////////////////////////");
+
+        //--------------------------------------------
+
+        HitBoard hb4 = new HitBoard(10);
+        hb4.fill(new Point(0,1));
+        hb4.fill(new Point(1,1));
+        hb4.fill(new Point(2,1));
+        hb4.fill(new Point(3,1));
+        hb4.fill(new Point(4,1));
+        hb4.fill(new Point(5,1));
+
+        hb4.fill(new Point(7,0));
+        hb4.fill(new Point(7,1));
+        hb4.fill(new Point(8,1));
+
+        hb4.fill(new Point(3,2));
+        hb4.fill(new Point(3,3));
+        hb4.fill(new Point(3,4));
+        hb4.fill(new Point(3,5));
+        hb4.fill(new Point(3,6));
+        hb4.fill(new Point(3,7));
+
+        hb4.fill(new Point(1,7));
+        hb4.fill(new Point(2,7));
+        hb4.fill(new Point(2,8));
+
+        hb4.fill(new Point(4,9));
+
+        hb4.fill(new Point(4,7));
+        hb4.fill(new Point(5,7));
+
+        hb4.fill(new Point(6,3));
+        hb4.fill(new Point(6,4));
+        hb4.fill(new Point(6,5));
+        hb4.fill(new Point(6,6));
+        hb4.fill(new Point(6,7));
+        hb4.fill(new Point(6,8));
+
+        hb4.fill(new Point(8,3));
+        hb4.fill(new Point(8,4));
+        hb4.fill(new Point(8,5));
+        hb4.fill(new Point(8,6));
+        hb4.fill(new Point(8,7));
+
+        hb4.fill(new Point(9,3));
+
+        System.out.println(hb4);
+        sp = new ShortestPath(hb4);
+        start = new Node(1,4);
+        end = new Node(8,0);
+        test = sp.AStar(start, end);
+        System.out.println(test);
+
+        //---------------------------------
+
+
+        HitBoard hb5 = new HitBoard(7);
+
+        hb5.fill(new Point(2,1));
+        hb5.fill(new Point(2,2));
+        hb5.fill(new Point(2,3));
+        hb5.fill(new Point(2,4));
+
+        hb5.fill(new Point(3,4));
+        hb5.fill(new Point(4,4));
+
+        System.out.println(hb5);
+        start = new Node(4,2);
+        end = new Node(1,5);
+        sp = new ShortestPath(hb5);
+        test = sp.AStar(start, end);
+        System.out.println(test);
+
+
     }
 
 
@@ -212,7 +297,6 @@ class Node{
     private Node parent;
     // Attribut pour A*
     private double h;
-    private double g;
     private double f;
 
     /**
@@ -271,14 +355,6 @@ class Node{
     }
 
     /**
-     * getter de g
-     * @return
-     */
-    public double getG() {
-        return g;
-    }
-
-    /**
      * getter de f
      * @return
      */
@@ -300,14 +376,6 @@ class Node{
      */
     public void setH(double h) {
         this.h = h;
-    }
-
-    /**
-     * setter de g
-     * @param g
-     */
-    public void setG(double g) {
-        this.g = g;
     }
 
     /**
@@ -351,6 +419,7 @@ class Node{
         if(this.getParent() != null){
             res += ", parent : [" + this.getParent().getPosx() + ", " + this.getParent().getPosy() + "]";
         }
+        res += " = " + this.getF();
         res += ")";
         return res;
     }
