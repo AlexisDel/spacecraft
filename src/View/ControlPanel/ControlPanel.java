@@ -7,6 +7,8 @@ import Model.Layer1.Entities.SpaceMarine;
 import Model.Layer1.InteractiveItem;
 import Model.Layer1.Structures.Spaceship;
 import Model.Layer1.Structures.Structure;
+import Model.Mouvements.Direction;
+import Model.Mouvements.Movement;
 import View.ControlPanel.Panels.AlienPanel;
 import View.ControlPanel.Panels.DefaultPanel;
 import View.ControlPanel.Panels.SpaceMarinePanel;
@@ -44,7 +46,7 @@ public class ControlPanel extends JPanel {
         /**adds the display panel*/
         this.add(new DefaultPanel(), "DEFAULT");
         this.add(new AlienPanel(), Alien.class.getName());
-        this.add(new SpaceMarinePanel(), SpaceMarine.class.getName());
+        this.add(new SpaceMarinePanel(this), SpaceMarine.class.getName());
         this.add(new SpaceshipPanel(), Spaceship.class.getName());
         cardLayout.show(this, "DEFAULT");
     }
@@ -80,8 +82,16 @@ public class ControlPanel extends JPanel {
         }
         else{
             //TODO bug prevention: make sure you have an entity to move !
-            //this.statsPanel.coordinatesArrived(p);
+            coordinatesArrived(p);
         }
+    }
+
+    public void coordinatesArrived(Point newCoord){
+        Movement walk= new Movement((Entity) this.selectedItem, newCoord, gameEngine.getGameBoard());
+         //((Entity) this.selectedItem).move(Direction.NORTH);
+                System.out.println("MOVINNNN"+ this.selectedItem.getName()+" TO "+newCoord.x +","+newCoord.y);
+
+        this.waitingForCoord=false;
     }
 
     /**

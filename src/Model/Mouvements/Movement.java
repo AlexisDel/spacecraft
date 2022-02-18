@@ -8,7 +8,7 @@ import java.awt.*;
 
 import static java.lang.Thread.sleep;
 
-public class Movement implements Runnable{
+public class Movement extends Thread{
 
     Entity entity;
     Point destination;
@@ -20,6 +20,7 @@ public class Movement implements Runnable{
         this.destination = destination;
         this.gameBoard = gameBoard;
         this.shortestPath = new ShortestPath(gameBoard.getHitbox());
+        this.start();
     }
 
     @Override
@@ -27,6 +28,8 @@ public class Movement implements Runnable{
         while (entity.getCoordinate() != destination){
             gameBoard.getHitbox().empty(entity.getCoordinate());
             entity.move(shortestPath.nextMove(entity.getCoordinate(), destination));
+            System.out.println(shortestPath.nextMove(entity.getCoordinate(), destination));
+            System.out.println(entity.getCoordinate());
             gameBoard.getHitbox().fill(entity.getCoordinate());
 
             try {
