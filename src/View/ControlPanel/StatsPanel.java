@@ -92,7 +92,7 @@ public class StatsPanel extends JPanel implements ActionListener{
         switch(e.getActionCommand()) {
             case "MOVE":
                 this.controlPanel.setWaitingForCoord(true);
-                this.actionWaitingForCoordinates=Action.MOVE;
+                //this.actionWaitingForCoordinates=Action.MOVE;
         }
 
     }
