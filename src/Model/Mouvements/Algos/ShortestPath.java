@@ -147,12 +147,12 @@ public class ShortestPath {
             return Direction.NULL;
         }
         else{
-            Point delta = new Point( start.y - track.get(track.size() - 1).x,start.y - track.get(track.size() - 1).y);
+            Point delta = new Point( start.x - track.get(track.size() - 1).x,start.y - track.get(track.size() - 1).y);
             if (new Point(1, 0).equals(delta)) {
                 return Direction.SOUTH;
             }
             else if (new Point(-1, 0).equals(delta)) {
-                return Direction.NULL;
+                return Direction.NORTH;
             }
             else if (new Point(0, 1).equals(delta)) {
                 return Direction.EAST;
