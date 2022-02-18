@@ -25,11 +25,9 @@ public class Movement extends Thread{
 
     @Override
     public void run() {
-        while (entity.getCoordinate() != destination){
+        while (!entity.getCoordinate().equals(destination)){
             gameBoard.getHitbox().empty(entity.getCoordinate());
             entity.move(shortestPath.nextMove(entity.getCoordinate(), destination));
-            System.out.println(shortestPath.nextMove(entity.getCoordinate(), destination));
-            System.out.println(entity.getCoordinate());
             gameBoard.getHitbox().fill(entity.getCoordinate());
 
             try {

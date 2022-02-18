@@ -142,12 +142,15 @@ public class ShortestPath {
         Node Nstart = new Node(start.x, start.y);
         Node Nend = new Node(end.x, end.y);
         ArrayList<Point> track = this.AStar(Nstart, Nend);
+        for(Point p : track)
+            System.out.print("(" + p.x + ", " + p.y + ") ");
+        System.out.println();
         assert track.size() != 0;
         if(track.size() == 1){
             return Direction.NULL;
         }
         else{
-            Point delta = new Point( start.x - track.get(track.size() - 1).x,start.y - track.get(track.size() - 1).y);
+            Point delta = new Point( track.get(track.size() - 2).x - start.x,track.get(track.size() - 2).y - start.y);
             if (new Point(1, 0).equals(delta)) {
                 return Direction.SOUTH;
             }

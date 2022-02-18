@@ -32,10 +32,10 @@ public abstract class Entity extends InteractiveItem {
     /** Cette méthode déplace l'entité */
     public void move(Direction direction){
         switch (direction){
-            case NORTH -> super.getCoordinate().translate(0, -1);
-            case SOUTH -> super.getCoordinate().translate(0, 1);
-            case EAST -> super.getCoordinate().translate(-1, 0);
-            case WEST -> super.getCoordinate().translate(1, 0);
+            case NORTH -> super.getCoordinate().translate(-1, 0);
+            case SOUTH -> super.getCoordinate().translate(1, 0);
+            case EAST -> super.getCoordinate().translate(0, 1);
+            case WEST -> super.getCoordinate().translate(0, -1);
         }
     }
 
