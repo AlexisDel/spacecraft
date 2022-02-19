@@ -71,8 +71,8 @@ public class ShortestPath {
             }
             // On ajoute le noeud courrant à close
             Close.add(currentNode);
-            double cost = this.heuristic(currentNode, end) + currentNode.getG() + 1;
             for(Node child : currentNode.getChild(this.hitbox)){
+                double cost = this.heuristic(child, end) + currentNode.getG() + 1;
                 // Pos pour potentiellement retirer l'enfant des listes
                 int posOpen = 0;
                 int posClose = 0;
@@ -94,7 +94,7 @@ public class ShortestPath {
                 }
                 boolean flag2 = false;
                 boolean notSeenClose = true;
-                // Si child est dans Close mais et avec une plus petite valeur f, on ignore
+                // Si child est dans Close mais et avec une plus petite valeur f, on le retire de Close
                 for(int i = 0; i < Close.size(); i++){
                     if(Close.get(i).equals(child)){
                         notSeenClose = false;
