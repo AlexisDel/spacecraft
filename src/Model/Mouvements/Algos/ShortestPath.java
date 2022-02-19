@@ -42,7 +42,8 @@ public class ShortestPath {
     private ArrayList<Point>AStar(Node start, Node end){
         // Initialisation de start
         start.setH(heuristic(start, end));
-        start.setF(start.getH());
+        start.setG(0);
+        start.setF(start.getG() + start.getH());
 
         // Initialisation de Open et Close
         ArrayList<Node> Open = new ArrayList<>();
@@ -111,7 +112,8 @@ public class ShortestPath {
                 if(notSeenOpen && notSeenClose){
                     // On calcul les heuristiques de child
                     child.setH(this.heuristic(child, end));
-                    child.setF(child.getH());
+                    child.setG(currentNode.getG() + 1);
+                    child.setF(child.getH() + child.getH());
                     // On fixe le parent
                     child.setParent(currentNode);
                     Open.add(child);
@@ -138,13 +140,16 @@ public class ShortestPath {
         return res;
     }
 
+    /**
+     * méthode calculant un plus court chemin avec AStar, puis calculant la première étape de ce plus court chemin.
+     * @param start
+     * @param end
+     * @return
+     */
     public Direction nextMove(Point start, Point end){
         Node Nstart = new Node(start.x, start.y);
         Node Nend = new Node(end.x, end.y);
         ArrayList<Point> track = this.AStar(Nstart, Nend);
-        for(Point p : track)
-            System.out.print("(" + p.x + ", " + p.y + ") ");
-        System.out.println();
         assert track.size() != 0;
         if(track.size() == 1){
             return Direction.NULL;
@@ -300,6 +305,7 @@ class Node{
     private Node parent;
     // Attribut pour A*
     private double h;
+    private double g;
     private double f;
 
     /**
@@ -366,6 +372,14 @@ class Node{
     }
 
     /**
+     * getter de g
+     * @return
+     */
+    public double getG() {
+        return g;
+    }
+
+    /**
      * setter de parent
      * @param parent
      */
@@ -390,6 +404,14 @@ class Node{
     }
 
     /**
+     * setter de g
+     * @param g
+     */
+    public void setG(double g) {
+        this.g = g;
+    }
+
+    /**
      * méthode renvoyanbt la liste des enfants du noeud courrant
      * @param hb
      * @return
@@ -408,7 +430,7 @@ class Node{
     }
 
     /**
-     * méthode d'égalité
+     * méthode d'égalité surécrivant Object.equals
      * @param n
      * @return
      */
@@ -416,6 +438,10 @@ class Node{
         return this.posx == n.getPosx() && this.posy == n.getPosy();
     }
 
+    /**
+     * méthode représantant un objet Node
+     * @return
+     */
     public String toString(){
         String res = "";
         res += "node(" + this.posx + " " + this.posy;
