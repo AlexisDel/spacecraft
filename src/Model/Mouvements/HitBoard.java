@@ -10,7 +10,7 @@ import java.util.ArrayList;
 /**
  * classe désignant les hitbox ^^ de la grille
  */
-public class HitBoard<Synchronised, synchronised> {
+public class HitBoard {
     // Tableau de booléen désignant les endroits vides ou non
     ArrayList<ArrayList<Boolean>> hitbox;
     int dim;

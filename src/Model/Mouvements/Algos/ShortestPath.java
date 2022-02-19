@@ -71,8 +71,8 @@ public class ShortestPath {
             }
             // On ajoute le noeud courrant à close
             Close.add(currentNode);
+            double cost = this.heuristic(currentNode, end) + currentNode.getG() + 1;
             for(Node child : currentNode.getChild(this.hitbox)){
-                double cost = this.heuristic(currentNode, end);
                 // Pos pour potentiellement retirer l'enfant des listes
                 int posOpen = 0;
                 int posClose = 0;
