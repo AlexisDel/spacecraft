@@ -70,6 +70,8 @@ public class GameBoard {
 
     private void initLand(int nbAliens, int nbSpaceMarines){
         Random rand = new Random();
+        int seed = rand.nextInt();
+        rand.setSeed(2935821327085103353L);
         // Génération aléatoire de la position du space ship
         int shipX = rand.nextInt(GameConstants.BOARD_SIZE);
         int shipY = rand.nextInt(GameConstants.BOARD_SIZE);

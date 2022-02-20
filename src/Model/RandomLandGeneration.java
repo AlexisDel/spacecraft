@@ -11,7 +11,7 @@ import static Model.GameConstants.MOUNTAIN_SIZE;
 public class RandomLandGeneration {
     private final ArrayList<Mountain> board;
 
-    private static final int nbMountains = 5;
+    private static final int nbMountains = 2;
     private static int pourcent = 20;
     private final int borneMax;
     private final int borneMin;
@@ -33,7 +33,7 @@ public class RandomLandGeneration {
 
         // Génération de la seed :
         long seed = this.rand.nextLong();
-        this.rand.setSeed(seed);
+        this.rand.setSeed(2935821327085103353L);
         System.out.println("la seed de la partie est " + seed);
 
         this.randomStartingBoard();
@@ -112,26 +112,6 @@ public class RandomLandGeneration {
                 }
             }
         }
-
-        // Génération aléatoire de la position du space ship
-//        int shipX = this.rand.nextInt(GameConstants.BOARD_SIZE);
-        //      int shipY = this.rand.nextInt(GameConstants.BOARD_SIZE);
-        //    while (!(this.board[shipX][shipY] == null)) {
-        //      shipX = this.rand.nextInt(GameConstants.BOARD_SIZE);
-        //    shipY = this.rand.nextInt(GameConstants.BOARD_SIZE);
-        //}
-        //this.addGameSquare(new SpaceShip(), new Point(shipX, shipY));
-        // On ajoute 3 space marines, à max 2 cases de distance du space ship
-        //for (int i = 0; i < 4; i++) {
-        //  newX = shipX - 2 + this.rand.nextInt(4);
-        //newY = shipY - 2 + this.rand.nextInt(4);
-        //la nouvel GameSquare doit être dans le tableau et a une case vide
-        //while (!isInBoard(new Point(newX, newY)) || !(this.board[newX][newY] == null)) {
-        //  newX = shipX - 2 + this.rand.nextInt(4);
-        //newY = shipY - 2 + this.rand.nextInt(4);
-        //}
-        //this.addGameSquare(new Character(), new Point(newX, newY));
-        //}
     }
 
     /**

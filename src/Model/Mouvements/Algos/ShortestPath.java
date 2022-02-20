@@ -72,7 +72,7 @@ public class ShortestPath {
             // On ajoute le noeud courrant à close
             Close.add(currentNode);
             for(Node child : currentNode.getChild(this.hitbox)){
-                double cost = this.heuristic(child, end) + currentNode.getG() + 1;
+                double cost = currentNode.getG() + 1;
                 // Pos pour potentiellement retirer l'enfant des listes
                 int posOpen = 0;
                 int posClose = 0;
@@ -82,31 +82,22 @@ public class ShortestPath {
                 for(int i = 0; i < Open.size(); i++){
                     if(Open.get(i).equals(child)){
                         notSeenOpen = false;
-                        if(Open.get(i).getF() < cost){
+                        if(Open.get(i).getG() > cost){
                             posOpen = i;
                             flag1 = false;
-                            break;
                         }
                     }
                 }
                 if(!flag1) {
                     Open.remove(posOpen);
                 }
-                boolean flag2 = false;
                 boolean notSeenClose = true;
-                // Si child est dans Close mais et avec une plus petite valeur f, on le retire de Close
+                // On repère si child est dans close
                 for(int i = 0; i < Close.size(); i++){
                     if(Close.get(i).equals(child)){
                         notSeenClose = false;
-                        if(Close.get(i).getF() < cost){
-                            posClose = i;
-                            flag2 = true;
-                            break;
-                        }
+                        break;
                     }
-                }
-                if(flag2) {
-                    Close.remove(posClose);
                 }
 
                 if(notSeenOpen && notSeenClose){
@@ -179,7 +170,10 @@ public class ShortestPath {
      * @param args
      */
     public static void main(String[] args) {
-        HitBoard hb1 = new HitBoard(2);
+
+        int n = 2;
+
+        HitBoard hb1 = new HitBoard(n);
         hb1.fill(new Point(1,1));
         System.out.println(hb1);
 
@@ -187,11 +181,26 @@ public class ShortestPath {
         Node start = new Node(0,0);
         Node end = new Node(1,0);
         ArrayList<Point>test = sp.AStar(start, end);
-        System.out.println(test);
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                if(test.contains(new Point(i, j))){
+                    System.out.print("C ");
+                }
+                else if(hb1.isEmpty(i, j)){
+                    System.out.print(". ");
+                }
+                else{
+                    System.out.print("M ");
+                }
+            }
+            System.out.println();
+        }
+        System.out.println("/////////////////////////");
 
         //--------------------------------------------
 
-        HitBoard hb2 = new HitBoard(4);
+        n = 4;
+        HitBoard hb2 = new HitBoard(n);
         hb2.fill(new Point(1,1));
         hb2.fill(new Point(1,2));
         hb2.fill(new Point(2,2));
@@ -202,22 +211,54 @@ public class ShortestPath {
         end = new Node(2,1);
         test = sp.AStar(start, end);
         System.out.println(test);
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                if(test.contains(new Point(i, j))){
+                    System.out.print("C ");
+                }
+                else if(hb2.isEmpty(i, j)){
+                    System.out.print(". ");
+                }
+                else{
+                    System.out.print("M ");
+                }
+            }
+            System.out.println();
+        }
         System.out.println("////////////////////////");
 
         //--------------------------------------------
 
-        HitBoard hb3 = new HitBoard(2);
+        n = 2;
+
+        HitBoard hb3 = new HitBoard(n);
         System.out.println(hb3);
         sp = new ShortestPath((hb3));
         start=  new Node(0,0);
         end = new Node(0,0);
         test = sp.AStar(start, end);
         System.out.println(test);
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                if(test.contains(new Point(i, j))){
+                    System.out.print("C ");
+                }
+                else if(hb3.isEmpty(i, j)){
+                    System.out.print(". ");
+                }
+                else{
+                    System.out.print("M ");
+                }
+            }
+            System.out.println();
+        }
         System.out.println("////////////////////////");
 
         //--------------------------------------------
 
-        HitBoard hb4 = new HitBoard(10);
+        n = 10;
+
+        HitBoard hb4 = new HitBoard(n);
         hb4.fill(new Point(0,1));
         hb4.fill(new Point(1,1));
         hb4.fill(new Point(2,1));
@@ -265,12 +306,26 @@ public class ShortestPath {
         start = new Node(1,4);
         end = new Node(8,0);
         test = sp.AStar(start, end);
-        System.out.println(test);
-
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                if(test.contains(new Point(i, j))){
+                    System.out.print("C ");
+                }
+                else if(hb4.isEmpty(i, j)){
+                    System.out.print(". ");
+                }
+                else{
+                    System.out.print("M ");
+                }
+            }
+            System.out.println();
+        }
+        System.out.println("////////////////");
         //---------------------------------
 
+        n = 7;
 
-        HitBoard hb5 = new HitBoard(7);
+        HitBoard hb5 = new HitBoard(n);
 
         hb5.fill(new Point(2,1));
         hb5.fill(new Point(2,2));
@@ -285,7 +340,20 @@ public class ShortestPath {
         end = new Node(1,5);
         sp = new ShortestPath(hb5);
         test = sp.AStar(start, end);
-        System.out.println(test);
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                if(test.contains(new Point(i, j))){
+                    System.out.print("C ");
+                }
+                else if(hb5.isEmpty(i, j)){
+                        System.out.print(". ");
+                }
+                else{
+                    System.out.print("M ");
+                }
+            }
+            System.out.println();
+        }
 
 
     }
