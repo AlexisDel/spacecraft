@@ -12,7 +12,7 @@ public class RandomLandGeneration {
     private final ArrayList<Mountain> board;
 
     private static final int nbMountains = 2;
-    private static int pourcent = 20;
+    private static int pourcent = 10;
     private final int borneMax;
     private final int borneMin;
     private final int dimH =  (GameConstants.BOARD_SIZE/ MOUNTAIN_SIZE);

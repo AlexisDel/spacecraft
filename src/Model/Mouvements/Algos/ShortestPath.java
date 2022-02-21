@@ -39,67 +39,70 @@ public class ShortestPath {
      * @param end
      * @return
      */
-    private ArrayList<Point>AStar(Node start, Node end){
+    public ArrayList<Point> AStar(Node start, Node end){
         // Initialisation de start
         start.setH(heuristic(start, end));
         start.setG(0);
         start.setF(start.getG() + start.getH());
 
         // Initialisation de Open et Close
-        ArrayList<Node> Open = new ArrayList<>();
-        ArrayList<Node> Close = new ArrayList<>();
-        Open.add(start);
+        BinaryHeap Open = new BinaryHeap(100000);
+        BinaryHeap Close = new BinaryHeap(100000);
+        Open.insert(start);
         // Tant que la recherche continue
+        int cpt = 0;
         while(!Open.isEmpty()){
-            // Entier servant lors des parcours de listes de Noeuds
-            int pos = 0;
-            // On suppose Open non-vide
-            Node currentNode = Open.get(0);
+            cpt++;
             // On cherche le noeud de plus petite fvalue dans open : currentNode
-            for(int i = 0; i < Open.size(); i++){
-                if(Open.get(i).getF() < currentNode.getF()){
-                    currentNode = Open.get(i);
-                    pos = i;
-                }
-            }
+            Node currentNode = Open.findMin();
             // On retire currentNode de Open
-            Open.remove(pos);
+            Open.delete(0);
             // Si on trouve l'arrivée, alors on arrête
             if(currentNode.equals(end)){
                 end = currentNode;
                 break;
             }
             // On ajoute le noeud courrant à close
-            Close.add(currentNode);
+            Close.insert(currentNode);
             for(Node child : currentNode.getChild(this.hitbox)){
-                double cost = currentNode.getG() + 1;
-                // Pos pour potentiellement retirer l'enfant des listes
+                double cost = currentNode.getG() + 1 + this.heuristic(child, end);
+                // Pose pour potentiellement retirer l'enfant des listes
                 int posOpen = 0;
                 int posClose = 0;
-                // Si child est dans la liste Open, et à une plus petite fvalue, on l'enlève
-                boolean flag1 = true;
                 boolean notSeenOpen = true;
-                for(int i = 0; i < Open.size(); i++){
-                    if(Open.get(i).equals(child)){
+                boolean notSeenClose = true;
+                ///////////////////////////////////////////////
+                // Si child est dans la liste Open, et à une plus grande F-value, on l'enlève de Open
+                boolean flag1 = true;
+                for(int i = 0; i < Open.getHeapSize(); i++){
+                    if(Open.getHeap()[i].equals(child)){
                         notSeenOpen = false;
-                        if(Open.get(i).getG() > cost){
+                        if(Open.getHeap()[i].getF() > cost){
                             posOpen = i;
                             flag1 = false;
                         }
                     }
                 }
                 if(!flag1) {
-                    Open.remove(posOpen);
+                    Open.delete(posOpen);
                 }
-                boolean notSeenClose = true;
-                // On repère si child est dans close
-                for(int i = 0; i < Close.size(); i++){
-                    if(Close.get(i).equals(child)){
+                //////////////////////////////////////////////
+                // Si child est dans la liste Close, et à une plus grande F-value, on l'enlève de Close
+                boolean flag2 = true;
+                for(int i = 0; i < Close.getHeapSize(); i++){
+                    if(Close.getHeap()[i].equals(child)){
                         notSeenClose = false;
-                        break;
+                        if(Close.getHeap()[i].getF() > cost){
+                            posClose = i;
+                            flag2 = false;
+                        }
                     }
                 }
-
+                if(!flag2) {
+                    //Close.delete(posClose);
+                }
+                //////////////////////////////////////////////
+                // Si l'enfant est ni dans Open ni dans Close
                 if(notSeenOpen && notSeenClose){
                     // On calcul les heuristiques de child
                     child.setH(this.heuristic(child, end));
@@ -107,10 +110,11 @@ public class ShortestPath {
                     child.setF(child.getH() + child.getH());
                     // On fixe le parent
                     child.setParent(currentNode);
-                    Open.add(child);
+                    Open.insert(child);
                 }
             }
         }
+        System.out.println("nombre de tours : " + cpt);
         return this.backtrack(start, end);
     }
 
@@ -120,7 +124,7 @@ public class ShortestPath {
      * @param end
      * @return
      */
-    public ArrayList<Point> backtrack(Node start, Node end){
+    private ArrayList<Point> backtrack(Node start, Node end){
         ArrayList<Point> res = new ArrayList<>();
         Node currentNode = end;
         while(!currentNode.equals(start)){
@@ -131,22 +135,17 @@ public class ShortestPath {
         return res;
     }
 
-    /**
-     * méthode calculant un plus court chemin avec AStar, puis calculant la première étape de ce plus court chemin.
-     * @param start
-     * @param end
-     * @return
-     */
-    public Direction nextMove(Point start, Point end){
-        Node Nstart = new Node(start.x, start.y);
-        Node Nend = new Node(end.x, end.y);
-        ArrayList<Point> track = this.AStar(Nstart, Nend);
+
+    public Direction nextMove(ArrayList<Point> track, int i){
         assert track.size() != 0;
         if(track.size() == 1){
             return Direction.NULL;
         }
+        if(i == 0){
+            return Direction.NULL;
+        }
         else{
-            Point delta = new Point( track.get(track.size() - 2).x - start.x,track.get(track.size() - 2).y - start.y);
+            Point delta = new Point(track.get(track.size() - 1 - i).x - track.get(track.size() - i).x,track.get(track.size() - 1 - i).y - track.get(track.size() - i).y);
             if (new Point(1, 0).equals(delta)) {
                 return Direction.SOUTH;
             }
@@ -300,7 +299,6 @@ public class ShortestPath {
         hb4.fill(new Point(8,7));
 
         hb4.fill(new Point(9,3));
-
         System.out.println(hb4);
         sp = new ShortestPath(hb4);
         start = new Node(1,4);
@@ -321,6 +319,7 @@ public class ShortestPath {
             System.out.println();
         }
         System.out.println("////////////////");
+
         //---------------------------------
 
         n = 7;
@@ -346,7 +345,7 @@ public class ShortestPath {
                     System.out.print("C ");
                 }
                 else if(hb5.isEmpty(i, j)){
-                        System.out.print(". ");
+                    System.out.print(". ");
                 }
                 else{
                     System.out.print("M ");
@@ -361,165 +360,3 @@ public class ShortestPath {
 
 
 }
-
-//-----------------------------------------------------------------------------------------//
-/**
- * structure pour A*
- */
-class Node{
-    // Attributs
-    private int posx;
-    private int posy;
-    private Node parent;
-    // Attribut pour A*
-    private double h;
-    private double g;
-    private double f;
-
-    /**
-     * constructeur sans initialisation de parent
-     * @param x
-     * @param y
-     */
-    public Node(int x, int y){
-        this.posx = x;
-        this.posy = y;
-        this.parent = null;
-    }
-
-    /**
-     * constructeur avec initialisationde parent
-     * @param x
-     * @param y
-     * @param p
-     */
-    public Node(int x, int y, Node p){
-        this.posx = x;
-        this.posy = y;
-        this.parent = p;
-    }
-
-    /**
-     * getter de pos X
-     * @return
-     */
-    public int getPosx() {
-        return posx;
-    }
-
-    /**
-     * getter de pos Y
-     * @return
-     */
-    public int getPosy() {
-        return posy;
-    }
-
-    /**
-     * getter de parent
-     * @return
-     */
-    public Node getParent() {
-        return parent;
-    }
-
-    /**
-     * getter de h
-     * @return
-     */
-    public double getH() {
-        return h;
-    }
-
-    /**
-     * getter de f
-     * @return
-     */
-    public double getF() {
-        return f;
-    }
-
-    /**
-     * getter de g
-     * @return
-     */
-    public double getG() {
-        return g;
-    }
-
-    /**
-     * setter de parent
-     * @param parent
-     */
-    public void setParent(Node parent) {
-        this.parent = parent;
-    }
-
-    /**
-     * setter de h
-     * @param h
-     */
-    public void setH(double h) {
-        this.h = h;
-    }
-
-    /**
-     * setter de f
-     * @param f
-     */
-    public void setF(double f) {
-        this.f = f;
-    }
-
-    /**
-     * setter de g
-     * @param g
-     */
-    public void setG(double g) {
-        this.g = g;
-    }
-
-    /**
-     * méthode renvoyanbt la liste des enfants du noeud courrant
-     * @param hb
-     * @return
-     */
-    public ArrayList<Node>getChild(HitBoard hb){
-        ArrayList<Node> res = new ArrayList<>();
-        if(hb.isInBoard(this.posx, this.posy - 1) && hb.isEmpty(this.posx, this.posy - 1))
-            res.add(new Node(this.posx, this.posy - 1, this));
-        if(hb.isInBoard(this.posx, this.posy + 1) && hb.isEmpty(this.posx, this.posy + 1))
-            res.add(new Node(this.posx, this.posy + 1, this));
-        if(hb.isInBoard(this.posx - 1, this.posy) && hb.isEmpty(this.posx - 1, this.posy))
-            res.add(new Node(this.posx - 1, this.posy, this));
-        if(hb.isInBoard(this.posx + 1, this.posy) && hb.isEmpty(this.posx + 1, this.posy))
-            res.add(new Node(this.posx + 1, this.posy, this));
-        return res;
-    }
-
-    /**
-     * méthode d'égalité surécrivant Object.equals
-     * @param n
-     * @return
-     */
-    public boolean equals(Node n){
-        return this.posx == n.getPosx() && this.posy == n.getPosy();
-    }
-
-    /**
-     * méthode représantant un objet Node
-     * @return
-     */
-    public String toString(){
-        String res = "";
-        res += "node(" + this.posx + " " + this.posy;
-        if(this.getParent() != null){
-            res += ", parent : [" + this.getParent().getPosx() + ", " + this.getParent().getPosy() + "]";
-        }
-        res += " = " + this.getF();
-        res += ")";
-        return res;
-    }
-}
-
-
