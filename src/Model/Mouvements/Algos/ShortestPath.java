@@ -65,19 +65,18 @@ public class ShortestPath {
             // On ajoute le noeud courrant à close
             Close.insert(currentNode);
             for(Node child : currentNode.getChild(this.hitbox)){
-                double cost = currentNode.getG() + 1 + this.heuristic(child, end);
+                double cost = currentNode.getG() + 1;
                 // Pose pour potentiellement retirer l'enfant des listes
                 int posOpen = 0;
-                int posClose = 0;
-                boolean notSeenOpen = true;
-                boolean notSeenClose = true;
+                boolean notInOpen = true;
+                boolean notInClose = true;
                 ///////////////////////////////////////////////
-                // Si child est dans la liste Open, et à une plus grande F-value, on l'enlève de Open
+                // Si child est dans la liste Open, et à une plus grande G-value, on l'enlève de Open
                 boolean flag1 = true;
                 for(int i = 0; i < Open.getHeapSize(); i++){
                     if(Open.getHeap()[i].equals(child)){
-                        notSeenOpen = false;
-                        if(Open.getHeap()[i].getF() > cost){
+                        notInOpen = false;
+                        if(Open.getHeap()[i].getG() > cost){
                             posOpen = i;
                             flag1 = false;
                         }
@@ -85,25 +84,19 @@ public class ShortestPath {
                 }
                 if(!flag1) {
                     Open.delete(posOpen);
+                    notInOpen = true;
                 }
                 //////////////////////////////////////////////
-                // Si child est dans la liste Close, et à une plus grande F-value, on l'enlève de Close
-                boolean flag2 = true;
+                // On regarde si child est dans Close
                 for(int i = 0; i < Close.getHeapSize(); i++){
                     if(Close.getHeap()[i].equals(child)){
-                        notSeenClose = false;
-                        if(Close.getHeap()[i].getF() > cost){
-                            posClose = i;
-                            flag2 = false;
-                        }
+                        notInClose = false;
+                        break;
                     }
-                }
-                if(!flag2) {
-                    //Close.delete(posClose);
                 }
                 //////////////////////////////////////////////
                 // Si l'enfant est ni dans Open ni dans Close
-                if(notSeenOpen && notSeenClose){
+                if(notInOpen && notInClose){
                     // On calcul les heuristiques de child
                     child.setH(this.heuristic(child, end));
                     child.setG(currentNode.getG() + 1);
