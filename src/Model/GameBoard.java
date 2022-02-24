@@ -127,6 +127,8 @@ public class GameBoard {
             Alien tempAlien = new Alien(new Point(newX,newY), 150, 10);
             entities.add(tempAlien);
             this.hitbox.fill(new Point(newX, newY));
+            AlienMovements am = new AlienMovements(tempAlien, this.hitbox, this);
+            am.start();
         }
     }
 
