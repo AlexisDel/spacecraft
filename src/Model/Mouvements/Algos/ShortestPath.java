@@ -39,7 +39,7 @@ public class ShortestPath {
      * @param end
      * @return
      */
-    public ArrayList<Point> AStar(Node start, Node end){
+    public ArrayList<Point> AStar(Node start, Node end, HitBoard hitBoard){
         // Initialisation de start
         start.setH(heuristic(start, end));
         start.setG(0);
@@ -50,9 +50,7 @@ public class ShortestPath {
         BinaryHeap Close = new BinaryHeap(100000);
         Open.insert(start);
         // Tant que la recherche continue
-        int cpt = 0;
         while(!Open.isEmpty()){
-            cpt++;
             // On cherche le noeud de plus petite fvalue dans open : currentNode
             Node currentNode = Open.findMin();
             // On retire currentNode de Open
@@ -64,7 +62,7 @@ public class ShortestPath {
             }
             // On ajoute le noeud courrant à close
             Close.insert(currentNode);
-            for(Node child : currentNode.getChild(this.hitbox)){
+            for(Node child : currentNode.getChild(hitBoard)){
                 double cost = currentNode.getG() + 1;
                 // Pose pour potentiellement retirer l'enfant des listes
                 int posOpen = 0;
@@ -107,7 +105,6 @@ public class ShortestPath {
                 }
             }
         }
-        System.out.println("nombre de tours : " + cpt);
         return this.backtrack(start, end);
     }
 
@@ -120,6 +117,8 @@ public class ShortestPath {
     private ArrayList<Point> backtrack(Node start, Node end){
         ArrayList<Point> res = new ArrayList<>();
         Node currentNode = end;
+        if(currentNode.getParent() == null)
+            return res;
         while(!currentNode.equals(start)){
             res.add(new Point(currentNode.getPosx(), currentNode.getPosy()));
             currentNode = currentNode.getParent();
@@ -172,7 +171,7 @@ public class ShortestPath {
         ShortestPath sp = new ShortestPath(hb1);
         Node start = new Node(0,0);
         Node end = new Node(1,0);
-        ArrayList<Point>test = sp.AStar(start, end);
+        ArrayList<Point>test = sp.AStar(start, end, hb1);
         for(int i = 0; i < n; i++){
             for(int j = 0; j < n; j++){
                 if(test.contains(new Point(i, j))){
@@ -201,7 +200,7 @@ public class ShortestPath {
         sp = new ShortestPath(hb2);
         start = new Node(3,3);
         end = new Node(2,1);
-        test = sp.AStar(start, end);
+        test = sp.AStar(start, end, hb2);
         System.out.println(test);
         for(int i = 0; i < n; i++){
             for(int j = 0; j < n; j++){
@@ -228,7 +227,7 @@ public class ShortestPath {
         sp = new ShortestPath((hb3));
         start=  new Node(0,0);
         end = new Node(0,0);
-        test = sp.AStar(start, end);
+        test = sp.AStar(start, end, hb3);
         System.out.println(test);
         for(int i = 0; i < n; i++){
             for(int j = 0; j < n; j++){
@@ -296,7 +295,7 @@ public class ShortestPath {
         sp = new ShortestPath(hb4);
         start = new Node(1,4);
         end = new Node(8,0);
-        test = sp.AStar(start, end);
+        test = sp.AStar(start, end, hb4);
         for(int i = 0; i < n; i++){
             for(int j = 0; j < n; j++){
                 if(test.contains(new Point(i, j))){
@@ -331,7 +330,7 @@ public class ShortestPath {
         start = new Node(4,2);
         end = new Node(1,5);
         sp = new ShortestPath(hb5);
-        test = sp.AStar(start, end);
+        test = sp.AStar(start, end, hb5);
         for(int i = 0; i < n; i++){
             for(int j = 0; j < n; j++){
                 if(test.contains(new Point(i, j))){

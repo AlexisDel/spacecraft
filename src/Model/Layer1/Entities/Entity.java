@@ -14,6 +14,7 @@ public abstract class Entity extends InteractiveItem {
     /**Attributes*/
     private int speed;
     private ArrayList<Action>actions;
+    private boolean isMoving;
     /**
      * Constructeur
      * @param coordinate   coordonnées globales de l'entité
@@ -27,6 +28,7 @@ public abstract class Entity extends InteractiveItem {
         super(name, coordinate, dimension, healthPoints);
         this.speed = speed;
         this.actions= new ArrayList<>();
+        this.isMoving = false;
     }
 
     /** Cette méthode déplace l'entité */
@@ -48,4 +50,16 @@ public abstract class Entity extends InteractiveItem {
     public ArrayList<Action> getActions() {
         return actions;
     }
+
+    /**
+     * setter de isMoving
+     * @param value
+     */
+    public void setIsMoving(boolean value){this.isMoving = value;}
+
+    /**
+     * getter du booléen désignant si l'entité est en train de bouger ou non
+     * @return
+     */
+    public boolean getIsMoving(){return this.isMoving;}
 }

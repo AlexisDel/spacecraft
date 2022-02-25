@@ -22,9 +22,10 @@ public class GameBoard {
     /** Liste représentant les entités qui sont sur le terrain de jeu
      *  une entité étant un objet que l'on peut déplacer sur la carte */
     ArrayList<Entity> entities;
-    /***
-     * Tableau 2D de booléens désignants les zones libres ou non-libres*/
+    /** Tableau 2D de booléens désignants les zones libres ou non-libres*/
     HitBoard hitbox;
+    /** Tableau 2D de booléens désignant le monde selon les aliens avec leur peur des spaceMarines*/
+    HitBoard AlienView;
 
     /**
      * Constructeur, initialise les différentes couches qui composent notre terrain de jeu
@@ -32,6 +33,7 @@ public class GameBoard {
     public GameBoard() {
         mountains = new RandomLandGeneration().getBoard();
         this.hitbox = new HitBoard(this);
+        this.AlienView = new HitBoard(this);
         structures = new ArrayList<>();
         entities = new ArrayList<>();
         this.initLand(5, 3);
@@ -89,7 +91,7 @@ public class GameBoard {
             shipY = rand.nextInt(GameConstants.BOARD_SIZE);
             for(int i = 0; i < 4; i++){
                 for(int j = 0; j < 4; j++){
-                    if(!(this.isInBoard(i, j)) || !(this.hitbox.isEmpty(shipX + i, shipY + j))){
+                    if(!(this.isInBoard(shipX + i, shipY + j)) || !(this.hitbox.isEmpty(shipX + i, shipY + j))){
                         flag = true;
                     }
                 }
@@ -100,6 +102,7 @@ public class GameBoard {
         for(int i = 0; i < 4; i++){
             for(int j = 0; j < 4; j++){
                 this.hitbox.fill(new Point(shipX + i, shipY + j));
+                this.AlienView.fill(new Point(shipX + i, shipY + j));
             }
         }
 
@@ -114,29 +117,42 @@ public class GameBoard {
                 }
             entities.add(new SpaceMarine(new Point(newX,newY),200,10));
             this.hitbox.fill(new Point(newX, newY));
+            for(int j = -GameConstants.fearOfSpaceMarines/2; j < GameConstants.fearOfSpaceMarines/2 + 1; j++){
+                for(int k = -GameConstants.fearOfSpaceMarines/2; k < GameConstants.fearOfSpaceMarines/2 + 1; k++){
+                    if(isInBoard(newX + j, newY + k)) {
+                        this.AlienView.fill(new Point(newX + j, newY + k));
+                    }
+                }
+            }
         }
 
         // Enfin, on ajoute nbAliens alien dans le tableau
         for(int i = 0; i < nbAliens; i++){
             int newX = rand.nextInt(GameConstants.BOARD_SIZE);
             int newY = rand.nextInt(GameConstants.BOARD_SIZE);
-            while (!this.hitbox.isEmpty(newX, newY)){
+            while (!this.AlienView.isEmpty(newX, newY)){
                 newX = rand.nextInt(GameConstants.BOARD_SIZE);
                 newY = rand.nextInt(GameConstants.BOARD_SIZE);
             }
             Alien tempAlien = new Alien(new Point(newX,newY), 150, 10);
             entities.add(tempAlien);
-            this.hitbox.fill(new Point(newX, newY));
-            AlienMovements am = new AlienMovements(tempAlien, this.hitbox, this);
+            this.AlienView.fill(new Point(newX, newY));
+            AlienMovements am = new AlienMovements(tempAlien, this.AlienView, this);
             am.start();
         }
     }
 
     /**
      * getter de la hitbox
-     * @return
+     * @return HitBoard
      */
     public HitBoard getHitbox() {
         return hitbox;
     }
+
+    /**
+     * getter de AlienView
+     * @return HitBoard
+     */
+    public HitBoard getAlienView(){return this.AlienView;}
 }

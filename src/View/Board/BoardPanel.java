@@ -45,7 +45,7 @@ public class BoardPanel extends JPanel {
         this.setDoubleBuffered(true);
 
         // Layer 0
-        this.setBackground(Color.ORANGE);
+        this.setBackground(new Color(234, 138, 54));
 
     }
 

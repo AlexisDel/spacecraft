@@ -87,10 +87,12 @@ public class ControlPanel extends JPanel {
     }
 
     public void coordinatesArrived(Point newCoord){
-        Movement walk= new Movement((Entity) this.selectedItem, newCoord, gameEngine.getGameBoard());
+        Entity entity = (Entity) this.selectedItem;
+        if(!entity.getIsMoving()) {
+            Movement walk = new Movement(entity, newCoord, gameEngine.getGameBoard());
+        }
          //((Entity) this.selectedItem).move(Direction.NORTH);
-                System.out.println("MOVINNNN"+ this.selectedItem.getName()+" TO "+newCoord.x +","+newCoord.y);
-
+        System.out.println("MOVINNNN "+ this.selectedItem.getName()+" TO "+ newCoord.x +", "+newCoord.y);
         this.waitingForCoord=false;
     }
 

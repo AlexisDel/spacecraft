@@ -34,7 +34,8 @@ public class HitBoard {
             Dimension dim = m.getDimension();
             for(int i = 0; i < dim.width; i++){
                 for(int j = 0; j < dim.height; j++){
-                    this.hitbox.get(pos.x + i).set(pos.y + j, false);
+                    if(this.isInBoard(pos.x + i, pos.y + j))
+                        this.hitbox.get(pos.x + i).set(pos.y + j, false);
                 }
             }
         }
@@ -88,7 +89,7 @@ public class HitBoard {
         String s = "";
         for(int i = 0; i < this.dim; i++){
             for(int j = 0; j < this.dim; j++){
-                if(this.hitbox.get(i).get(j))
+                if(this.hitbox.get(j).get(i))
                     s += ". ";
                 else{
                     s += "$ ";
