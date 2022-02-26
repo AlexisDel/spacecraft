@@ -27,12 +27,17 @@ public class Movement extends Thread{
         this.start();
     }
 
-    @Override    public void run() {
-        this.entity.setIsMoving(true);
+    @Override
+    public void run() {
+        try {
+            this.entity.setIsMoving(true);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         // On test si le mouvement est possible
         if(this.gameBoard.getHitbox().isEmpty(destination.x, destination.y)) {
             // Tant qu'on est pas arrivé
-            while (!entity.getCoordinate().equals(destination)) {
+            while (!entity.getCoordinate().equals(destination) && entity.getIsMoving()) {
                 ArrayList<Point> track;
                 // On calcul le chemin en fonction de qui on est
                 if(this.entity instanceof Alien) {
@@ -42,11 +47,11 @@ public class Movement extends Thread{
                     track = shortestPath.AStar(new Node(entity.getCoordinate()), new Node(destination), this.gameBoard.getHitbox());
                 }
                 // Pour chaque étapes du chemin trouvé
-                for (int i = 0; i < track.size(); i++) {
+                for (int i = 0; i < track.size() - 1 && entity.getIsMoving(); i++) {
                     // Si c'est un alien qui bouge
                     if(this.entity instanceof Alien) {
                         // Si la prochaine étape est libre :
-                        if ((i < track.size() - 1 && this.gameBoard.getAlienView().isEmpty(track.get(i + 1).x, track.get(i + 1).y)) || i == track.size() - 1){
+                        if (this.gameBoard.getAlienView().isEmpty(track.get(i + 1).x, track.get(i + 1).y)){
                             // On calcul la direction à prendre
                             Direction direction = shortestPath.nextMove(track, i);
                             // On effectue le déplacement de l'entité
@@ -71,7 +76,7 @@ public class Movement extends Thread{
                     // Si on est pas un alien :
                     else{
                         // Si la prochaine case est libre
-                        if ((i < track.size() - 1 && this.gameBoard.getHitbox().isEmpty(track.get(i + 1).x, track.get(i + 1).y)) || i == track.size() - 1) {
+                        if (this.gameBoard.getHitbox().isEmpty(track.get(i + 1).x, track.get(i + 1).y)) {
                             // On calcul la direction
                             Direction direction = shortestPath.nextMove(track, i);
                             // On effectue le mouvement
@@ -95,7 +100,13 @@ public class Movement extends Thread{
                 }
             }
         }
-        this.entity.setIsMoving(false);
+        if(this.entity.getIsMoving()) {
+            try {
+                this.entity.setIsMoving(false);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -166,63 +177,23 @@ public class Movement extends Thread{
             // On effectue le mouvement
             entity.move(dir);
             // On remplie le nouvel endroit où on se trouve
-            switch (dir){
-                case NORTH -> {
-                    // On va vers le nord, on cherche la ligne de la hitbox du spaceMarines la plus haute.
-                    int x = Math.max(0, entity.getCoordinate().x - GameConstants.fearOfSpaceMarines/2);
-                    // Pour tous les points dans cette ligne et dans la hitbox du spaceMarine :
-                    for(int y = -GameConstants.fearOfSpaceMarines/2; y < GameConstants.fearOfSpaceMarines/2 + 1; y++){
-                        // Si ce point est dans la grille et normalement vide :
-                        newCoord = entity.getCoordinate().y + y;
-                        if(this.gameBoard.isInBoard(x, newCoord) && this.gameBoard.getHitbox().isEmpty(x, newCoord)){
-                            // On vide ce point
-                            this.gameBoard.getAlienView().fill(new Point(x, newCoord));
-                        }
-                    }
-                }
-                case SOUTH -> {
-                    // On va vers le sud, on cherche la ligne de la hitbox du spaceMarines la plus haute.
-                    int x = Math.min(GameConstants.BOARD_SIZE - 1, entity.getCoordinate().x + GameConstants.fearOfSpaceMarines/2);
-                    // Pour tous les points dans cette ligne et dans la hitbox du spaceMarine :
-                    for(int y = -GameConstants.fearOfSpaceMarines/2; y < GameConstants.fearOfSpaceMarines/2 + 1; y++){
-                        // Si ce point est dans la grille et normalement vide :
-                        newCoord = entity.getCoordinate().y + y;
-                        if(this.gameBoard.isInBoard(x, newCoord) && this.gameBoard.getHitbox().isEmpty(x, newCoord)){
-                            // On vide ce point
-                            this.gameBoard.getAlienView().fill(new Point(x, newCoord));
-                        }
-                    }
-                }
-                case EAST -> {
-                    // On va vers l'est, on cherche la ligne de la hitbox du spaceMarines la plus haute.
-                    int y = Math.min(GameConstants.BOARD_SIZE - 1, entity.getCoordinate().y + GameConstants.fearOfSpaceMarines/2);
-                    // Pour tous les points dans cette ligne et dans la hitbox du spaceMarine :
-                    for(int x = -GameConstants.fearOfSpaceMarines/2; x < GameConstants.fearOfSpaceMarines/2 + 1; x++){
-                        // Si ce point est dans la grille et normalement vide :
-                        newCoord = entity.getCoordinate().x + x;
-                        if(this.gameBoard.isInBoard(newCoord, y) && this.gameBoard.getHitbox().isEmpty(newCoord, y)){
-                            // On vide ce point
-                            this.gameBoard.getAlienView().fill(new Point(newCoord, y));
-                        }
-                    }
-                }
-                case WEST -> {
-                    // On va vers l'ouest, on cherche la ligne de la hitbox du spaceMarines la plus haute.
-                    int y = Math.max(0, entity.getCoordinate().y - GameConstants.fearOfSpaceMarines/2);
-                    // Pour tous les points dans cette ligne et dans la hitbox du spaceMarine :
-                    for(int x = -GameConstants.fearOfSpaceMarines/2; x < GameConstants.fearOfSpaceMarines/2 + 1; x++){
-                        // Si ce point est dans la grille et normalement vide :
-                        newCoord = entity.getCoordinate().x + x;
-                        if(this.gameBoard.isInBoard(newCoord, y) && this.gameBoard.getHitbox().isEmpty(newCoord, y)){
-                            // On vide ce point
-                            this.gameBoard.getAlienView().fill(new Point(newCoord, y));
+            for(Entity entity : this.gameBoard.getEntities()){
+                if(entity instanceof  SpaceMarine){
+                    for (int x = -GameConstants.fearOfSpaceMarines / 2; x < GameConstants.fearOfSpaceMarines / 2 + 1; x++) {
+                        for (int y = -GameConstants.fearOfSpaceMarines / 2; y < GameConstants.fearOfSpaceMarines / 2 + 1; y++) {
+                            // Si ce point est dans la grille et normalement vide :
+                            if (this.gameBoard.isInBoard(entity.getCoordinate().x + x,entity.getCoordinate().y + y)) {
+                                // On remplit ce point
+                                this.gameBoard.getAlienView().fill(new Point(entity.getCoordinate().x + x,entity.getCoordinate().y + y));
+                            }
                         }
                     }
                 }
             }
+
             gameBoard.getHitbox().fill(entity.getCoordinate());
         }
-        // Sinon :
+        // Sinon : (Alors on est un Alien
         else{
             gameBoard.getHitbox().empty(entity.getCoordinate());
             gameBoard.getAlienView().empty(entity.getCoordinate());

@@ -6,6 +6,8 @@ import Model.Mouvements.Direction;
 import java.awt.*;
 import java.util.ArrayList;
 
+import static java.lang.Thread.sleep;
+
 /**
  * Cette classe regroupe les entités du jeu,
  * à savoir les objets qui peuvent être déplacé
@@ -55,7 +57,14 @@ public abstract class Entity extends InteractiveItem {
      * setter de isMoving
      * @param value
      */
-    public void setIsMoving(boolean value){this.isMoving = value;}
+    public void setIsMoving(boolean value) throws InterruptedException {
+        this.isMoving = value;
+        try {
+            sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * getter du booléen désignant si l'entité est en train de bouger ou non

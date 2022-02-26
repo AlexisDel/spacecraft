@@ -5,6 +5,8 @@ import Model.Mouvements.HitBoard;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 import static java.lang.Math.pow;
 
@@ -124,20 +126,18 @@ public class ShortestPath {
             currentNode = currentNode.getParent();
         }
         res.add(new Point(start.getPosx(), start.getPosy()));
+        Collections.reverse(res);
         return res;
     }
 
 
     public Direction nextMove(ArrayList<Point> track, int i){
         assert track.size() != 0;
-        if(track.size() == 1){
-            return Direction.NULL;
-        }
-        if(i == 0){
+        if(track.size() <= 1){
             return Direction.NULL;
         }
         else{
-            Point delta = new Point(track.get(track.size() - 1 - i).x - track.get(track.size() - i).x,track.get(track.size() - 1 - i).y - track.get(track.size() - i).y);
+            Point delta = new Point(track.get(i + 1).x - track.get(i).x,track.get(i + 1).y - track.get(i).y);
             if (new Point(1, 0).equals(delta)) {
                 return Direction.SOUTH;
             }

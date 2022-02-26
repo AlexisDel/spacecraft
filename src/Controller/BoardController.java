@@ -45,7 +45,11 @@ public class BoardController implements KeyListener, MouseListener, MouseMotionL
     @Override
     public void mouseClicked(MouseEvent e) {
         // Récupère les coordonnées de la case sur laquelle le joueur a cliqué et les transmet au control panel
-        gameView.getControlPanel().SelectItem(gameView.getBoardPanel().getTileFromClick(e.getX(), e.getY()));
+        try {
+            gameView.getControlPanel().SelectItem(gameView.getBoardPanel().getTileFromClick(e.getX(), e.getY()));
+        } catch (InterruptedException interruptedException) {
+            interruptedException.printStackTrace();
+        }
     }
 
     @Override

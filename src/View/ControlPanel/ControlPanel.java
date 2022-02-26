@@ -56,7 +56,7 @@ public class ControlPanel extends JPanel {
      * S'il n'y a pas d'entité sur cette case alors rien ne se passe
      * @param p Coordonnées de la case
      */
-    public void SelectItem(Point p){
+    public void SelectItem(Point p) throws InterruptedException {
         //if we are not waiting for coordinates then set as new selected entity/building
         if(!this.waitingForCoord){
             // Cherche dans la liste des structures s'il y en a une à cette coordonnée
@@ -86,11 +86,11 @@ public class ControlPanel extends JPanel {
         }
     }
 
-    public void coordinatesArrived(Point newCoord){
+    public void coordinatesArrived(Point newCoord) throws InterruptedException {
         Entity entity = (Entity) this.selectedItem;
-        if(!entity.getIsMoving()) {
-            Movement walk = new Movement(entity, newCoord, gameEngine.getGameBoard());
-        }
+        entity.setIsMoving(false);
+        Movement walk = new Movement(entity, newCoord, gameEngine.getGameBoard());
+
          //((Entity) this.selectedItem).move(Direction.NORTH);
         System.out.println("MOVINNNN "+ this.selectedItem.getName()+" TO "+ newCoord.x +", "+newCoord.y);
         this.waitingForCoord=false;
