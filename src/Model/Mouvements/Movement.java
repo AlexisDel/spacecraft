@@ -39,18 +39,13 @@ public class Movement extends Thread{
             // Tant qu'on est pas arrivé
             while (!entity.getCoordinate().equals(destination) && entity.getIsMoving()) {
                 ArrayList<Point> track;
-                // On calcul le chemin en fonction de qui on est
-                if(this.entity instanceof Alien) {
-                    track = shortestPath.AStar(new Node(entity.getCoordinate()), new Node(destination), this.gameBoard.getAlienView());
-                }
-                else{
-                    track = shortestPath.AStar(new Node(entity.getCoordinate()), new Node(destination), this.gameBoard.getHitbox());
-                }
+                // On calcul le chemin
+                track = shortestPath.AStar(new Node(entity.getCoordinate()), new Node(destination), this.gameBoard.getHitbox());
                 // Pour chaque étapes du chemin trouvé
                 for (int i = 0; i < track.size() - 1 && entity.getIsMoving(); i++) {
                     // Si c'est un alien qui bouge
                     if(this.entity instanceof Alien) {
-                        // Si la prochaine étape est libre :
+                        // Si la prochaine étape est libre dans la vue des Aliens:
                         if (this.gameBoard.getAlienView().isEmpty(track.get(i + 1).x, track.get(i + 1).y)){
                             // On calcul la direction à prendre
                             Direction direction = shortestPath.nextMove(track, i);
@@ -66,11 +61,10 @@ public class Movement extends Thread{
                         // Sinon, alors on fait une petite pause et on recalcule un chemin
                         else {
                             try {
-                                sleep(150 + (new Random()).nextInt(150));
+                                this.entity.setIsMoving(false);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
-                            break;
                         }
                     }
                     // Si on est pas un alien :

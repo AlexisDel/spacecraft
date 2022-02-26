@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class HitBoard {
     // Tableau de booléen désignant les endroits vides ou non
-    ArrayList<ArrayList<Boolean>> hitbox;
+    ArrayList<ArrayList<Integer>> hitbox;
     int dim;
 
     /**
@@ -25,7 +25,7 @@ public class HitBoard {
         for(int i = 0; i < this.dim; i++){
             this.hitbox.add(new ArrayList<>(this.dim));
             for(int j = 0; j < this.dim; j++){
-                this.hitbox.get(i).add(true);
+                this.hitbox.get(i).add(0);
             }
         }
         // On remplie le tableau par les montagnes
@@ -35,7 +35,7 @@ public class HitBoard {
             for(int i = 0; i < dim.width; i++){
                 for(int j = 0; j < dim.height; j++){
                     if(this.isInBoard(pos.x + i, pos.y + j))
-                        this.hitbox.get(pos.x + i).set(pos.y + j, false);
+                        this.hitbox.get(pos.x + i).set(pos.y + j, 1);
                 }
             }
         }
@@ -51,7 +51,7 @@ public class HitBoard {
         for(int i = 0; i < n; i++){
             this.hitbox.add(new ArrayList<>(n));
             for(int j = 0; j < n; j++){
-                this.hitbox.get(i).add(true);
+                this.hitbox.get(i).add(0);
             }
         }
     }
@@ -63,7 +63,7 @@ public class HitBoard {
      * @return
      */
     public boolean isEmpty(int x, int y){
-        return this.hitbox.get(x).get(y);
+        return this.hitbox.get(x).get(y) == 0;
     }
 
     public boolean isInBoard(int x, int y){
@@ -75,21 +75,26 @@ public class HitBoard {
      * @param p
      */
     public synchronized void empty(Point p){
-        this.hitbox.get(p.x).set(p.y, true);
+        int tmp = this.hitbox.get(p.x).get(p.y);
+        if(tmp > 0)
+            tmp--;
+        this.hitbox.get(p.x).set(p.y, tmp);
     }
 
     /**
      * remplie la case de coordonnées (x, y)
      */
     public synchronized void fill(Point p){
-        this.hitbox.get(p.x).set(p.y, false);
+        int tmp = this.hitbox.get(p.x).get(p.y);
+        tmp++;
+        this.hitbox.get(p.x).set(p.y, tmp);
     }
 
     public String toString(){
         String s = "";
         for(int i = 0; i < this.dim; i++){
             for(int j = 0; j < this.dim; j++){
-                if(this.hitbox.get(j).get(i))
+                if(this.hitbox.get(j).get(i) == 0)
                     s += ". ";
                 else{
                     s += "$ ";
