@@ -9,11 +9,8 @@ import Model.Mouvements.Algos.Node;
 import Model.Mouvements.Algos.ShortestPath;
 
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
-
-import static java.lang.Thread.sleep;
 
 public class Movement extends Thread{
 
@@ -30,8 +27,7 @@ public class Movement extends Thread{
         this.start();
     }
 
-    @Override
-    public void run() {
+    @Override    public void run() {
         this.entity.setIsMoving(true);
         // On test si le mouvement est possible
         if(this.gameBoard.getHitbox().isEmpty(destination.x, destination.y)) {
