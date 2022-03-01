@@ -1,6 +1,5 @@
 package View.ControlPanel.Panels;
 
-import Model.Layer1.Entities.Action;
 import View.ControlPanel.ControlPanel;
 import View.ImageManager;
 
@@ -20,6 +19,7 @@ public class SpaceMarinePanel extends JPanel implements ActionListener {
     }
     public void createButton(){
         JButton move= new JButton("Move");
+        move.setFocusable(false);
         move.addActionListener(this);
         this.add(move);
     }

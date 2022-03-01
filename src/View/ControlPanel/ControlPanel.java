@@ -7,7 +7,6 @@ import Model.Layer1.Entities.SpaceMarine;
 import Model.Layer1.InteractiveItem;
 import Model.Layer1.Structures.Spaceship;
 import Model.Layer1.Structures.Structure;
-import Model.Mouvements.Direction;
 import Model.Mouvements.Movement;
 import View.ControlPanel.Panels.AlienPanel;
 import View.ControlPanel.Panels.DefaultPanel;
@@ -17,7 +16,8 @@ import View.ControlPanel.Panels.SpaceshipPanel;
 import javax.swing.*;
 import java.awt.*;
 
-import static View.ViewConstants.*;
+import static View.ViewConstants.CONTROL_PANEL_HEIGHT;
+import static View.ViewConstants.CONTROL_PANEL_WIDTH;
 
 //TODO: Correct bug causing the requirement of double clicking
 /** this class creates the control panel with two sub panels : the one for the image and the one for the actions */

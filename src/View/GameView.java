@@ -11,16 +11,14 @@ import java.io.IOException;
 
 import static java.lang.Thread.sleep;
 
-public class GameView implements Runnable{
+public class GameView extends JFrame implements Runnable{
 
-    private JFrame window;
     private Thread displayUpdateThread;
     private BoardPanel boardPanel;
     private ControlPanel controlPanel;
 
     private GameEngine gameEngine;
 
-    // TODO : transform to JFrame
     public GameView(GameEngine gameEngine) {
 
         try {
@@ -31,26 +29,25 @@ public class GameView implements Runnable{
 
         this.gameEngine = gameEngine;
 
-        window = new JFrame();
         initWindow();
         /** adds the board panel to the window*/
         boardPanel = new BoardPanel(gameEngine);
-        window.add(boardPanel, BorderLayout.WEST);
+        this.add(boardPanel, BorderLayout.WEST);
         /** adds the control panel to the window*/
         controlPanel = new ControlPanel(gameEngine);
-        window.add(controlPanel, BorderLayout.EAST);
+        this.add(controlPanel, BorderLayout.EAST);
 
         displayUpdateThread = new Thread(this);
         displayUpdateThread.start();
 
-        window.pack();
-        window.setVisible(true);
+        this.pack();
+        this.setVisible(true);
     }
 
     private void initWindow() {
-        window.setTitle("Spacecraft");
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setResizable(false);
+        this.setTitle("Spacecraft");
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
     }
 
     @Override
@@ -67,7 +64,7 @@ public class GameView implements Runnable{
     }
 
     public void setBoardController(BoardController boardController) {
-        getBoardPanel().addKeyListener(boardController);
+        //getBoardPanel().addKeyListener(boardController);
         getBoardPanel().addMouseListener(boardController);
         getBoardPanel().addMouseMotionListener(boardController);
         getBoardPanel().addMouseWheelListener(boardController);

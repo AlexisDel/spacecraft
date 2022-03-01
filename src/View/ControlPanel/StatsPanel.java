@@ -14,7 +14,6 @@ public class StatsPanel extends JPanel implements ActionListener{
     /**Attributes*/
     private ControlPanel controlPanel;
     private JToolBar tools;
-    private Action actionWaitingForCoordinates;
 
     /**Constructor*/
     public StatsPanel(ControlPanel mcp){
@@ -49,6 +48,7 @@ public class StatsPanel extends JPanel implements ActionListener{
         //Add the actions
         for(Action a: e.getActions()){
             JButton button = new JButton(a.toString());
+            button.setFocusable(false);
             button.addActionListener(this);
             this.tools.add(button);
         }

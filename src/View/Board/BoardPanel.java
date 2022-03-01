@@ -7,6 +7,7 @@ import Model.Layer1.Structures.Structure;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 import static Model.GameConstants.BOARD_SIZE;
 import static View.ViewConstants.BOARD_PANEL_HEIGHT;
@@ -43,6 +44,25 @@ public class BoardPanel extends JPanel {
         // All the drawing from this component will be done in an offscreen painting buffer
         // tl;dr : improves game's rendering performance
         this.setDoubleBuffered(true);
+
+        //TODO : improves key bindings (read docs)
+        // Key Bindings
+        this.getInputMap().put(KeyStroke.getKeyStroke("UP"), "zoomIn");
+        this.getActionMap().put("zoomIn", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                zoomIn();
+            }
+        });
+
+        this.getInputMap().put(KeyStroke.getKeyStroke("DOWN"), "zoomOut");
+        this.getActionMap().put("zoomOut", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                zoomOut();
+            }
+        });
+
 
         // Layer 0
         this.setBackground(new Color(234, 138, 54));
