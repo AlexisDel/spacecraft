@@ -47,7 +47,7 @@ public class BoardPanel extends JPanel {
 
         //TODO : improves key bindings (read docs)
         // Key Bindings
-        this.getInputMap().put(KeyStroke.getKeyStroke("UP"), "zoomIn");
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "zoomIn");
         this.getActionMap().put("zoomIn", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -55,7 +55,7 @@ public class BoardPanel extends JPanel {
             }
         });
 
-        this.getInputMap().put(KeyStroke.getKeyStroke("DOWN"), "zoomOut");
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "zoomOut");
         this.getActionMap().put("zoomOut", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {

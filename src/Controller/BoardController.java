@@ -7,7 +7,7 @@ import java.awt.event.*;
 
 import static java.lang.Math.abs;
 
-public class BoardController implements KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
+public class BoardController implements MouseListener, MouseMotionListener, MouseWheelListener {
 
     private Point mousePt;
     int mouseDraggedThresholdX = 0;
@@ -17,28 +17,6 @@ public class BoardController implements KeyListener, MouseListener, MouseMotionL
 
     public BoardController(GameView gameView) {
         this.gameView = gameView;
-
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()){
-            case KeyEvent.VK_Z -> gameView.getBoardPanel().moveUp();
-            case KeyEvent.VK_Q -> gameView.getBoardPanel().moveLeft();
-            case KeyEvent.VK_S -> gameView.getBoardPanel().moveDown();
-            case KeyEvent.VK_D -> gameView.getBoardPanel().moveRight();
-            case KeyEvent.VK_UP -> gameView.getBoardPanel().zoomIn();
-            case KeyEvent.VK_DOWN -> gameView.getBoardPanel().zoomOut();
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
 
     }
 

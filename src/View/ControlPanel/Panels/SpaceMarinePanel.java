@@ -19,7 +19,6 @@ public class SpaceMarinePanel extends JPanel implements ActionListener {
     }
     public void createButton(){
         JButton move= new JButton("Move");
-        move.setFocusable(false);
         move.addActionListener(this);
         this.add(move);
     }
