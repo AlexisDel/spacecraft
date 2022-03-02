@@ -356,33 +356,82 @@ public class RandomLandGeneration {
     public Point nearestColoredTile(ArrayList<ArrayList<Color.color>> mountains, Point point, Color.color color) {
         // Point résultat (premier point autour de point déjà vue.
         Point res = (Point) point.clone();
-        res.translate(0, -2);
+        // On choisis aléatoirement le point de départ et on adapte le parcours en fonction
+        int parcours = this.rand.nextInt(4);
+        int dx;
+        int dy;
+        int evolx;
+        int evoly;
+        if(parcours == 0){
+            evolx = 0;
+            evoly = -1;
+            dx = -1;
+            dy = 1;
+
+        }
+        else if(parcours == 1){
+            evolx = 0;
+            evoly = 1;
+            dx = -1;
+            dy = -1;
+        }
+        else if(parcours == 2){
+            evolx = 1;
+            evoly = 0;
+            dx = -1;
+            dy = 1;
+        }
+        else{
+            evolx = -1;
+            evoly = 0;
+            dx = 1;
+            dy = -1;
+        }
+        res.translate(evolx, evoly);
+        // Tant qu'on a pas trouvé ce qu'on cherche :
         while (true) {
+            int tmp;
             while (res.y != point.y) {
-                res.translate(-1, 1);
+                res.translate(dx, dy);
                 if (isInBoard(res) && mountains.get(res.x).get(res.y).equals(color)) {
                     return res;
                 }
             }
+            // On calcul le vecteur normal au déplacement précédent
+            tmp = dx;
+            dx = dy;
+            dy = -dx;
             while (res.x != point.x) {
-                res.translate(1, 1);
+                res.translate(dx, dy);
                 if (isInBoard(res) && mountains.get(res.x).get(res.y).equals(color)) {
                     return res;
                 }
             }
+            // On calcul le vecteur normal au déplacement précédent
+            tmp = dx;
+            dx = dy;
+            dy = -dx;
             while (res.y != point.y) {
-                res.translate(1, -1);
+                res.translate(dx, dy);
                 if (isInBoard(res) && mountains.get(res.x).get(res.y).equals(color)) {
                     return res;
                 }
             }
+            // On calcul le vecteur normal au déplacement précédent
+            tmp = dx;
+            dx = dy;
+            dy = -dx;
             while (res.x != point.x) {
-                res.translate(-1, -1);
+                res.translate(dx, dy);
                 if (isInBoard(res) && mountains.get(res.x).get(res.y).equals(color)) {
                     return res;
                 }
             }
-            res.translate(0, -1);
+            // On calcul le vecteur normal au déplacement précédent (pour le prochain tour de boucle)
+            tmp = dx;
+            dx = dy;
+            dy = -dx;
+            res.translate(evolx, evoly);
         }
     }
 
