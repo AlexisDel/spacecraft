@@ -21,5 +21,6 @@ public class SpaceMarine extends Entity{
         setView(new SpaceMarineView(this));
         super.addAction(Action.MOVE);
         super.addAction(Action.ATTACK);
+        super.addAction(Action.MINE);
     }
 }

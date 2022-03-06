@@ -37,7 +37,7 @@ public class GameBoard {
         this.AlienView = new HitBoard(this);
         structures = new ArrayList<>();
         entities = new ArrayList<>();
-        this.initLand(5, 3);
+        this.initLand(5, 3, 10);
     }
 
     /**
@@ -71,7 +71,7 @@ public class GameBoard {
         return x >= 0 && y >= 0 && x < GameConstants.BOARD_SIZE && y < GameConstants.BOARD_SIZE;
     }
 
-    private void initLand(int nbAliens, int nbSpaceMarines){
+    private void initLand(int nbAliens, int nbSpaceMarines, int nbMeteorites){
         Random rand = new Random();
 
         // Trouve une zone libre assez grande sur la carte pour accueillir le vaisseau et les space marines
@@ -136,6 +136,36 @@ public class GameBoard {
             AlienMovements am = new AlienMovements(tempAlien, this.AlienView, this);
             am.start();
         }
+
+        //TODO URGENT
+        //Ajout des méteorites dans le tableau legit la meme chose que ton code pour le vaiseau, modularisable -J
+        /*boolean foundLocation = false;
+        for (int i = 0; i < nbMeteorites; i++) {
+
+            while (!foundLocation) {
+                int meteoriteX = rand.nextInt(GameConstants.BOARD_SIZE);
+                int meteoriteY = rand.nextInt(GameConstants.BOARD_SIZE);
+                boolean isThisPlaceBigEnough = true;
+                // Verifie que la zone trouvée est assez grande
+                for (int i = 0; i < 16; i++) {
+                    for (int j = 0; j < 16; j++) {
+                        if (!(this.isInBoard(meteoriteX + i, meteoriteY + j)) || !(this.hitbox.isEmpty(meteoriteX + i, meteoriteY + j))) {
+                            isThisPlaceBigEnough = false;
+                        }
+                    }
+                }
+                structures.add(new Spaceship(new Point(meteoriteX + 6, meteoriteY + 6), new Dimension(4, 4), 1000, 10));
+                for (int i = 6; i < 10; i++) {
+                    for (int j = 6; j < 10; j++) {
+                        this.hitbox.fill(new Point(meteoriteX + i, meteoriteY + j));
+                        this.AlienView.fill(new Point(meteoriteX + i, meteoriteY + j));
+                    }
+                }
+            }
+
+        }*/
+
+
     }
 
     /**

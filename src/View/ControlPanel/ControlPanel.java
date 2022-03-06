@@ -5,13 +5,11 @@ import Model.Layer1.Entities.Alien;
 import Model.Layer1.Entities.Entity;
 import Model.Layer1.Entities.SpaceMarine;
 import Model.Layer1.InteractiveItem;
+import Model.Layer1.Structures.Meteorite;
 import Model.Layer1.Structures.Spaceship;
 import Model.Layer1.Structures.Structure;
 import Model.Mouvements.Movement;
-import View.ControlPanel.Panels.AlienPanel;
-import View.ControlPanel.Panels.DefaultPanel;
-import View.ControlPanel.Panels.SpaceMarinePanel;
-import View.ControlPanel.Panels.SpaceshipPanel;
+import View.ControlPanel.Panels.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -47,6 +45,7 @@ public class ControlPanel extends JPanel {
         this.add(new AlienPanel(), Alien.class.getName());
         this.add(new SpaceMarinePanel(this), SpaceMarine.class.getName());
         this.add(new SpaceshipPanel(), Spaceship.class.getName());
+        this.add(new MeteoritePanel(this), Meteorite.class.getName());
 
         cardLayout.show(this, "DEFAULT");
     }
