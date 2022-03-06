@@ -19,7 +19,6 @@ import java.awt.*;
 import static View.ViewConstants.CONTROL_PANEL_HEIGHT;
 import static View.ViewConstants.CONTROL_PANEL_WIDTH;
 
-//TODO: Correct bug causing the requirement of double clicking
 /** this class creates the control panel with two sub panels : the one for the image and the one for the actions */
 public class ControlPanel extends JPanel {
 
@@ -48,6 +47,7 @@ public class ControlPanel extends JPanel {
         this.add(new AlienPanel(), Alien.class.getName());
         this.add(new SpaceMarinePanel(this), SpaceMarine.class.getName());
         this.add(new SpaceshipPanel(), Spaceship.class.getName());
+
         cardLayout.show(this, "DEFAULT");
     }
 

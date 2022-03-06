@@ -43,7 +43,7 @@ public abstract class Entity extends InteractiveItem {
         }
     }
 
-    // TODO supprimer si non utiliser
+    // TODO supprimer si non utilisé
     /**Ajoute une action à la liste d'actions de l'entité*/
     public void addAction(Action a){
         this.actions.add(a);
