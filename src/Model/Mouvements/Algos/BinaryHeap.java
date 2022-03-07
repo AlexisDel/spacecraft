@@ -98,8 +98,8 @@ public class BinaryHeap {
      */
     private void heapifyUp(int i) {
         Node tmp = heap[i];
-        // On compare en fonction des H-value des noeuds, le tas est un tas min.
-        while(i>0 && tmp.getH() < heap[parent(i)].getH()){
+        // On compare en fonction des F-value des noeuds, le tas est un tas min.
+        while(i>0 && tmp.getF() < heap[parent(i)].getF()){
             heap[i] = heap[parent(i)];
             i = parent(i);
         }
@@ -113,10 +113,10 @@ public class BinaryHeap {
     private void heapifyDown(int i){
         int child;
         Node tmp = heap[i];
-        // On compare en fonction des H-value des noeuds, le tas est un tas min.
+        // On compare en fonction des F-value des noeuds, le tas est un tas min.
         while(kthChild(i, 1) < heapSize){
             child = minChild(i);
-            if(tmp.getH() > heap[child].getH()){
+            if(tmp.getF() > heap[child].getF()){
                 heap[i] = heap[child];
             }
             else{
@@ -128,14 +128,14 @@ public class BinaryHeap {
     }
 
     /**
-     * méthode renvoyant l'enfant de plus petite H-value du noeud i
+     * méthode renvoyant l'enfant de plus petite F-value du noeud i
      * @param i
      * @return
      */
     private int minChild(int i){
         int leftChild = kthChild(i, 1);
         int rightChild = kthChild(i, 2);
-        return heap[leftChild].getH() < heap[rightChild].getH() ? leftChild:rightChild;
+        return heap[leftChild].getF() < heap[rightChild].getF() ? leftChild:rightChild;
     }
 
     /**
@@ -162,7 +162,7 @@ public class BinaryHeap {
     {
         String s = "nHeap = |";
         for (int i = 0; i < heapSize; i++)
-            s += i + " : " + heap[i].getH() +" | ";
+            s += i + " : " + heap[i].getF() +" | ";
         return s;
     }
     /**
@@ -183,43 +183,43 @@ public class BinaryHeap {
         BinaryHeap bh2 = new BinaryHeap(50);
 
         Node no0 = new Node(10,10);
-        no0.setH(0);
+        no0.setF(0);
         bh2.insert(no0);
 
         Node no1 = new Node(10,10);
-        no1.setH(1);
+        no1.setF(1);
         bh2.insert(no1);
 
         Node no2 = new Node(10,10);
-        no2.setH(2);
+        no2.setF(2);
         bh2.insert(no2);
 
         Node no3 = new Node(10,10);
-        no3.setH(3);
+        no3.setF(3);
         bh2.insert(no3);
 
         Node no4 = new Node(10,10);
-        no4.setH(4);
+        no4.setF(4);
         bh2.insert(no4);
 
         Node no5 = new Node(10,10);
-        no5.setH(5);
+        no5.setF(5);
         bh2.insert(no5);
 
         Node no6 = new Node(10,10);
-        no6.setH(6);
+        no6.setF(6);
         bh2.insert(no6);
 
         Node no7 = new Node(10,10);
-        no7.setH(7);
+        no7.setF(7);
         bh2.insert(no7);
 
         Node no8 = new Node(10,10);
-        no8.setH(8);
+        no8.setF(8);
         bh2.insert(no8);
 
         Node no9 = new Node(10,10);
-        no9.setH(9);
+        no9.setF(9);
         bh2.insert(no9);
 
         System.out.println(bh2);
@@ -230,7 +230,7 @@ public class BinaryHeap {
 
 
         Node no75 = new Node(10,10);
-        no75.setH(7.5);
+        no75.setF(7.5);
         bh2.insert(no75);
         System.out.println(bh2);
 
@@ -238,26 +238,26 @@ public class BinaryHeap {
         System.out.println(bh2);
 
         Node no05 = new Node(10,10);
-        no05.setH(0.5);
+        no05.setF(0.5);
         bh2.insert(no05);
         System.out.println(bh2);
 
         Node no10 = new Node(10,10);
-        no10.setH(10);
+        no10.setF(10);
         bh2.insert(no10);
 
         Node no11 = new Node(10,10);
-        no11.setH(11);
+        no11.setF(11);
         bh2.insert(no11);
 
         Node no12 = new Node(10,10);
-        no12.setH(12);
+        no12.setF(12);
         bh2.insert(no12);
 
         System.out.println(bh2);
 
         Node no15 = new Node(10,10);
-        no15.setH(1.5);
+        no15.setF(1.5);
         bh2.insert(no15);
 
         System.out.println(bh2);

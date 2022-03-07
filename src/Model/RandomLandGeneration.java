@@ -11,8 +11,8 @@ import static Model.GameConstants.MOUNTAIN_SIZE;
 public class RandomLandGeneration {
     private final ArrayList<Mountain> board;
 
-    private static final int nbMountains = 4;
-    private static int pourcent = 15;
+    private static final int nbMountains = 6;
+    private static int pourcent = 30;
     private final int borneMax;
     private final int borneMin;
     private final int dimH =  (GameConstants.BOARD_SIZE/ MOUNTAIN_SIZE);
@@ -33,7 +33,7 @@ public class RandomLandGeneration {
 
         // Génération de la seed :
         long seed = this.rand.nextLong();
-        this.rand.setSeed(seed);
+        this.rand.setSeed(137495780117517325L);
         System.out.println("la seed de la partie est " + seed);
 
         this.randomStartingBoard();
