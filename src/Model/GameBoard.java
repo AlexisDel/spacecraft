@@ -96,7 +96,6 @@ public class GameBoard {
             }
             if(isThisPlaceBigEnough){
                 // TODO : to modularize
-
                 // Ajoute le vaisseau sur la carte
                 int shipX = (SPACESHIP_LANDING_ZONE - SPACESHIP_WIDTH) / 2;
                 int shipY = (SPACESHIP_LANDING_ZONE - SPACESHIP_HEIGHT) / 2;
@@ -110,14 +109,16 @@ public class GameBoard {
 
                 // Ajoute les spaces marines sur la carte
                 for (int i = 0; i < nbSpaceMarines; i++) {
-                    int newX = areaX + ((SPACESHIP_LANDING_ZONE/2) + (rand.nextBoolean() ? 1 : -1) * ((SPACESHIP_WIDTH/2) + rand.nextInt((SPACESHIP_LANDING_ZONE-SPACESHIP_WIDTH)/4)));
-                    int newY = areaY + ((SPACESHIP_LANDING_ZONE/2) + (rand.nextBoolean() ? 1 : -1) * ((SPACESHIP_HEIGHT/2) + rand.nextInt((SPACESHIP_LANDING_ZONE-SPACESHIP_HEIGHT)/4)));
-                    entities.add(new SpaceMarine(new Point(newX,newY),200,10));
-                    this.hitbox.fill(new Point(newX, newY));
+                    int spaceMarineX = areaX + ((SPACESHIP_LANDING_ZONE/2) + (rand.nextBoolean() ? 1 : -1) * ((SPACESHIP_WIDTH/2) + rand.nextInt((SPACESHIP_LANDING_ZONE-SPACESHIP_WIDTH)/4)));
+                    int spaceMarineY = areaY + ((SPACESHIP_LANDING_ZONE/2) + (rand.nextBoolean() ? 1 : -1) * ((SPACESHIP_HEIGHT/2) + rand.nextInt((SPACESHIP_LANDING_ZONE-SPACESHIP_HEIGHT)/4)));
+                    if (this.hitbox.isEmpty(spaceMarineX, spaceMarineY)){
+                        entities.add(new SpaceMarine(new Point(spaceMarineX,spaceMarineY),200,10));
+                        this.hitbox.fill(new Point(spaceMarineX, spaceMarineY));
+                    }
                     for(int j = -fearOfSpaceMarines/2; j < fearOfSpaceMarines/2 + 1; j++){
                         for(int k = -fearOfSpaceMarines/2; k < fearOfSpaceMarines/2 + 1; k++){
-                            if(isInBoard(newX + j, newY + k)) {
-                                this.AlienView.fill(new Point(newX + j, newY + k));
+                            if(isInBoard(spaceMarineX + j, spaceMarineY + k)) {
+                                this.AlienView.fill(new Point(spaceMarineX + j, spaceMarineY + k));
                             }
                         }
                     }
