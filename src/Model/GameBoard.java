@@ -13,6 +13,8 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static Model.GameConstants.*;
+
 public class GameBoard {
 
     /** Le terrain du jeu */
@@ -69,7 +71,7 @@ public class GameBoard {
      * @return
      */
     public boolean isInBoard(int x, int y){
-        return x >= 0 && y >= 0 && x < GameConstants.BOARD_SIZE && y < GameConstants.BOARD_SIZE;
+        return x >= 0 && y >= 0 && x < BOARD_SIZE && y < BOARD_SIZE;
     }
 
     private void initLand(int nbAliens, int nbSpaceMarines, int nbMeteorites){
@@ -80,14 +82,14 @@ public class GameBoard {
         while (!findAPlace){
 
             // Calcul des coordonnées aléatoire pour la position du vaisseau
-            int shipX = rand.nextInt(GameConstants.BOARD_SIZE);
-            int shipY = rand.nextInt(GameConstants.BOARD_SIZE);
+            int areaX = rand.nextInt(BOARD_SIZE);
+            int areaY = rand.nextInt(BOARD_SIZE);
 
             boolean isThisPlaceBigEnough = true;
             // Verifie que la zone trouvée est assez grande
-            for (int i = 0; i < 16; i++){
-                for(int j = 0; j < 16; j++){
-                    if(!(this.isInBoard(shipX + i, shipY + j)) || !(this.hitbox.isEmpty(shipX + i, shipY + j))){
+            for (int i = 0; i < SPACESHIP_LANDING_ZONE; i++){
+                for(int j = 0; j < SPACESHIP_LANDING_ZONE; j++){
+                    if(!(this.isInBoard(areaX + i, areaY + j)) || !(this.hitbox.isEmpty(areaX + i, areaY + j))){
                         isThisPlaceBigEnough = false;
                     }
                 }
@@ -96,22 +98,24 @@ public class GameBoard {
                 // TODO : to modularize
 
                 // Ajoute le vaisseau sur la carte
-                structures.add(new Spaceship(new Point(shipX+6,shipY+6), new Dimension(4, 4), 1000, 10));
-                for(int i = 6; i < 10; i++){
-                    for(int j = 6; j < 10; j++){
-                        this.hitbox.fill(new Point(shipX + i, shipY + j));
-                        this.AlienView.fill(new Point(shipX + i, shipY + j));
+                int shipX = (SPACESHIP_LANDING_ZONE - SPACESHIP_WIDTH) / 2;
+                int shipY = (SPACESHIP_LANDING_ZONE - SPACESHIP_HEIGHT) / 2;
+                structures.add(new Spaceship(new Point(areaX+shipX,areaY+shipY), new Dimension(SPACESHIP_WIDTH, SPACESHIP_HEIGHT), 1000, 10));
+                for(int i = shipX; i < shipX+SPACESHIP_WIDTH; i++){
+                    for(int j = shipY; j < shipY+SPACESHIP_HEIGHT; j++){
+                        this.hitbox.fill(new Point(areaX + i, areaY + j));
+                        this.AlienView.fill(new Point(areaX + i, areaY + j));
                     }
                 }
 
                 // Ajoute les spaces marines sur la carte
                 for (int i = 0; i < nbSpaceMarines; i++) {
-                    int newX = shipX + (8 + (rand.nextBoolean() ? 1 : -1) * (2+rand.nextInt(4)));
-                    int newY = shipY + (8 + (rand.nextBoolean() ? 1 : -1) * (2+rand.nextInt(4)));
+                    int newX = areaX + ((SPACESHIP_LANDING_ZONE/2) + (rand.nextBoolean() ? 1 : -1) * ((SPACESHIP_WIDTH/2) + rand.nextInt((SPACESHIP_LANDING_ZONE-SPACESHIP_WIDTH)/4)));
+                    int newY = areaY + ((SPACESHIP_LANDING_ZONE/2) + (rand.nextBoolean() ? 1 : -1) * ((SPACESHIP_HEIGHT/2) + rand.nextInt((SPACESHIP_LANDING_ZONE-SPACESHIP_HEIGHT)/4)));
                     entities.add(new SpaceMarine(new Point(newX,newY),200,10));
                     this.hitbox.fill(new Point(newX, newY));
-                    for(int j = -GameConstants.fearOfSpaceMarines/2; j < GameConstants.fearOfSpaceMarines/2 + 1; j++){
-                        for(int k = -GameConstants.fearOfSpaceMarines/2; k < GameConstants.fearOfSpaceMarines/2 + 1; k++){
+                    for(int j = -fearOfSpaceMarines/2; j < fearOfSpaceMarines/2 + 1; j++){
+                        for(int k = -fearOfSpaceMarines/2; k < fearOfSpaceMarines/2 + 1; k++){
                             if(isInBoard(newX + j, newY + k)) {
                                 this.AlienView.fill(new Point(newX + j, newY + k));
                             }
@@ -125,11 +129,11 @@ public class GameBoard {
 
         // Enfin, on ajoute nbAliens alien dans le tableau
         for(int i = 0; i < nbAliens; i++){
-            int newX = rand.nextInt(GameConstants.BOARD_SIZE);
-            int newY = rand.nextInt(GameConstants.BOARD_SIZE);
+            int newX = rand.nextInt(BOARD_SIZE);
+            int newY = rand.nextInt(BOARD_SIZE);
             while (!this.AlienView.isEmpty(newX, newY)){
-                newX = rand.nextInt(GameConstants.BOARD_SIZE);
-                newY = rand.nextInt(GameConstants.BOARD_SIZE);
+                newX = rand.nextInt(BOARD_SIZE);
+                newY = rand.nextInt(BOARD_SIZE);
             }
             Alien tempAlien = new Alien(new Point(newX,newY), 150, 10);
             entities.add(tempAlien);

@@ -1,7 +1,6 @@
 package View.Board.Tiles;
 
 
-import Model.Layer1.Entities.Alien;
 import Model.Layer1.Structures.Meteorite;
 
 import java.awt.*;
