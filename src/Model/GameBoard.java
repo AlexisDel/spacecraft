@@ -4,6 +4,7 @@ import Model.Layer0.Mountain;
 import Model.Layer1.Entities.Alien;
 import Model.Layer1.Entities.Entity;
 import Model.Layer1.Entities.SpaceMarine;
+import Model.Layer1.Structures.Meteorite;
 import Model.Layer1.Structures.Spaceship;
 import Model.Layer1.Structures.Structure;
 import Model.Mouvements.HitBoard;
@@ -137,35 +138,51 @@ public class GameBoard {
             am.start();
         }
 
-        //TODO URGENT
-        //Ajout des méteorites dans le tableau legit la meme chose que ton code pour le vaiseau, modularisable -J
-        /*boolean foundLocation = false;
-        for (int i = 0; i < nbMeteorites; i++) {
 
+        /**Ajout des méteorites dans le tableau*/
+        initMeteorites(nbMeteorites);
+    }
+
+    /**
+     * Genère les méteorites qui seront qu début du jeu
+     * @param nbMeteorites int, désigne le nombre de météorites qui vont être placé sur la map
+     */
+    private void initMeteorites(int nbMeteorites){
+        Random rand = new Random();
+        /** pour chaque météorite:*/
+        for (int i = 0; i < nbMeteorites; i++) {
+            boolean foundLocation = false;
+            /**Tant qu'on n'a pas trouvé d'endroit où le posser:*/
             while (!foundLocation) {
+                //Générer des coordonnées aléatoires
                 int meteoriteX = rand.nextInt(GameConstants.BOARD_SIZE);
                 int meteoriteY = rand.nextInt(GameConstants.BOARD_SIZE);
                 boolean isThisPlaceBigEnough = true;
-                // Verifie que la zone trouvée est assez grande
-                for (int i = 0; i < 16; i++) {
-                    for (int j = 0; j < 16; j++) {
-                        if (!(this.isInBoard(meteoriteX + i, meteoriteY + j)) || !(this.hitbox.isEmpty(meteoriteX + i, meteoriteY + j))) {
+                // Verifier que la zone trouvée est assez grande
+                for (int i1 = 0; i1 < 2; i1++) {
+                    for (int j1 = 0; j1 < 2; j1++) {
+                        //ici on fixe la taille des méteorites à 2 et on verifie que le space de 2x2 soit bien dans la mp
+                        //et ne soit pas occupé par quelque chose d'autre
+                        if (!(this.isInBoard(meteoriteX + i1, meteoriteY + j1)) || !(this.hitbox.isEmpty(meteoriteX + i1, meteoriteY + j1))) {
                             isThisPlaceBigEnough = false;
                         }
                     }
                 }
-                structures.add(new Spaceship(new Point(meteoriteX + 6, meteoriteY + 6), new Dimension(4, 4), 1000, 10));
-                for (int i = 6; i < 10; i++) {
-                    for (int j = 6; j < 10; j++) {
-                        this.hitbox.fill(new Point(meteoriteX + i, meteoriteY + j));
-                        this.AlienView.fill(new Point(meteoriteX + i, meteoriteY + j));
+                //Si on a trouvé une cordonnée
+                if (isThisPlaceBigEnough){
+                    //Placer le météorite dans la map
+                    structures.add(new Meteorite(new Point(meteoriteX, meteoriteY), new Dimension(2, 2), 100));
+                    //On ajoute chaque case occupée par le méteorite dans la hitbox et la AlienView
+                    for (int i2 = 0; i2 < 2; i2++) {
+                        for (int j = 0; j < 2; j++) {
+                            this.hitbox.fill(new Point(meteoriteX + i2, meteoriteY + j));
+                            this.AlienView.fill(new Point(meteoriteX + i2, meteoriteY + j));
+                        }
                     }
+                    foundLocation=true;
                 }
             }
-
-        }*/
-
-
+        }
     }
 
     /**
