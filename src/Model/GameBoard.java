@@ -41,7 +41,7 @@ public class GameBoard {
         structures = new ArrayList<>();
         entities = new ArrayList<>();
         this.initLand(5, 3, 10);
-    }
+        }
 
     /**
      * @return La liste des montagnes présentes sur le terrain

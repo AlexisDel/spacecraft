@@ -1,5 +1,6 @@
 package View.Board;
 
+import Model.GameConstants;
 import Model.GameEngine;
 import Model.Layer0.Mountain;
 import Model.Layer1.Entities.Entity;
@@ -7,26 +8,24 @@ import Model.Layer1.Structures.Structure;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 
-import static Model.GameConstants.BOARD_SIZE;
-import static View.ViewConstants.BOARD_PANEL_HEIGHT;
-import static View.ViewConstants.BOARD_PANEL_WIDTH;
+import static View.ViewConstants.*;
 
 /**
  * Classe représentant l'affichage du terrain de jeu
  */
 public class BoardPanel extends JPanel {
 
-    // Taille d'une parcelle du terrain de jeu en pixel
-    private int tileSize = 16;
-    // Nombre de cases par affiché en largeur et en hauteur
-    private int maxBoardView = 40;
+    private double zoomFactor = 1;
+    private double zoomInterval = 1;
 
-    // Position de la fenêtre d'affichage (déplacement ZQSD)
+    // Position de la fenêtre d'affichage
     private int displayX = 0;
     private int displayY = 0;
-    private int displayMovementSpeed = 5;
+
+    private int cameraX = 0;
+    private int cameraY = 0;
+    private Point zoomPoint;
 
     // Moteur du jeu
     private GameEngine gameEngine;
@@ -45,25 +44,6 @@ public class BoardPanel extends JPanel {
         // tl;dr : improves game's rendering performance
         this.setDoubleBuffered(true);
 
-        //TODO : improves key bindings (read docs)
-        // Key Bindings
-        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "zoomIn");
-        this.getActionMap().put("zoomIn", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                zoomIn();
-            }
-        });
-
-        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "zoomOut");
-        this.getActionMap().put("zoomOut", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                zoomOut();
-            }
-        });
-
-
         // Layer 0
         this.setBackground(new Color(234, 138, 54));
 
@@ -73,24 +53,26 @@ public class BoardPanel extends JPanel {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
 
+        g2.translate(BOARD_PANEL_HEIGHT/2, BOARD_PANEL_HEIGHT/2);
+        g2.scale(zoomFactor, zoomFactor);
+        g2.translate(-BOARD_PANEL_WIDTH/2, -BOARD_PANEL_HEIGHT/2);
+
+        g2.translate(displayX, displayY);
+
+        //TODO : dessiner si afficher
+
         // Sand layer
         for (Mountain mountain : gameEngine.getGameBoard().getMountains()){
-            if (mountain.getView().getTileView().isDisplayed(displayX, displayY, maxBoardView)) {
-                mountain.getView().getTileView().draw(g2, tileSize, displayX, displayY);
-            }
+                mountain.getView().getTileView().draw(g2);
         }
 
         // Structure layer
         for (Structure structure : gameEngine.getGameBoard().getStructures()){
-            if (structure.getView().getTileView().isDisplayed(displayX, displayY, maxBoardView)){
-                structure.getView().getTileView().draw(g2, tileSize, displayX, displayY);
-            }
+                structure.getView().getTileView().draw(g2);
         }
         // Entity layer
         for (Entity entity : gameEngine.getGameBoard().getEntities()){
-            if (entity.getView().getTileView().isDisplayed(displayX, displayY, maxBoardView)){
-                entity.getView().getTileView().draw(g2, tileSize, displayX, displayY);
-            }
+                entity.getView().getTileView().draw(g2);
         }
 
         // Dispose of this graphics context and release any system ressources that it is using
@@ -105,10 +87,8 @@ public class BoardPanel extends JPanel {
      */
     public Point getTileFromClick(int mouseX, int mouseY) {
 
-        // Coordonnée x de la case sur laquelle le joueur a cliqué
-        int x = mouseX/tileSize + displayX;
-        // Coordonnée y de la case sur laquelle le joueur a cliqué
-        int y = mouseY/tileSize + displayY;
+        int x = (int) ((mouseX / (TILE_SIZE*zoomFactor)) + cameraX);
+        int y = (int) ((mouseY / (TILE_SIZE*zoomFactor)) + cameraY);
 
         System.out.println("("+x+", "+y+")");
         return new Point(x,y);
@@ -116,63 +96,26 @@ public class BoardPanel extends JPanel {
 
     /* --------------------- Déplacement/Zoom de l'affichage ----------------------- */
 
-    public void moveUp(){
-        if(displayY > 0){
-            displayY--;
+    public void zoomOut(int  mouseX, int mouseY) {
+        if (zoomFactor > 1) {
+            zoomFactor-=zoomInterval;
+            cameraX = (int) (GameConstants.BOARD_SIZE - ((1/zoomFactor) * GameConstants.BOARD_SIZE))/2;
+            cameraY = (int) (GameConstants.BOARD_SIZE - ((1/zoomFactor) * GameConstants.BOARD_SIZE))/2;
         }
     }
 
-    public void moveDown(){
-        if(displayY < BOARD_SIZE - maxBoardView){
-            displayY++;
-        }
-    }
-
-    public void moveLeft() {
-        if (displayX > 0){
-            displayX--;
-        }
-    }
-
-    public void moveRight() {
-        if (displayX < BOARD_SIZE - maxBoardView){
-            displayX++;
-        }
-    }
-
-    // TODO : ne pas reset la position de la caméra à chaque fois
-    public void zoomIn() {
-        if(maxBoardView/2 >= 40){
-            tileSize*=2;
-            maxBoardView/=2;
-            displayX = 0;
-            displayY = 0;
-            displayMovementSpeed++;
-        }
-    }
-
-    public void zoomOut(){
-        if(maxBoardView*2 <= BOARD_SIZE){
-            tileSize/=2;
-            maxBoardView *=2;
-            displayX = 0;
-            displayY = 0;
-            displayMovementSpeed--;
+    public void zoomIn(int  mouseX, int mouseY){
+        if (zoomFactor < 5){
+            zoomFactor+=zoomInterval;
+            cameraX = (int) (GameConstants.BOARD_SIZE - ((1/zoomFactor) * GameConstants.BOARD_SIZE))/2;
+            cameraY = (int) (GameConstants.BOARD_SIZE - ((1/zoomFactor) * GameConstants.BOARD_SIZE))/2;
         }
     }
 
     public void moveViewportX(int x){
-        if (displayX+x >= 0 && displayX+x <= BOARD_SIZE - maxBoardView){
-            displayX+=x;
-        }
+        //displayX+=x;
     }
     public void moveViewportY(int y){
-        if (displayY+y >= 0 && displayY+y <= BOARD_SIZE - maxBoardView){
-            displayY+=y;
-        }
-    }
-
-    public int getDisplayMovementSpeed() {
-        return displayMovementSpeed;
+        //displayY+=y;
     }
 }
