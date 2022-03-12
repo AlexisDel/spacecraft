@@ -5,8 +5,6 @@ import View.GameView;
 import java.awt.*;
 import java.awt.event.*;
 
-import static java.lang.Math.abs;
-
 public class BoardController implements MouseListener, MouseMotionListener, MouseWheelListener {
 
     private Point mousePt;
@@ -63,19 +61,10 @@ public class BoardController implements MouseListener, MouseMotionListener, Mous
         int dx = (e.getX() - mousePt.x);
         // Déplacement de la souris en y
         int dy = (e.getY() - mousePt.y);
-        // Accumulateur représentant la distance déjà parcourus par la souris
-        mouseDraggedThresholdX+=dx;
-        mouseDraggedThresholdY+=dy;
 
-        // Si la distance parcourue est jugé assez grande, on déplace la fenêtre d'affichage
-        if (abs(mouseDraggedThresholdX) > gameView.getBoardPanel().getDisplayMovementSpeed()){
-            gameView.getBoardPanel().moveViewportX(-mouseDraggedThresholdX/gameView.getBoardPanel().getDisplayMovementSpeed());
-            mouseDraggedThresholdX = 0;
-        }
-        if (abs(mouseDraggedThresholdY) > gameView.getBoardPanel().getDisplayMovementSpeed()){
-            gameView.getBoardPanel().moveViewportY(-mouseDraggedThresholdY/gameView.getBoardPanel().getDisplayMovementSpeed());
-            mouseDraggedThresholdY = 0;
-        }
+        gameView.getBoardPanel().moveViewportX(dx);
+        gameView.getBoardPanel().moveViewportY(dy);
+
         // Réinitialise la position de la souris
         mousePt = e.getPoint();
     }
@@ -87,12 +76,11 @@ public class BoardController implements MouseListener, MouseMotionListener, Mous
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
-        if (e.isControlDown()) {
-            if (e.getWheelRotation() < 0) {
-                gameView.getBoardPanel().zoomIn();
-            } else {
-                gameView.getBoardPanel().zoomOut();
-            }
+        if (e.getWheelRotation() > 0) {
+            gameView.getBoardPanel().zoomOut(e.getX(), e.getY());
+        }
+        if (e.getWheelRotation() < 0) {
+            gameView.getBoardPanel().zoomIn(e.getX(), e.getY());
         }
     }
 }

@@ -4,6 +4,8 @@ import Model.Layer0.Mountain;
 
 import java.awt.*;
 
+import static View.ViewConstants.TILE_SIZE;
+
 public class MountainTile extends ItemTile {
 
     public MountainTile(Mountain mountain) {
@@ -11,8 +13,8 @@ public class MountainTile extends ItemTile {
     }
 
     @Override
-    public void draw(Graphics2D g, int tileSize, int displayX, int displayY) {
+    public void draw(Graphics2D g) {
         g.setColor(Color.GRAY);
-        g.fillRect((item.getCoordinate().x-displayX)*tileSize, (item.getCoordinate().y-displayY)*tileSize, item.getDimension().width*tileSize, item.getDimension().height*tileSize);
+        g.fillRect((item.getCoordinate().x)*TILE_SIZE, (item.getCoordinate().y)*TILE_SIZE, item.getDimension().width*TILE_SIZE, item.getDimension().height*TILE_SIZE);
     }
 }
