@@ -33,8 +33,8 @@ public class RandomLandGeneration {
 
         // Génération de la seed :
         long seed = this.rand.nextLong();
-        this.rand.setSeed(137495780117517325L);
-        //this.rand.setSeed(seed);
+        //this.rand.setSeed(137495780117517325L);
+        this.rand.setSeed(seed);
         System.out.println("la seed de la partie est " + seed);
 
         this.randomStartingBoard();
@@ -76,7 +76,6 @@ public class RandomLandGeneration {
                 mountains.get(i).add(Color.color.notseen);
             }
         }
-
         // Le contour est une grande montagne
         for(int i = 0; i < dimH; i++){
             mountains.get(i).set(0, Color.color.mountain);
@@ -89,21 +88,18 @@ public class RandomLandGeneration {
         // On veut ensuite générer aléatoirement un relief dans la map
 
         int newX, newY;
-
         for (int i = 0; i < nbMountains; i++) {
-            newX = this.rand.nextInt(dimH);
-            newY = this.rand.nextInt(dimW);
+            newX = this.rand.nextInt(dimH - 2) + 1;
+            newY = this.rand.nextInt(dimW - 2) + 1;
             // Le relief doit être à une case vide
             while (!(mountains.get(newX).get(newY).equals(Color.color.notseen))) {
-                newX = this.rand.nextInt(dimH);
-                newY = this.rand.nextInt(dimW);
+                newX = this.rand.nextInt(dimH - 2) + 1;
+                newY = this.rand.nextInt(dimW - 2) + 1;
             }
             mountains = this.generateMountain(new Point(newX, newY), mountains);
         }
-
         // Appel à la fonction clear mountains qui rend le graph formé par la grille convexe.
         this.clearMountains(mountains);
-
         // On applique à board la génération effectuée
 
         for (int i = 0; i < dimH; i++) {
@@ -204,7 +200,6 @@ public class RandomLandGeneration {
         Point colorStartingPoint = new Point(0,0);
         // Coloration du tableau mountains
         // Corp de cette fonction. Quand on trouve un point non vue, on le relie à un point vue et on recommanbce à 0.
-
         // On commence par colorier une première case :
         boolean flag = true;
         for(int i = 0; flag&&(i < dimH); i++){
@@ -348,11 +343,11 @@ public class RandomLandGeneration {
     }
 
     /**
-     * fonction renvoyant la premiere case déjà vue trouvée autour du point de départ
-     *
-     * @param mountains
-     * @param point
-     * @return
+     * fonction renvoyant la premiere case colorée trouvée autour du point de départ suivant un BFS
+     * @param mountains le tableau d'informations
+     * @param point le point de départ
+     * @param color la couleur
+     * @return le point où se trouve l'information recherchée
      */
     public Point nearestColoredTile(ArrayList<ArrayList<Color.color>> mountains, Point point, Color.color color) {
         // Point résultat (premier point autour de point déjà vue.
@@ -368,70 +363,59 @@ public class RandomLandGeneration {
             evoly = -1;
             dx = -1;
             dy = 1;
-
         }
         else if(parcours == 1){
             evolx = 0;
             evoly = 1;
-            dx = -1;
+            dx = 1;
             dy = -1;
         }
         else if(parcours == 2){
             evolx = 1;
             evoly = 0;
             dx = -1;
-            dy = 1;
+            dy = -1;
         }
         else{
             evolx = -1;
             evoly = 0;
             dx = 1;
-            dy = -1;
+            dy = 1;
         }
         res.translate(evolx, evoly);
         // Tant qu'on a pas trouvé ce qu'on cherche :
         while (true) {
             int tmp;
-            while (res.y != point.y) {
-                res.translate(dx, dy);
-                if (isInBoard(res) && mountains.get(res.x).get(res.y).equals(color)) {
-                    return res;
+            // On veut faire des déplacement dans les 4 directions pour boucler, on exécute donc 2 fois le code ci-dessous
+            for(int i = 0; i < 2; i++){
+                // Si on est sur le parcours 0 ou 1, on compare les x, sinon, on compare les y
+                while(((parcours == 0 || parcours == 1) && res.y != point.y) || ((parcours == 2 || parcours == 3) && res.x != point.x)){
+                    res.translate(dx, dy);
+                    // Si on trouve ce qu'on cherche
+                    if (isInBoard(res) && mountains.get(res.x).get(res.y).equals(color)) {
+                        // On renvoie la position
+                        return res;
+                    }
                 }
-            }
-            // On calcul le vecteur normal au déplacement précédent
-            tmp = dx;
-            dx = dy;
-            dy = -dx;
-            while (res.x != point.x) {
-                res.translate(dx, dy);
-                if (isInBoard(res) && mountains.get(res.x).get(res.y).equals(color)) {
-                    return res;
+                // On calcul le vecteur normal au déplacement précédent pour changer de direction
+                tmp = dx;
+                dx = dy;
+                dy = -tmp;
+                // Si on est sur le parcours 0 ou 1 on compare les y, sinon on compare les x
+                while(((parcours == 0 || parcours == 1) && res.x != point.x) || ((parcours == 2 || parcours == 3) && res.y != point.y)){
+                    res.translate(dx, dy);
+                    // Si on trouve ce qu'on cherche
+                    if (isInBoard(res) && mountains.get(res.x).get(res.y).equals(color)) {
+                        // On renvoie la position
+                        return res;
+                    }
                 }
+                // On calcul le vecteur normal au déplacement précédent pour changer de direction
+                tmp = dx;
+                dx = dy;
+                dy = -tmp;
             }
-            // On calcul le vecteur normal au déplacement précédent
-            tmp = dx;
-            dx = dy;
-            dy = -dx;
-            while (res.y != point.y) {
-                res.translate(dx, dy);
-                if (isInBoard(res) && mountains.get(res.x).get(res.y).equals(color)) {
-                    return res;
-                }
-            }
-            // On calcul le vecteur normal au déplacement précédent
-            tmp = dx;
-            dx = dy;
-            dy = -dx;
-            while (res.x != point.x) {
-                res.translate(dx, dy);
-                if (isInBoard(res) && mountains.get(res.x).get(res.y).equals(color)) {
-                    return res;
-                }
-            }
-            // On calcul le vecteur normal au déplacement précédent (pour le prochain tour de boucle)
-            tmp = dx;
-            dx = dy;
-            dy = -dx;
+            // On effectue la translation de départ pour faire évoluer la profondeur.
             res.translate(evolx, evoly);
         }
     }
