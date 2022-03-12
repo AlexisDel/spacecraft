@@ -111,10 +111,13 @@ public class GameBoard {
                 for (int i = 0; i < nbSpaceMarines; i++) {
                     int spaceMarineX = areaX + ((SPACESHIP_LANDING_ZONE/2) + (rand.nextBoolean() ? 1 : -1) * ((SPACESHIP_WIDTH/2) + rand.nextInt((SPACESHIP_LANDING_ZONE-SPACESHIP_WIDTH)/4)));
                     int spaceMarineY = areaY + ((SPACESHIP_LANDING_ZONE/2) + (rand.nextBoolean() ? 1 : -1) * ((SPACESHIP_HEIGHT/2) + rand.nextInt((SPACESHIP_LANDING_ZONE-SPACESHIP_HEIGHT)/4)));
-                    if (this.hitbox.isEmpty(spaceMarineX, spaceMarineY)){
-                        entities.add(new SpaceMarine(new Point(spaceMarineX,spaceMarineY),200,10));
-                        this.hitbox.fill(new Point(spaceMarineX, spaceMarineY));
+                    while (!this.hitbox.isInBoard(spaceMarineX, spaceMarineY) || !this.hitbox.isEmpty(spaceMarineX, spaceMarineY)){
+                        spaceMarineX = areaX + ((SPACESHIP_LANDING_ZONE/2) + (rand.nextBoolean() ? 1 : -1) * ((SPACESHIP_WIDTH/2) + rand.nextInt((SPACESHIP_LANDING_ZONE-SPACESHIP_WIDTH)/4)));
+                        spaceMarineY = areaY + ((SPACESHIP_LANDING_ZONE/2) + (rand.nextBoolean() ? 1 : -1) * ((SPACESHIP_HEIGHT/2) + rand.nextInt((SPACESHIP_LANDING_ZONE-SPACESHIP_HEIGHT)/4)));
+
                     }
+                    entities.add(new SpaceMarine(new Point(spaceMarineX,spaceMarineY),200,10));
+                    this.hitbox.fill(new Point(spaceMarineX, spaceMarineY));
                     for(int j = -fearOfSpaceMarines/2; j < fearOfSpaceMarines/2 + 1; j++){
                         for(int k = -fearOfSpaceMarines/2; k < fearOfSpaceMarines/2 + 1; k++){
                             if(isInBoard(spaceMarineX + j, spaceMarineY + k)) {
@@ -163,6 +166,7 @@ public class GameBoard {
                 int meteoriteY = rand.nextInt(GameConstants.BOARD_SIZE);
                 boolean isThisPlaceBigEnough = true;
                 // Verifier que la zone trouvée est assez grande
+                //Todo : remplacer 2 par meteoritesSize ?
                 for (int i1 = 0; i1 < 2; i1++) {
                     for (int j1 = 0; j1 < 2; j1++) {
                         //ici on fixe la taille des méteorites à 2 et on verifie que le space de 2x2 soit bien dans la mp
@@ -175,6 +179,7 @@ public class GameBoard {
                 //Si on a trouvé une cordonnée
                 if (isThisPlaceBigEnough){
                     //Placer le météorite dans la map
+                    //todo : de même
                     structures.add(new Meteorite(new Point(meteoriteX, meteoriteY), new Dimension(2, 2), 100));
                     //On ajoute chaque case occupée par le méteorite dans la hitbox et la AlienView
                     for (int i2 = 0; i2 < 2; i2++) {

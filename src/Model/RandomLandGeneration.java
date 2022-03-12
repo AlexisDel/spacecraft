@@ -34,6 +34,7 @@ public class RandomLandGeneration {
         // Génération de la seed :
         long seed = this.rand.nextLong();
         this.rand.setSeed(137495780117517325L);
+        //this.rand.setSeed(seed);
         System.out.println("la seed de la partie est " + seed);
 
         this.randomStartingBoard();
