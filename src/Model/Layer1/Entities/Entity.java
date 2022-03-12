@@ -4,7 +4,6 @@ import Model.Layer1.InteractiveItem;
 import Model.Mouvements.Direction;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 import static java.lang.Thread.sleep;
 
@@ -15,7 +14,7 @@ import static java.lang.Thread.sleep;
 public abstract class Entity extends InteractiveItem {
     /**Attributes*/
     private int speed;
-    private ArrayList<Action>actions;
+    private Direction direction;
     private boolean isMoving;
     /**
      * Constructeur
@@ -29,28 +28,19 @@ public abstract class Entity extends InteractiveItem {
     public Entity(String name,Point coordinate, Dimension dimension, int healthPoints, int speed) {
         super(name, coordinate, dimension, healthPoints);
         this.speed = speed;
-        this.actions= new ArrayList<>();
+        this.direction = Direction.EAST;
         this.isMoving = false;
     }
 
     /** Cette méthode déplace l'entité */
     public void move(Direction direction){
+        this.direction = direction;
         switch (direction){
             case NORTH -> super.getCoordinate().translate(-1, 0);
             case SOUTH -> super.getCoordinate().translate(1, 0);
             case EAST -> super.getCoordinate().translate(0, 1);
             case WEST -> super.getCoordinate().translate(0, -1);
         }
-    }
-
-    // TODO supprimer si non utilisé
-    /**Ajoute une action à la liste d'actions de l'entité*/
-    public void addAction(Action a){
-        this.actions.add(a);
-    }
-
-    public ArrayList<Action> getActions() {
-        return actions;
     }
 
     /**
@@ -70,5 +60,11 @@ public abstract class Entity extends InteractiveItem {
      * getter du booléen désignant si l'entité est en train de bouger ou non
      * @return
      */
-    public boolean getIsMoving(){return this.isMoving;}
+    public boolean getIsMoving(){
+        return this.isMoving;
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
 }

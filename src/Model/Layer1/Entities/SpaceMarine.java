@@ -19,8 +19,5 @@ public class SpaceMarine extends Entity{
     public SpaceMarine(Point coordinate, int healthPoints, int speed) {
         super("Space Marine",coordinate, new Dimension(1,1), healthPoints, speed);
         setView(new SpaceMarineView(this));
-        super.addAction(Action.MOVE);
-        super.addAction(Action.ATTACK);
-        super.addAction(Action.MINE);
     }
 }

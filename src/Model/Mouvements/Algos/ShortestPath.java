@@ -5,7 +5,6 @@ import Model.Mouvements.HitBoard;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 import static java.lang.Math.pow;
@@ -32,7 +31,7 @@ public class ShortestPath {
      * @return
      */
     private double heuristic(Node p1, Node p2){
-        return Math.sqrt(pow((p1.getPosx() - p2.getPosx()), 2) + pow((p1.getPosy() - p2.getPosy()), 2));
+        return pow((p1.getPosx() - p2.getPosx()), 2) + pow((p1.getPosy() - p2.getPosy()), 2);
     }
 
     /**

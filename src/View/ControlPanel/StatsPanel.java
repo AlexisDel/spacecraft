@@ -1,6 +1,5 @@
 package View.ControlPanel;
 
-import Model.Layer1.Entities.Action;
 import Model.Layer1.Entities.Entity;
 import Model.Layer1.InteractiveItem;
 import Model.Layer1.Structures.Structure;
@@ -45,13 +44,6 @@ public class StatsPanel extends JPanel implements ActionListener{
         JLabel temp=new JLabel(e.getName());
         tools.add(temp);
         tools.addSeparator();
-        //Add the actions
-        for(Action a: e.getActions()){
-            JButton button = new JButton(a.toString());
-            button.setFocusable(false);
-            button.addActionListener(this);
-            this.tools.add(button);
-        }
     }
 
     public void addStructureStats(Structure s){
