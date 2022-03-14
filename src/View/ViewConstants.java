@@ -4,7 +4,7 @@ public class ViewConstants {
 
     public static final int FPS = 60;
 
-    public static final int TILE_SIZE = 4;
+    public static final int TILE_SIZE = 2;
 
     public static final int WINDOW_WIDTH = 940;
     public static final int WINDOW_HEIGHT = 640;
