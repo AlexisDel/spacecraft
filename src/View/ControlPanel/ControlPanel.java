@@ -27,13 +27,13 @@ public class ControlPanel extends JPanel {
     private InteractiveItem tagetItem;
     private Point targetCoord;
     private Action waitingAction;
+    private Action executingAction;
 
     private CardLayout cardLayout = new CardLayout();
 
     public ControlPanel(GameEngine gameEngine){
         this.gameEngine = gameEngine;
 
-        //this.waitingForCoord=false;
         this.waitingAction=Action.NONE;
         /**init selected entity to first entity on the board, it needs a non null displayPanel*/
         this.selectedItem =this.gameEngine.getGameBoard().getEntities().get(0);
@@ -106,11 +106,6 @@ public class ControlPanel extends JPanel {
                 entity.setIsMoving(false);
                 Movement walk = new Movement(entity, this.targetCoord, gameEngine.getGameBoard());
             }
-            case MINE -> {
-            }
-            case ATTACK -> {
-
-            }
         }
         this.waitingAction=Action.NONE;
 
@@ -127,6 +122,10 @@ public class ControlPanel extends JPanel {
 
     public void setWaitingAction(Action waitingAction) {
         this.waitingAction = waitingAction;
+    }
+
+    public void setExecutingAction(Action executingAction) {
+        this.executingAction = executingAction;
     }
 
     public InteractiveItem getSelectedItem() {

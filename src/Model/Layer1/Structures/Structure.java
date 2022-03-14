@@ -54,17 +54,21 @@ public abstract class Structure extends InteractiveItem {
     public boolean isAjdacent(Point p){
         for(int i = 0 ; i < this.getDimension().width; i++){
             if(new Point( this.getCoordinate().x - 1, i + this.getCoordinate().y).equals(p)){
+                System.out.println("FOUND 1");
                 return true;
             }
             if(new Point( this.getCoordinate().x + this.getDimension().height, i + this.getCoordinate().y).equals(p)){
+                System.out.println("FOUND  2");
                 return true;
             }
         }
         for(int i = 0 ; i < this.getDimension().height; i++){
             if(new Point(i + this.getCoordinate().x, this.getCoordinate().x - 1).equals(p)){
+                System.out.println("FOUND   3");
                 return true;
             }
             if(new Point(i + this.getCoordinate().x, this.getCoordinate().x + this.getDimension().width).equals(p)){
+                System.out.println("FOUND    4");
                 return true;
             }
         }

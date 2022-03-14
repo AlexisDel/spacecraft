@@ -22,7 +22,7 @@ public class Mine extends Thread{
         // Météorite à détruire
         Meteorite meteorite = this.choseMeteorite();
         // Tant que la météorite à des HP
-        while(meteorite != null && meteorite.getHealthPoints() > 0){
+        while(meteorite != null && meteorite.getHealthPoints() > 0 && false){
             System.out.println("MINNNINNNNNNGGGGGG BITCHHH");
             // On mine
             meteorite.mined(50);
@@ -37,7 +37,7 @@ public class Mine extends Thread{
             }
         }
         // La météorite n'as plus de vie, on la supprime
-        this.gameboard.getStructures().remove(meteorite);
+        //this.gameboard.getStructures().remove(meteorite);
         //todo : supprimer des HitBoxs
     }
 
