@@ -1,6 +1,5 @@
 package View.Board;
 
-import Model.GameConstants;
 import Model.GameEngine;
 import Model.Layer0.Mountain;
 import Model.Layer1.Entities.Entity;
@@ -16,8 +15,8 @@ import static View.ViewConstants.*;
  */
 public class BoardPanel extends JPanel {
 
-    private double zoomFactor = 1;
-    private double zoomInterval = 1;
+    private int zoomFactor = 1;
+    private int zoomInterval = 1;
 
     // Position de la fenêtre d'affichage
     private int displayX = 0;
@@ -25,7 +24,8 @@ public class BoardPanel extends JPanel {
 
     private int cameraX = 0;
     private int cameraY = 0;
-    private Point zoomPoint;
+    private int zoomX = 0;
+    private int zoomY = 0;
 
     // Moteur du jeu
     private GameEngine gameEngine;
@@ -53,9 +53,9 @@ public class BoardPanel extends JPanel {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
 
-        g2.translate(BOARD_PANEL_HEIGHT/2, BOARD_PANEL_HEIGHT/2);
+        g2.translate(zoomX, zoomY);
         g2.scale(zoomFactor, zoomFactor);
-        g2.translate(-BOARD_PANEL_WIDTH/2, -BOARD_PANEL_HEIGHT/2);
+        g2.translate(-zoomX, -zoomY);
 
         g2.translate(displayX, displayY);
 
@@ -87,8 +87,8 @@ public class BoardPanel extends JPanel {
      */
     public Point getTileFromClick(int mouseX, int mouseY) {
 
-        int x = (int) ((mouseX / (TILE_SIZE*zoomFactor)) + cameraX);
-        int y = (int) ((mouseY / (TILE_SIZE*zoomFactor)) + cameraY);
+        int x = ((mouseX / zoomFactor) + cameraX) / TILE_SIZE;
+        int y = ((mouseY / zoomFactor) + cameraY) / TILE_SIZE;
 
         System.out.println("("+x+", "+y+")");
         return new Point(x,y);
@@ -99,23 +99,31 @@ public class BoardPanel extends JPanel {
     public void zoomOut(int  mouseX, int mouseY) {
         if (zoomFactor > 1) {
             zoomFactor-=zoomInterval;
-            cameraX = (int) (GameConstants.BOARD_SIZE - ((1/zoomFactor) * GameConstants.BOARD_SIZE))/2;
-            cameraY = (int) (GameConstants.BOARD_SIZE - ((1/zoomFactor) * GameConstants.BOARD_SIZE))/2;
+            zoomX = mouseX;
+            zoomY = mouseY;
+            int viewPortSizeX = BOARD_PANEL_WIDTH / zoomFactor;
+            int viewPortSizeY = BOARD_PANEL_HEIGHT / zoomFactor;
+            cameraX = (BOARD_PANEL_WIDTH - viewPortSizeX) * mouseX/BOARD_PANEL_WIDTH;
+            cameraY = (BOARD_PANEL_HEIGHT - viewPortSizeY) * mouseY/BOARD_PANEL_HEIGHT;
         }
     }
 
     public void zoomIn(int  mouseX, int mouseY){
         if (zoomFactor < 5){
             zoomFactor+=zoomInterval;
-            cameraX = (int) (GameConstants.BOARD_SIZE - ((1/zoomFactor) * GameConstants.BOARD_SIZE))/2;
-            cameraY = (int) (GameConstants.BOARD_SIZE - ((1/zoomFactor) * GameConstants.BOARD_SIZE))/2;
+            zoomX = mouseX;
+            zoomY = mouseY;
+            int viewPortSizeX = BOARD_PANEL_WIDTH / zoomFactor;
+            int viewPortSizeY = BOARD_PANEL_HEIGHT / zoomFactor;
+            cameraX = (BOARD_PANEL_WIDTH - viewPortSizeX) * mouseX/BOARD_PANEL_WIDTH;
+            cameraY = (BOARD_PANEL_HEIGHT - viewPortSizeY) * mouseY/BOARD_PANEL_HEIGHT;
         }
     }
 
     public void moveViewportX(int x){
-        //displayX+=x;
+        displayX+=x;
     }
     public void moveViewportY(int y){
-        //displayY+=y;
+        displayY+=y;
     }
 }
