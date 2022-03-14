@@ -16,8 +16,7 @@ public class Meteorite extends Structure {
     public Meteorite(Point coordinate, Dimension dimension, int healthPoints) {
         super("Meteorite", coordinate, dimension, healthPoints, 0);
 
-        //Les roches sont les unités
-        this.rocks= dimension.height*dimension.width*10;
+        this.rocks= healthPoints;
         setView(new MeteoriteView(this));
 
     }
@@ -29,4 +28,15 @@ public class Meteorite extends Structure {
     public void setRocks(int rocks) {
         this.rocks = rocks;
     }
+
+    /**
+     * Cette méthode est utilisée quand on mine un météorite, on diminue les points de vie et les roches
+     * Les roches diminuent de 1 et les HealthPoints diminuent de hitPoints
+     * @param hitPoints
+     */
+    public void mined(int hitPoints){
+        this.setHealthPoints(this.getHealthPoints()-hitPoints);
+        this.rocks-=1;
+    }
+
 }

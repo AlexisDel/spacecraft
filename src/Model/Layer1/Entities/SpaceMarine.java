@@ -14,10 +14,10 @@ public class SpaceMarine extends Entity{
      *
      * @param coordinate   coordonnées globales du SpaceMarine
      * @param healthPoints points de vie du SpaceMarine
-     * @param speed        vitesse en ms du SpaceMarine
+     * @param hitSpeed        vitesse de Attaque et de minage du SpaceMarine
      */
-    public SpaceMarine(Point coordinate, int healthPoints, int speed) {
-        super("Space Marine",coordinate, new Dimension(1,1), healthPoints, speed);
+    public SpaceMarine(Point coordinate, int healthPoints, int hitSpeed) {
+        super("Space Marine",coordinate, new Dimension(1,1), healthPoints, hitSpeed);
         setView(new SpaceMarineView(this));
     }
 }

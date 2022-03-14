@@ -133,6 +133,10 @@ public class ControlPanel extends JPanel {
         return selectedItem;
     }
 
+    public GameEngine getGameEngine() {
+        return gameEngine;
+    }
+
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         this.repaint();

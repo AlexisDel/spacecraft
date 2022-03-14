@@ -50,4 +50,5 @@ public abstract class Structure extends InteractiveItem {
     public void removeOccupant(Entity e){
         this.occupants.remove(e);
     }
+
 }

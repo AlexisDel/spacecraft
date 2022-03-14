@@ -16,6 +16,7 @@ public abstract class Entity extends InteractiveItem {
     private int speed;
     private Direction direction;
     private boolean isMoving;
+    private int rocks;
     /**
      * Constructeur
      * @param coordinate   coordonnées globales de l'entité
@@ -27,6 +28,7 @@ public abstract class Entity extends InteractiveItem {
     // TODO fix le gameBoard
     public Entity(String name,Point coordinate, Dimension dimension, int healthPoints, int speed) {
         super(name, coordinate, dimension, healthPoints);
+        this.rocks=0;
         this.speed = speed;
         this.direction = Direction.EAST;
         this.isMoving = false;
@@ -66,5 +68,13 @@ public abstract class Entity extends InteractiveItem {
 
     public Direction getDirection() {
         return direction;
+    }
+
+    public int getRocks() {
+        return rocks;
+    }
+
+    public void setRocks(int rocks) {
+        this.rocks = rocks;
     }
 }

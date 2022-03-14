@@ -26,6 +26,10 @@ public class InteractiveItem extends Item {
         return healthPoints;
     }
 
+    public void setHealthPoints(int healthPoints) {
+        this.healthPoints = healthPoints;
+    }
+
     public String getName(){ return this.name;}
 
 }
