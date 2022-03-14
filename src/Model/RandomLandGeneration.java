@@ -11,8 +11,8 @@ import static Model.GameConstants.MOUNTAIN_SIZE;
 public class RandomLandGeneration {
     private final ArrayList<Mountain> board;
 
-    private static final int nbMountains = 6;
-    private static int pourcent = 30;
+    private static final int nbMountains = 4;
+    private static int pourcent = 20;
     private final int borneMax;
     private final int borneMin;
     private final int dimH =  (GameConstants.BOARD_SIZE/ MOUNTAIN_SIZE);

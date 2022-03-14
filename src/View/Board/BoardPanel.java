@@ -22,6 +22,8 @@ public class BoardPanel extends JPanel {
     private int displayX = 0;
     private int displayY = 0;
 
+    int viewPortSize = BOARD_PANEL_WIDTH;
+
     private int cameraX = 0;
     private int cameraY = 0;
     private int zoomX = 0;
@@ -87,8 +89,8 @@ public class BoardPanel extends JPanel {
      */
     public Point getTileFromClick(int mouseX, int mouseY) {
 
-        int x = ((mouseX / zoomFactor) + cameraX) / TILE_SIZE;
-        int y = ((mouseY / zoomFactor) + cameraY) / TILE_SIZE;
+        int x = ((mouseX / zoomFactor) + cameraX - displayX) / TILE_SIZE;
+        int y = ((mouseY / zoomFactor) + cameraY - displayY) / TILE_SIZE;
 
         System.out.println("("+x+", "+y+")");
         return new Point(x,y);
@@ -113,10 +115,10 @@ public class BoardPanel extends JPanel {
             zoomFactor+=zoomInterval;
             zoomX = mouseX;
             zoomY = mouseY;
-            int viewPortSizeX = BOARD_PANEL_WIDTH / zoomFactor;
-            int viewPortSizeY = BOARD_PANEL_HEIGHT / zoomFactor;
-            cameraX = (BOARD_PANEL_WIDTH - viewPortSizeX) * mouseX/BOARD_PANEL_WIDTH;
-            cameraY = (BOARD_PANEL_HEIGHT - viewPortSizeY) * mouseY/BOARD_PANEL_HEIGHT;
+            viewPortSize = BOARD_PANEL_WIDTH / zoomFactor;
+            cameraX = (BOARD_PANEL_WIDTH - viewPortSize) * mouseX/BOARD_PANEL_WIDTH;
+            cameraY = (BOARD_PANEL_HEIGHT - viewPortSize) * mouseY/BOARD_PANEL_HEIGHT;
+            System.out.println("camera : ("+cameraX+")");
         }
     }
 
