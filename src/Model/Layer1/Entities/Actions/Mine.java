@@ -22,7 +22,7 @@ public class Mine extends Thread{
         // Météorite à détruire
         Meteorite meteorite = this.choseMeteorite();
         // Tant que la météorite à des HP
-        while(meteorite.getHealthPoints() > 0){
+        while(meteorite != null && meteorite.getHealthPoints() > 0){
             System.out.println("MINNNINNNNNNGGGGGG BITCHHH");
             // On mine
             meteorite.mined(50);
@@ -38,6 +38,7 @@ public class Mine extends Thread{
         }
         // La météorite n'as plus de vie, on la supprime
         this.gameboard.getStructures().remove(meteorite);
+        //todo : supprimer des HitBoxs
     }
 
     /**
@@ -47,9 +48,7 @@ public class Mine extends Thread{
     private Meteorite choseMeteorite(){
         Meteorite res = null;
         for(Structure structure : this.gameboard.getStructures()){
-            System.out.println("YO 1");
             if(structure instanceof Meteorite){
-                System.out.println("YO 2");
                 // si la distance euclidienne est inferieur à 1
                 if(structure.isAjdacent(miner.getCoordinate())){
                     res = (Meteorite) structure;
