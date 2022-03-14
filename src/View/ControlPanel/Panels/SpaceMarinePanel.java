@@ -38,14 +38,14 @@ public class SpaceMarinePanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()){
-            case "Move":
+            case "Move"->{
                 this.controlPanel.setWaitingAction(MOVE);
-            case "Mine":
-                System.out.println("wtf ");
-                //On mine le meteorite le plus proche
+            }
+            case "Mine"->{//On mine le meteorite le plus proche
                 Mine m= new Mine((Entity) controlPanel.getSelectedItem(), controlPanel.getGameEngine().getGameBoard());
                 //lock mouvement button
                 //proc progress bar
+                }
         }
     }
 }

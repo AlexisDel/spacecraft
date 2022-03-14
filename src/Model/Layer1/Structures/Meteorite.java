@@ -39,4 +39,5 @@ public class Meteorite extends Structure {
         this.rocks-=1;
     }
 
+
 }
