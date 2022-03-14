@@ -1,7 +1,7 @@
-package Model.Mouvements.Algos;
+package Model.Layer1.Entities.Actions.Mouvements.Algos;
 
-import Model.Mouvements.Direction;
-import Model.Mouvements.HitBoard;
+import Model.Layer1.Entities.Actions.Mouvements.Direction;
+import Model.Layer1.Entities.Actions.Mouvements.HitBoard;
 
 import java.awt.*;
 import java.util.ArrayList;

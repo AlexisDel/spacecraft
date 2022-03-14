@@ -1,13 +1,14 @@
 package Model;
 
 import Model.Layer0.Mountain;
+import Model.Layer1.Entities.Actions.AlienMovements;
 import Model.Layer1.Entities.Alien;
 import Model.Layer1.Entities.Entity;
 import Model.Layer1.Entities.SpaceMarine;
 import Model.Layer1.Structures.Meteorite;
 import Model.Layer1.Structures.Spaceship;
 import Model.Layer1.Structures.Structure;
-import Model.Mouvements.HitBoard;
+import Model.Layer1.Entities.Actions.Mouvements.HitBoard;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -178,7 +179,7 @@ public class GameBoard {
                 }
                 //Si on a trouvé une cordonnée
                 if (isThisPlaceBigEnough){
-                    //Placer le météorite dans la map
+                    //On crée les méteorites et on les place  dans la map
                     //todo : de même
                     structures.add(new Meteorite(new Point(meteoriteX, meteoriteY), new Dimension(2, 2), 100));
                     //On ajoute chaque case occupée par le méteorite dans la hitbox et la AlienView

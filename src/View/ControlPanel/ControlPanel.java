@@ -1,6 +1,7 @@
 package View.ControlPanel;
 
 import Model.GameEngine;
+import Model.Layer1.Entities.Actions.Action;
 import Model.Layer1.Entities.Alien;
 import Model.Layer1.Entities.Entity;
 import Model.Layer1.Entities.SpaceMarine;
@@ -8,7 +9,7 @@ import Model.Layer1.InteractiveItem;
 import Model.Layer1.Structures.Meteorite;
 import Model.Layer1.Structures.Spaceship;
 import Model.Layer1.Structures.Structure;
-import Model.Mouvements.Movement;
+import Model.Layer1.Entities.Actions.Mouvements.Movement;
 import View.ControlPanel.Panels.*;
 
 import javax.swing.*;
@@ -21,16 +22,19 @@ import static View.ViewConstants.CONTROL_PANEL_WIDTH;
 public class ControlPanel extends JPanel {
 
     //Control panel related attributes
-    private boolean waitingForCoord;
     private GameEngine gameEngine;
     private InteractiveItem selectedItem;
+    private InteractiveItem tagetItem;
+    private Point targetCoord;
+    private Action waitingAction;
 
     private CardLayout cardLayout = new CardLayout();
 
     public ControlPanel(GameEngine gameEngine){
         this.gameEngine = gameEngine;
 
-        this.waitingForCoord=false;
+        //this.waitingForCoord=false;
+        this.waitingAction=Action.NONE;
         /**init selected entity to first entity on the board, it needs a non null displayPanel*/
         this.selectedItem =this.gameEngine.getGameBoard().getEntities().get(0);
 
@@ -52,47 +56,64 @@ public class ControlPanel extends JPanel {
 
     /**
      * Sélectionne l'entité qui se trouve sur la case de coordonnées p
-     * S'il n'y a pas d'entité sur cette case alors rien ne se passe
+     * S'il n'y a pas d'entité sur cette case alors on notifie l'action en attente que des coordonnées sont là
      * @param p Coordonnées de la case
      */
     public void SelectItem(Point p) throws InterruptedException {
         //if we are not waiting for coordinates then set as new selected entity/building
-        if(!this.waitingForCoord){
+        if(this.waitingAction==Action.NONE||this.waitingAction==Action.MINE||this.waitingAction==Action.ATTACK){
+            /**Cas objet cliqué est une structure*/
             // Cherche dans la liste des structures s'il y en a une à cette coordonnée
             for (Structure structure : this.gameEngine.getGameBoard().getStructures()){
-                // TODO : a modifier si structure avec forme particulière
                 // Si la case sur laquelle on a cliqué "appartient" au bâtiment
                 if (p.x >= structure.getCoordinate().x &&
                     p.x < structure.getCoordinate().x + structure.getDimension().width &&
                     p.y >= structure.getCoordinate().y &&
                     p.y < structure.getCoordinate().y + structure.getDimension().height
                 ) {
-                    setSelectedItem(structure);
-                    System.out.println("select structure");
+                   if(this.waitingAction==Action.NONE) setSelectedItem(structure);
+                   else{this.tagetItem=structure;
+                   notifyWaitingAction();}
                 }
             }
+            /**Cas objet cliqué est une entité*/
             // Cherche dans la liste des entités s'il y en a une à cette coordonnée
             for (Entity e : this.gameEngine.getGameBoard().getEntities()){
                 if(e.getCoordinate().equals(p)){
-                    setSelectedItem(e);
-                    System.out.println("select set to entity");
+                    if(this.waitingAction==Action.NONE) setSelectedItem(e);
+                    else{this.tagetItem=e;
+                    notifyWaitingAction();}
                 }
             }
         }
+        /**Cas il n'y a rien dans l'objet cliqué*/
         else{
-            //TODO bug prevention: make sure you have an entity to move !
-            coordinatesArrived(p);
+            this.targetCoord=p;
+            if(this.waitingAction==Action.MOVE) notifyWaitingAction();
         }
     }
 
-    public void coordinatesArrived(Point newCoord) throws InterruptedException {
-        Entity entity = (Entity) this.selectedItem;
-        entity.setIsMoving(false);
-        Movement walk = new Movement(entity, newCoord, gameEngine.getGameBoard());
+    /**
+     * Cette méthode notifie le panneau de contrôle quand des nouvelles coordonnées ont été cliquées sur la map
+     * @throws InterruptedException
+     */
+    public void notifyWaitingAction() throws InterruptedException {
 
-         //((Entity) this.selectedItem).move(Direction.NORTH);
-        System.out.println("MOVINNNN "+ this.selectedItem.getName()+" TO "+ newCoord.x +", "+newCoord.y);
-        this.waitingForCoord=false;
+        switch(this.waitingAction){
+
+            case MOVE -> {
+                Entity entity = (Entity) this.selectedItem;
+                entity.setIsMoving(false);
+                Movement walk = new Movement(entity, this.targetCoord, gameEngine.getGameBoard());
+            }
+            case MINE -> {
+            }
+            case ATTACK -> {
+
+            }
+        }
+        this.waitingAction=Action.NONE;
+
     }
 
     /**
@@ -102,11 +123,10 @@ public class ControlPanel extends JPanel {
     public void setSelectedItem(InteractiveItem objectL1){
         this.selectedItem = objectL1;
         this.cardLayout.show(this, selectedItem.getClass().getName());
-        //this.statsPanel.update(this.selectedItem);
     }
 
-    public void setWaitingForCoord(boolean waitingForCoord) {
-        this.waitingForCoord = waitingForCoord;
+    public void setWaitingAction(Action waitingAction) {
+        this.waitingAction = waitingAction;
     }
 
     public InteractiveItem getSelectedItem() {
@@ -116,6 +136,5 @@ public class ControlPanel extends JPanel {
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         this.repaint();
-        //this.statsPanel.repaint();
     }
 }

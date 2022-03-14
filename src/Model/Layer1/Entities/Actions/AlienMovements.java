@@ -1,8 +1,10 @@
-package Model;
+package Model.Layer1.Entities.Actions;
 
+import Model.GameBoard;
+import Model.GameConstants;
 import Model.Layer1.Entities.Alien;
-import Model.Mouvements.HitBoard;
-import Model.Mouvements.Movement;
+import Model.Layer1.Entities.Actions.Mouvements.HitBoard;
+import Model.Layer1.Entities.Actions.Mouvements.Movement;
 
 import java.awt.*;
 import java.util.Random;

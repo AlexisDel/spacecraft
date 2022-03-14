@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static Model.Layer1.Entities.Actions.Action.MOVE;
 import static View.ImageManager.THUMBNAIL_SIZE;
 
 public class SpaceMarinePanel extends JPanel implements ActionListener {
@@ -32,10 +33,7 @@ public class SpaceMarinePanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()){
             case "Move":
-                this.controlPanel.setWaitingForCoord(true);
-                //this.actionWaitingForCoordinates= Action.MOVE;
+                this.controlPanel.setWaitingAction(MOVE);
         }
-
-
     }
 }

@@ -15,9 +15,18 @@ public class Meteorite extends Structure {
      */
     public Meteorite(Point coordinate, Dimension dimension, int healthPoints) {
         super("Meteorite", coordinate, dimension, healthPoints, 0);
+
         //Les roches sont les unités
         this.rocks= dimension.height*dimension.width*10;
         setView(new MeteoriteView(this));
 
+    }
+    /**Getter pour les roches de la météorite*/
+    public int getRocks() {
+        return rocks;
+    }
+    /**Setter pour update le nombre de roches disponibles (ie: quand on mine on update ceci)*/
+    public void setRocks(int rocks) {
+        this.rocks = rocks;
     }
 }

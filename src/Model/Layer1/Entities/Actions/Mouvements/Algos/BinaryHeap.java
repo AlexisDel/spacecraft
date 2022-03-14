@@ -1,6 +1,5 @@
-package Model.Mouvements.Algos;
+package Model.Layer1.Entities.Actions.Mouvements.Algos;
 
-import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 

@@ -1,4 +1,4 @@
-package Model.Mouvements;
+package Model.Layer1.Entities.Actions.Mouvements;
 
 import Model.GameBoard;
 import Model.GameConstants;

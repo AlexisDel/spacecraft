@@ -1,7 +1,7 @@
 package Model.Layer1.Entities;
 
 import Model.Layer1.InteractiveItem;
-import Model.Mouvements.Direction;
+import Model.Layer1.Entities.Actions.Mouvements.Direction;
 
 import java.awt.*;
 

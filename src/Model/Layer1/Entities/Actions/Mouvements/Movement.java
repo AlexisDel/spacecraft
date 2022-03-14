@@ -1,13 +1,12 @@
-package Model.Mouvements;
+package Model.Layer1.Entities.Actions.Mouvements;
 
 import Model.GameBoard;
 import Model.GameConstants;
 import Model.Layer1.Entities.Alien;
 import Model.Layer1.Entities.Entity;
 import Model.Layer1.Entities.SpaceMarine;
-import Model.Mouvements.Algos.Node;
-import Model.Mouvements.Algos.ShortestPath;
-import View.ItemsViews.AlienView;
+import Model.Layer1.Entities.Actions.Mouvements.Algos.Node;
+import Model.Layer1.Entities.Actions.Mouvements.Algos.ShortestPath;
 
 import java.awt.*;
 import java.util.ArrayList;
