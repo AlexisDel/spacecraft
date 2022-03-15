@@ -26,7 +26,7 @@ public class Mine extends Thread{
             System.out.println("MINNNINNNNNNGGGGGG BITCHHH");
             // On mine
             System.out.println("hp 1 : " + meteorite.getHealthPoints());
-            meteorite.mined(50);
+            meteorite.mined(miner.getAttackDamage());
             System.out.println("hp 2 : " + meteorite.getHealthPoints());
             // On gagne des cailloux
             this.miner.setRocks(this.miner.getRocks()+1);

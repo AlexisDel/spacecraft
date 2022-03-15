@@ -1,5 +1,6 @@
 package View.ControlPanel.Panels;
 
+import Model.Layer1.InteractiveItem;
 import View.ControlPanel.ControlPanel;
 import View.ImageManager;
 

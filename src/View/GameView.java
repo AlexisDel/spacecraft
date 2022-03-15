@@ -4,6 +4,7 @@ import Controller.BoardController;
 import Model.GameEngine;
 import View.Board.BoardPanel;
 import View.ControlPanel.ControlPanel;
+import View.ControlPanel.ScorePanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,9 +34,16 @@ public class GameView extends JFrame implements Runnable{
         /** adds the board panel to the window*/
         boardPanel = new BoardPanel(gameEngine);
         this.add(boardPanel, BorderLayout.WEST);
+
         /** adds the control panel to the window*/
         controlPanel = new ControlPanel(gameEngine);
-        this.add(controlPanel, BorderLayout.EAST);
+        ScorePanel scorePanel= new ScorePanel(gameEngine);
+
+        JPanel rightPanel = new JPanel(new BorderLayout());
+        rightPanel.add(controlPanel,BorderLayout.NORTH);
+        rightPanel.add(scorePanel, BorderLayout.SOUTH);
+
+        this.add(rightPanel, BorderLayout.EAST);
 
         displayUpdateThread = new Thread(this);
         displayUpdateThread.start();

@@ -41,7 +41,7 @@ public class GameBoard {
         this.AlienView = new HitBoard(this);
         structures = new ArrayList<>();
         entities = new ArrayList<>();
-        this.initLand(5, 3, 1);
+        this.initLand(5, 3, NBR_METEORITES);
         }
 
     /**
@@ -117,7 +117,7 @@ public class GameBoard {
                         spaceMarineY = areaY + ((SPACESHIP_LANDING_ZONE/2) + (rand.nextBoolean() ? 1 : -1) * ((SPACESHIP_HEIGHT/2) + rand.nextInt((SPACESHIP_LANDING_ZONE-SPACESHIP_HEIGHT)/4)));
 
                     }
-                    entities.add(new SpaceMarine(new Point(spaceMarineX,spaceMarineY),200,10));
+                    entities.add(new SpaceMarine(new Point(spaceMarineX,spaceMarineY)));
                     this.hitbox.fill(new Point(spaceMarineX, spaceMarineY));
                     for(int j = -fearOfSpaceMarines/2; j < fearOfSpaceMarines/2 + 1; j++){
                         for(int k = -fearOfSpaceMarines/2; k < fearOfSpaceMarines/2 + 1; k++){
@@ -181,7 +181,8 @@ public class GameBoard {
                 if (isThisPlaceBigEnough){
                     //On crée les méteorites et on les place  dans la map
                     //todo : de même
-                    structures.add(new Meteorite(new Point(meteoriteX, meteoriteY), new Dimension(2, 2), 100));
+                     int randHealth= rand.nextInt(200)+50;
+                    structures.add(new Meteorite(new Point(meteoriteX, meteoriteY), new Dimension(2, 2),randHealth));
                     //On ajoute chaque case occupée par le méteorite dans la hitbox et la AlienView
                     for (int i2 = 0; i2 < 2; i2++) {
                         for (int j = 0; j < 2; j++) {

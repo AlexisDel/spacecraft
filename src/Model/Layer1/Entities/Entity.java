@@ -13,7 +13,7 @@ import static java.lang.Thread.sleep;
  */
 public abstract class Entity extends InteractiveItem {
     /**Attributes*/
-    private int speed;
+    private int AttackDamage;
     private Direction direction;
     private boolean isMoving;
     private int rocks;
@@ -22,14 +22,13 @@ public abstract class Entity extends InteractiveItem {
      * @param coordinate   coordonnées globales de l'entité
      * @param dimension    width et size de l'entité
      * @param healthPoints points de vie de l'entité
-     * @param speed vitesse en ms de déplacement de l'entité
      */
 
     // TODO fix le gameBoard
-    public Entity(String name,Point coordinate, Dimension dimension, int healthPoints, int speed) {
+    public Entity(String name,Point coordinate, Dimension dimension, int healthPoints) {
         super(name, coordinate, dimension, healthPoints);
+        this.AttackDamage=50;
         this.rocks=0;
-        this.speed = speed;
         this.direction = Direction.EAST;
         this.isMoving = false;
     }
@@ -72,6 +71,10 @@ public abstract class Entity extends InteractiveItem {
 
     public int getRocks() {
         return rocks;
+    }
+
+    public int getAttackDamage() {
+        return AttackDamage;
     }
 
     public void setRocks(int rocks) {

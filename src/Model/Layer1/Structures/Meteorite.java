@@ -31,12 +31,12 @@ public class Meteorite extends Structure {
 
     /**
      * Cette méthode est utilisée quand on mine un météorite, on diminue les points de vie et les roches
-     * Les roches diminuent de 1 et les HealthPoints diminuent de hitPoints
+     * Les roches diminuent et les HealthPoints diminuent de hitPoints
      * @param hitPoints
      */
     public void mined(int hitPoints){
         this.setHealthPoints(this.getHealthPoints()-hitPoints);
-        this.rocks-=1;
+        this.rocks-=hitPoints;
     }
 
 
