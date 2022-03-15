@@ -33,6 +33,7 @@ public class AlienMovements extends Thread{
         // Variables stockant les coordonnées du prochain point où l'alien souhaite aller.
         int nextX;
         int nextY;
+        boolean lookingForMeteorite = true;
         // On veut que ce thread tourne à l'infini
         while(true){
             // On cherche une zone libre vers laquelle aller
@@ -43,7 +44,7 @@ public class AlienMovements extends Thread{
                 nextY = rand.nextInt(GameConstants.BOARD_SIZE);
             }
             // On initialise notre objet movement pour notre alien vers notre destination
-            this.movement = new Movement(this.alien, new Point(nextX, nextY), gameboard);
+            this.movement = new Movement(this.alien, new Point(nextX, nextY), gameboard, lookingForMeteorite);
             // On lance le thread du mouvement
             // On attend qu'il meurt (finisse son exécution)
             try {
@@ -51,6 +52,32 @@ public class AlienMovements extends Thread{
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            // Si on se trouvé à côté d'une météorite, on mine puis on s'éloigne
+            if(movement.getGotMeteorite()){
+                // On mine une fois puis on lance un mouvement sans recherche de météorite
+                // On mine
+                System.out.println(movement.getMeteorite().getHealthPoints());
+                movement.getMeteorite().mined(50);
+                // On gagne des cailloux
+                this.alien.setRocks(this.alien.getRocks()+1);
+                // On lance une fois sans chercher de météorite
+                lookingForMeteorite = false;
+            }
+            // Sinon, alors on a pas trouvé de météorite auquel cas lookingForMeteorite = true;
+            else{
+                lookingForMeteorite = true;
+            }
+            if(movement.getGotMeteorite() && movement.getMeteorite().getHealthPoints() <= 0){
+                // La météorite n'as plus de vie, on la supprime
+                this.gameboard.getStructures().remove(movement.getMeteorite());
+                for(int i = 0; i < movement.getMeteorite().getDimension().height; i++){
+                    for(int j = 0; j < movement.getMeteorite().getDimension().width; j++){
+                        this.gameboard.getHitbox().empty(new Point(movement.getMeteorite().getCoordinate().x + i,movement.getMeteorite().getCoordinate().y + j));
+                        this.gameboard.getAlienView().empty(new Point(movement.getMeteorite().getCoordinate().x + i,movement.getMeteorite().getCoordinate().y + j));
+                    }
+                }
+            }
         }
     }
+
 }

@@ -7,8 +7,15 @@ public class GameConstants {
     public static final int BOARD_SIZE = 320;
     /** Dimension d'une montagne en nombre de case */
     public static final int MOUNTAIN_SIZE = 16;
+
     /** Rayon autour des SpaceMarines représentant la peur des Aliens*/
     public static final int fearOfSpaceMarines = 8;
+    /** Rayon de vision des Aliens pour repérer une météorite*/
+    public static final int alienRadar = 16;
+
+    /** vitesses des éléments bougeant*/
+    public static final int SpaceMarineSpeed = 75;
+    public static final int AlienSpeed = 225;
 
     /** Hauteur du vaisseau (doit être pair et ≤ SPACESHIP_LANDING_ZONE - 2) */
     public static final int SPACESHIP_WIDTH = 6;

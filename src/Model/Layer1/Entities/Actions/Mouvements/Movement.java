@@ -7,6 +7,8 @@ import Model.Layer1.Entities.Entity;
 import Model.Layer1.Entities.SpaceMarine;
 import Model.Layer1.Entities.Actions.Mouvements.Algos.Node;
 import Model.Layer1.Entities.Actions.Mouvements.Algos.ShortestPath;
+import Model.Layer1.Structures.Meteorite;
+import Model.Layer1.Structures.Structure;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -18,12 +20,16 @@ public class Movement extends Thread{
     Point destination;
     ShortestPath shortestPath;
     GameBoard gameBoard;
+    Meteorite meteorite;
+    Boolean gotMeteorite = false;
+    Boolean lookingForMeteorite;
 
-    public Movement(Entity entity, Point destination, GameBoard gameBoard) {
+    public Movement(Entity entity, Point destination, GameBoard gameBoard, Boolean lookingForMeteorite) {
         this.entity = entity;
         this.destination = destination;
         this.gameBoard = gameBoard;
         this.shortestPath = new ShortestPath(gameBoard.getHitbox());
+        this.lookingForMeteorite = lookingForMeteorite;
         this.start();
     }
 
@@ -53,7 +59,7 @@ public class Movement extends Thread{
                             this.shiftEntity(entity, direction);
                             // On fait une petite pause
                             try {
-                                sleep(300);
+                                sleep(GameConstants.AlienSpeed);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
@@ -64,6 +70,44 @@ public class Movement extends Thread{
                                 this.entity.setIsMoving(false);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
+                            }
+                        }
+                        if(this.lookingForMeteorite){
+                            Meteorite tmp = this.findMeteorite();
+                            if (tmp != null) {
+                                for (int k = 0; k < tmp.getDimension().width; k++) {
+                                    if (this.gameBoard.getHitbox().isEmpty(tmp.getCoordinate().x - 1, k + tmp.getCoordinate().y)) {
+                                        this.destination = new Point(tmp.getCoordinate().x - 1, k + tmp.getCoordinate().y);
+                                        this.gotMeteorite = true;
+                                        this.meteorite = tmp;
+                                        this.lookingForMeteorite = false;
+                                        break;
+                                    }
+                                    if (this.gameBoard.getHitbox().isEmpty(tmp.getCoordinate().x + tmp.getDimension().height, k + tmp.getCoordinate().y)) {
+                                        this.destination = new Point(tmp.getCoordinate().x + tmp.getDimension().height, k + tmp.getCoordinate().y);
+                                        this.gotMeteorite = true;
+                                        this.meteorite = tmp;
+                                        this.lookingForMeteorite = false;
+                                        break;
+                                    }
+                                }
+                                for (int k = 0; k < tmp.getDimension().height; k++) {
+                                    if (this.gameBoard.getHitbox().isEmpty(k + tmp.getCoordinate().x, tmp.getCoordinate().y - 1)) {
+                                        this.destination = new Point(k + tmp.getCoordinate().x, tmp.getCoordinate().y - 1);
+                                        this.gotMeteorite = true;
+                                        this.meteorite = tmp;
+                                        this.lookingForMeteorite = false;
+                                        break;
+                                    }
+                                    if (this.gameBoard.getHitbox().isEmpty(k + tmp.getCoordinate().x, tmp.getCoordinate().y + tmp.getDimension().width)) {
+                                        this.destination = new Point(k + tmp.getCoordinate().x, tmp.getCoordinate().y + tmp.getDimension().width);
+                                        this.gotMeteorite = true;
+                                        this.meteorite = tmp;
+                                        this.lookingForMeteorite = false;
+                                        break;
+                                    }
+                                }
+                                break;
                             }
                         }
                     }
@@ -77,17 +121,12 @@ public class Movement extends Thread{
                             this.shiftEntity(entity, direction);
                             // On fait une petite pause
                             try {
-                                sleep(100);
+                                sleep(GameConstants.SpaceMarineSpeed);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
                         }
                         else {
-                            try {
-                                sleep(50 + (new Random()).nextInt(50));
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
                             break;
                         }
                     }
@@ -150,5 +189,58 @@ public class Movement extends Thread{
             gameBoard.getHitbox().fill(entity.getCoordinate());
             gameBoard.getAlienView().fill(entity.getCoordinate());
         }
+    }
+
+    /**
+     * méthode renvoyant un emplacement collé à une météorite proche (de distance inférieur à alienRadar), (-1,-1) sinon
+     * @return un Point
+     */
+    private Meteorite findMeteorite() {
+        // Pour chaque structure
+        for (Structure structure : this.gameBoard.getStructures()) {
+            // Si c'est une météorite
+            if(structure instanceof Meteorite){
+                // Si elle est à une distance euclienne inférieur à 2 de l'Alien
+                for(int i = 0; i < structure.getDimension().height; i++){
+                    for(int j = 0; j < structure.getDimension().width; j++){
+                        Point res = new Point(structure.getCoordinate().x + i, structure.getCoordinate().y + j);
+                        if(this.entity.getCoordinate().distance(res) <= GameConstants.alienRadar){
+                            // Si elle a une case adjacente libre, on renvoie cette case
+                            for(int k = 0 ; k < structure.getDimension().width; k++){
+                                if(this.gameBoard.getHitbox().isEmpty(structure.getCoordinate().x - 1, k + structure.getCoordinate().y)){
+                                    return (Meteorite) structure;
+                                }
+                                if(this.gameBoard.getHitbox().isEmpty(structure.getCoordinate().x + structure.getDimension().height,k + structure.getCoordinate().y)){
+                                    return (Meteorite) structure;
+                                }
+                            }
+                            for(int k = 0 ; k < structure.getDimension().height; k++){
+                                if(this.gameBoard.getHitbox().isEmpty(k + structure.getCoordinate().x, structure.getCoordinate().y - 1)){
+                                    return (Meteorite) structure;                                }
+                                if(this.gameBoard.getHitbox().isEmpty(k + structure.getCoordinate().x, structure.getCoordinate().y + structure.getDimension().width)){
+                                    return (Meteorite) structure;                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * getter de gotMeteorite
+     * @return
+     */
+    public Boolean getGotMeteorite() {
+        return gotMeteorite;
+    }
+
+    /**
+     * getter de meteorite
+     * @return
+     */
+    public Meteorite getMeteorite() {
+        return meteorite;
     }
 }

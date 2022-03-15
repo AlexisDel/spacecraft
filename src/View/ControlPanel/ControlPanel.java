@@ -104,7 +104,7 @@ public class ControlPanel extends JPanel {
             case MOVE -> {
                 Entity entity = (Entity) this.selectedItem;
                 entity.setIsMoving(false);
-                Movement walk = new Movement(entity, this.targetCoord, gameEngine.getGameBoard());
+                Movement walk = new Movement(entity, this.targetCoord, gameEngine.getGameBoard(), false);
             }
         }
         this.waitingAction=Action.NONE;

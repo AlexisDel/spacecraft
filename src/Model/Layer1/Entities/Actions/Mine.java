@@ -23,11 +23,8 @@ public class Mine extends Thread{
         Meteorite meteorite = this.choseMeteorite();
         // Tant que la météorite à des HP
         while(meteorite != null && meteorite.getHealthPoints() > 0){
-            System.out.println("MINNNINNNNNNGGGGGG BITCHHH");
             // On mine
-            System.out.println("hp 1 : " + meteorite.getHealthPoints());
-            meteorite.mined(miner.getAttackDamage());
-            System.out.println("hp 2 : " + meteorite.getHealthPoints());
+            meteorite.mined(50);
             // On gagne des cailloux
             this.miner.setRocks(this.miner.getRocks()+1);
             // On fait une pause
@@ -46,7 +43,6 @@ public class Mine extends Thread{
                 this.gameboard.getAlienView().empty(new Point(meteorite.getCoordinate().x + i,meteorite.getCoordinate().y + j));
             }
         }
-        //todo : supprimer des HitBoxs
     }
 
     /**
