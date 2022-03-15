@@ -10,7 +10,7 @@ import Model.Layer1.Structures.Meteorite;
 import Model.Layer1.Structures.Spaceship;
 import Model.Layer1.Structures.Structure;
 import Model.Layer1.Entities.Actions.Mouvements.Movement;
-import View.ControlPanel.Panels.*;
+import View.ControlPanel.ItemsPanels.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -46,10 +46,10 @@ public class ControlPanel extends JPanel {
 
         /**adds the display panel*/
         this.add(new DefaultPanel(), "DEFAULT");
-        this.add(new AlienPanel(), Alien.class.getName());
-        this.add(new SpaceMarinePanel(this), SpaceMarine.class.getName());
-        this.add(new SpaceshipPanel(), Spaceship.class.getName());
-        this.add(new MeteoritePanel(this), Meteorite.class.getName());
+        this.add(new AlienPanel(this), Alien.class.getSimpleName());
+        this.add(new SpaceMarinePanel(this), SpaceMarine.class.getSimpleName());
+        this.add(new SpaceshipPanel(this), Spaceship.class.getSimpleName());
+        this.add(new MeteoritePanel(this), Meteorite.class.getSimpleName());
 
         cardLayout.show(this, "DEFAULT");
     }
@@ -117,7 +117,7 @@ public class ControlPanel extends JPanel {
      */
     public void setSelectedItem(InteractiveItem objectL1){
         this.selectedItem = objectL1;
-        this.cardLayout.show(this, selectedItem.getClass().getName());
+        this.cardLayout.show(this, selectedItem.getClass().getSimpleName());
     }
 
     public void setWaitingAction(Action waitingAction) {

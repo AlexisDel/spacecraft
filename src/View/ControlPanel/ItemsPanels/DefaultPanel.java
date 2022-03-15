@@ -1,4 +1,4 @@
-package View.ControlPanel.Panels;
+package View.ControlPanel.ItemsPanels;
 
 import View.ImageManager;
 

@@ -59,7 +59,7 @@ public class BoardPanel extends JPanel {
         g2.scale(zoomFactor, zoomFactor);
         g2.translate(-zoomX, -zoomY);
 
-        g2.translate(displayX, displayY);
+        g2.translate(-displayX, -displayY);
 
         //TODO : dessiner si afficher
 
@@ -89,8 +89,8 @@ public class BoardPanel extends JPanel {
      */
     public Point getTileFromClick(int mouseX, int mouseY) {
 
-        int x = ((mouseX / zoomFactor) + cameraX - displayX) / TILE_SIZE;
-        int y = ((mouseY / zoomFactor) + cameraY - displayY) / TILE_SIZE;
+        int x = ((mouseX / zoomFactor) + cameraX) / TILE_SIZE;
+        int y = ((mouseY / zoomFactor) + cameraY) / TILE_SIZE;
 
         System.out.println("("+x+", "+y+")");
         return new Point(x,y);
@@ -118,14 +118,24 @@ public class BoardPanel extends JPanel {
             viewPortSize = BOARD_PANEL_WIDTH / zoomFactor;
             cameraX = (BOARD_PANEL_WIDTH - viewPortSize) * mouseX/BOARD_PANEL_WIDTH;
             cameraY = (BOARD_PANEL_HEIGHT - viewPortSize) * mouseY/BOARD_PANEL_HEIGHT;
-            System.out.println("camera : ("+cameraX+")");
         }
     }
 
     public void moveViewportX(int x){
-        displayX+=x;
+        /*
+        if (cameraX-x >= 0 && cameraX+viewPortSize-x <= BOARD_PANEL_WIDTH){
+            displayX-=x;
+            cameraX-=x;
+            System.out.println(cameraX);
+        }
+        */
     }
     public void moveViewportY(int y){
-        displayY+=y;
+        /*
+        if (cameraY-y >= 0 && cameraY+viewPortSize-y <= BOARD_PANEL_HEIGHT) {
+            displayY -= y;
+            cameraY -= y;
+        }
+        */
     }
 }

@@ -22,6 +22,9 @@ public class ImageManager {
     public static Image spaceMarineWestTile;
     public static Image meteoriteTile;
 
+    public static Image heart;
+    public static Image sword;
+
     public ImageManager() throws IOException {
         thumbnailAlien = ImageIO.read(new File("./resources/alien.jpeg")).getScaledInstance(THUMBNAIL_SIZE, THUMBNAIL_SIZE, Image.SCALE_SMOOTH);
         thumbnailSpaceMarine = ImageIO.read(new File("./resources/space_marine.jpg")).getScaledInstance(THUMBNAIL_SIZE, THUMBNAIL_SIZE, Image.SCALE_SMOOTH);
@@ -34,6 +37,10 @@ public class ImageManager {
         spaceMarineSouthTile = ImageIO.read(new File("resources/BoardAssets/SpaceMarineS.png"));
         spaceMarineEastTile = ImageIO.read(new File("resources/BoardAssets/SpaceMarineE.png"));
         spaceMarineWestTile = ImageIO.read(new File("resources/BoardAssets/SpaceMarineW.png"));
+
+        heart = ImageIO.read(new File("resources/ControlPanelAssets/heart.png"));
+        sword = ImageIO.read(new File("resources/ControlPanelAssets/sword.png"));
+
     }
 
     public static Image getTileImage(String ressourceName){
@@ -44,6 +51,24 @@ public class ImageManager {
             case "SpaceMarineSOUTH": return spaceMarineSouthTile;
             case "SpaceMarineWEST": return spaceMarineWestTile;
             case "SpaceMarineEAST": return spaceMarineEastTile;
+        }
+        return null;
+    }
+
+    public static Image getThumbnail(String ressourceName){
+        switch (ressourceName){
+            case "Spaceship" : return thumbnailSpaceship;
+            case "Meteorite" : return thumbnailMeteorite;
+            case "SpaceMarine": return thumbnailSpaceMarine;
+            case "Alien" : return thumbnailAlien;
+        }
+        return null;
+    }
+
+    public static Image getControlPanelAssets(String ressourceName){
+        switch (ressourceName){
+            case "Heart" : return heart;
+            case "Sword" : return sword;
         }
         return null;
     }

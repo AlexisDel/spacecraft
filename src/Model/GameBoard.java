@@ -139,7 +139,7 @@ public class GameBoard {
                 newX = rand.nextInt(BOARD_SIZE);
                 newY = rand.nextInt(BOARD_SIZE);
             }
-            Alien tempAlien = new Alien(new Point(newX,newY), 150, 10);
+            Alien tempAlien = new Alien(new Point(newX,newY), 150);
             entities.add(tempAlien);
             this.AlienView.fill(new Point(newX, newY));
             AlienMovements am = new AlienMovements(tempAlien, this.AlienView, this);
