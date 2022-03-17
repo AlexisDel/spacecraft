@@ -3,7 +3,6 @@ package View.ControlPanel.Panels;
 import Model.Layer1.Entities.Actions.Mine;
 import Model.Layer1.Entities.Entity;
 import View.ControlPanel.ControlPanel;
-import View.ImageManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +15,8 @@ import static Model.Layer1.Entities.Actions.Action.MOVE;
 public class ActionPanel extends JPanel {
 
     public ActionPanel(ControlPanel controlPanel) {
+
+        this.setPreferredSize(new Dimension(300,64));
 
         JButton move = new JButton("Move");
         move.addActionListener(new ActionListener() {
@@ -39,11 +40,5 @@ public class ActionPanel extends JPanel {
             }
         });
         this.add(mine);
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(ImageManager.controlPanelBGMid2, 0, 0, null);
     }
 }

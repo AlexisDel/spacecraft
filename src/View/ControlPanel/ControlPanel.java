@@ -34,6 +34,8 @@ public class ControlPanel extends JPanel {
     public ControlPanel(GameEngine gameEngine){
         this.gameEngine = gameEngine;
 
+        this.setBackground(Color.GRAY);
+
         this.waitingAction=Action.NONE;
         /**init selected entity to first entity on the board, it needs a non null displayPanel*/
         this.selectedItem = this.gameEngine.getGameBoard().getEntities().get(0);

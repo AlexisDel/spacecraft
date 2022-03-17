@@ -7,8 +7,8 @@ import java.io.IOException;
 
 public class ImageManager {
 
-    public static int THUMBNAIL_SIZE = 105;
-    public static int BORDER_SIZE = 120;
+    public static int THUMBNAIL_SIZE = 140;
+    public static int BORDER_SIZE = 160;
 
     public static Image thumbnailMars;
     public static Image thumbnailAlien;
@@ -28,10 +28,6 @@ public class ImageManager {
     public static Image heart;
     public static Image sword;
 
-    public static Image controlPanelBGTop;
-    public static Image controlPanelBGMid1;
-    public static Image controlPanelBGMid2;
-    public static Image controlPanelBGBot;
     public static Image thumbnailBorder;
 
     public ImageManager() throws IOException {
@@ -51,10 +47,6 @@ public class ImageManager {
 
         heart = ImageIO.read(new File("resources/ControlPanelAssets/heart.png"));
         sword = ImageIO.read(new File("resources/ControlPanelAssets/sword.png"));
-        controlPanelBGTop = ImageIO.read(new File("resources/ControlPanelAssets/backgroundTop.png"));
-        controlPanelBGMid1 = ImageIO.read(new File("resources/ControlPanelAssets/backgroundMid1.png"));
-        controlPanelBGMid2 = ImageIO.read(new File("resources/ControlPanelAssets/backgroundMid2.png"));
-        controlPanelBGBot = ImageIO.read(new File("resources/ControlPanelAssets/backgroundBot.png"));
         thumbnailBorder = ImageIO.read(new File("resources/ControlPanelAssets/border.png"));
 
     }
@@ -88,15 +80,4 @@ public class ImageManager {
         }
         return null;
     }
-
-    public static Image getControlPanelBG(String ressourceName){
-        switch (ressourceName){
-            case "Top" : return controlPanelBGTop;
-            case "Mid1" : return controlPanelBGMid1;
-            case "Mid2" : return controlPanelBGMid2;
-            case "Bot" : return controlPanelBGBot;
-        }
-        return null;
-    }
-
 }

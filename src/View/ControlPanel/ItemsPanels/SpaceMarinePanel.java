@@ -12,10 +12,14 @@ import java.awt.*;
 public class SpaceMarinePanel extends JPanel {
 
     public SpaceMarinePanel(ControlPanel controlPanel){
-        this.setLayout(new GridLayout(4,1));
+        this.setLayout(new GridLayout(3,1));
         this.add(new ThumbnailPanel("SpaceMarine"));
-        this.add(new StatsPanel(controlPanel));
-        this.add(new ActionPanel(controlPanel));
+
+        JPanel statsActions = new JPanel(new BorderLayout());
+        statsActions.add(new StatsPanel(controlPanel),BorderLayout.NORTH);
+        statsActions.add(new ActionPanel(controlPanel), BorderLayout.SOUTH);
+
+        this.add(statsActions);
         this.add(new DescriptionPanel());
     }
 }
