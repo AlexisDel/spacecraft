@@ -26,5 +26,5 @@ public class GameConstants {
     public static final int SPACESHIP_LANDING_ZONE = 16;
 
     /** Nombre de météorites placés sur la map au début d'une partie*/
-    public static final int NBR_METEORITES=1;
+    public static final int NBR_METEORITES=20;
 }

@@ -73,11 +73,12 @@ public abstract class Entity extends InteractiveItem {
         return rocks;
     }
 
+    public void setRocks(int rocks) {
+        this.rocks = rocks;
+    }
+
     public int getAttackDamage() {
         return AttackDamage;
     }
 
-    public void setRocks(int rocks) {
-        this.rocks = rocks;
-    }
 }

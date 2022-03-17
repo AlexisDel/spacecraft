@@ -4,6 +4,7 @@ import Model.GameEngine;
 import Model.Layer0.Mountain;
 import Model.Layer1.Entities.Entity;
 import Model.Layer1.Structures.Structure;
+import View.ControlPanel.ScorePanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -48,7 +49,6 @@ public class BoardPanel extends JPanel {
 
         // Layer 0
         this.setBackground(new Color(234, 138, 54));
-
     }
 
     public void paintComponent(Graphics g){
@@ -80,6 +80,8 @@ public class BoardPanel extends JPanel {
         // Dispose of this graphics context and release any system ressources that it is using
         g2.dispose();
     }
+
+
 
     /**
      * Méthode appelée lorsque l'utilisateur clique sur le terrain

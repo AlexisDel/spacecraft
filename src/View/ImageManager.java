@@ -22,6 +22,8 @@ public class ImageManager {
     public static Image spaceMarineWestTile;
     public static Image meteoriteTile;
 
+    public static Image rock;
+
     public static Image heart;
     public static Image sword;
 
@@ -37,6 +39,8 @@ public class ImageManager {
         spaceMarineSouthTile = ImageIO.read(new File("resources/BoardAssets/SpaceMarineS.png"));
         spaceMarineEastTile = ImageIO.read(new File("resources/BoardAssets/SpaceMarineE.png"));
         spaceMarineWestTile = ImageIO.read(new File("resources/BoardAssets/SpaceMarineW.png"));
+
+        rock=ImageIO.read(new File("resources/ScorePanelAssets/rock.png")).getScaledInstance(50,50,Image.SCALE_SMOOTH);
 
         heart = ImageIO.read(new File("resources/ControlPanelAssets/heart.png"));
         sword = ImageIO.read(new File("resources/ControlPanelAssets/sword.png"));

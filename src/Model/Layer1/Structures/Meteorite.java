@@ -16,7 +16,7 @@ public class Meteorite extends Structure {
     public Meteorite(Point coordinate, Dimension dimension, int healthPoints) {
         super("Meteorite", coordinate, dimension, healthPoints, 0);
 
-        this.rocks= healthPoints;
+        this.rocks= healthPoints*2;
         setView(new MeteoriteView(this));
 
     }
@@ -34,10 +34,20 @@ public class Meteorite extends Structure {
      * Les roches diminuent et les HealthPoints diminuent de hitPoints
      * @param hitPoints
      */
-    public void mined(int hitPoints){
-        this.setHealthPoints(this.getHealthPoints()-hitPoints);
-        this.rocks-=hitPoints;
-    }
+    public int mined(int hitPoints){
+        //On garde le nombre de rocks courants dans une variable, ainsi si on mine plus qu'il y
+        int res= rocks;
+        if(this.getHealthPoints()-hitPoints<0){
+            this.rocks=0;
+            setHealthPoints(0);
+            return res;
+        }
+        else{
+            this.setHealthPoints(this.getHealthPoints()-hitPoints);
+            this.rocks-=hitPoints*2;
+            return hitPoints*2;
+        }
 
+    }
 
 }

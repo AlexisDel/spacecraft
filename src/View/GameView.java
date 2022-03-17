@@ -17,6 +17,7 @@ public class GameView extends JFrame implements Runnable{
     private Thread displayUpdateThread;
     private BoardPanel boardPanel;
     private ControlPanel controlPanel;
+    private ScorePanel scorePanel;
 
     private GameEngine gameEngine;
 
@@ -37,7 +38,7 @@ public class GameView extends JFrame implements Runnable{
 
         /** adds the control panel to the window*/
         controlPanel = new ControlPanel(gameEngine);
-        ScorePanel scorePanel= new ScorePanel(gameEngine);
+        scorePanel= new ScorePanel(gameEngine);
 
         JPanel rightPanel = new JPanel(new BorderLayout());
         rightPanel.add(controlPanel,BorderLayout.NORTH);
@@ -63,6 +64,7 @@ public class GameView extends JFrame implements Runnable{
         while(true){
             boardPanel.repaint();
             controlPanel.repaint();
+            scorePanel.repaint();
             try {
                 sleep(1000/ViewConstants.FPS);
             } catch (InterruptedException e) {
