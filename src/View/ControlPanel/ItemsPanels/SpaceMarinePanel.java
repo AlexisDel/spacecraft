@@ -15,9 +15,9 @@ public class SpaceMarinePanel extends JPanel {
         this.setLayout(new GridLayout(3,1));
         this.add(new ThumbnailPanel("SpaceMarine"));
 
-        JPanel statsActions = new JPanel(new BorderLayout());
-        statsActions.add(new StatsPanel(controlPanel),BorderLayout.NORTH);
-        statsActions.add(new ActionPanel(controlPanel), BorderLayout.SOUTH);
+        JPanel statsActions = new JPanel(new GridLayout(2,1));
+        statsActions.add(new StatsPanel(controlPanel));
+        statsActions.add(new ActionPanel(controlPanel));
 
         this.add(statsActions);
         this.add(new DescriptionPanel());

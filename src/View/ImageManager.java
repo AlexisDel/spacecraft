@@ -21,6 +21,10 @@ public class ImageManager {
     public static Image spaceMarineSouthTile;
     public static Image spaceMarineEastTile;
     public static Image spaceMarineWestTile;
+    public static Image alienNorthTile;
+    public static Image alienSouthTile;
+    public static Image alienEastTile;
+    public static Image alienWestTile;
     public static Image meteoriteTile;
 
     public static Image rock;
@@ -43,6 +47,11 @@ public class ImageManager {
         spaceMarineEastTile = ImageIO.read(new File("resources/BoardAssets/SpaceMarineE.png"));
         spaceMarineWestTile = ImageIO.read(new File("resources/BoardAssets/SpaceMarineW.png"));
 
+        alienNorthTile = ImageIO.read(new File("resources/BoardAssets/AlienN.png"));
+        alienSouthTile = ImageIO.read(new File("resources/BoardAssets/AlienS.png"));
+        alienEastTile = ImageIO.read(new File("resources/BoardAssets/AlienE.png"));
+        alienWestTile = ImageIO.read(new File("resources/BoardAssets/AlienW.png"));
+
         rock=ImageIO.read(new File("resources/ScorePanelAssets/rock.png")).getScaledInstance(50,50,Image.SCALE_SMOOTH);
 
         heart = ImageIO.read(new File("resources/ControlPanelAssets/heart.png"));
@@ -59,6 +68,10 @@ public class ImageManager {
             case "SpaceMarineSOUTH": return spaceMarineSouthTile;
             case "SpaceMarineWEST": return spaceMarineWestTile;
             case "SpaceMarineEAST": return spaceMarineEastTile;
+            case "AlienNORTH": return alienNorthTile;
+            case "AlienSOUTH": return alienSouthTile;
+            case "AlienWEST": return alienWestTile;
+            case "AlienEAST": return alienEastTile;
         }
         return null;
     }

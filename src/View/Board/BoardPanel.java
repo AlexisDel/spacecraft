@@ -4,7 +4,6 @@ import Model.GameEngine;
 import Model.Layer0.Mountain;
 import Model.Layer1.Entities.Entity;
 import Model.Layer1.Structures.Structure;
-import View.ControlPanel.ScorePanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -113,7 +112,7 @@ public class BoardPanel extends JPanel {
     }
 
     public void zoomIn(int  mouseX, int mouseY){
-        if (zoomFactor < 5){
+        if (zoomFactor < 10){
             zoomFactor+=zoomInterval;
             zoomX = mouseX;
             zoomY = mouseY;

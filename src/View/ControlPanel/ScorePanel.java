@@ -49,6 +49,7 @@ public class ScorePanel extends JPanel {
 
     @Override
     public void paintComponent(Graphics g){
+        super.paintComponent(g);
         updateScore();
         g.drawString(this.rocksSM+" / "+this.initialRocks,100,this.getHeight()/2);
         g.drawString("Mine rocks from Meteorites or by killing Aliens !", 0, 10);

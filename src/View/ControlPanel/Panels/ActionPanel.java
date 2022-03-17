@@ -17,15 +17,16 @@ public class ActionPanel extends JPanel {
     public ActionPanel(ControlPanel controlPanel) {
 
         this.setPreferredSize(new Dimension(300,64));
+        this.setLayout(null);
 
         JButton move = new JButton("Move");
         move.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("test");
                 controlPanel.setWaitingAction(MOVE);
             }
         });
+        move.setBounds(20, 30, 120, 40);
         this.add(move);
 
         JButton mine = new JButton("Mine");
@@ -34,11 +35,19 @@ public class ActionPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 controlPanel.setExecutingAction(MINE);
                 //On mine le meteorite le plus proche
-                Mine m= new Mine((Entity) controlPanel.getSelectedItem(), controlPanel.getGameEngine().getGameBoard());
+                new Mine((Entity) controlPanel.getSelectedItem(), controlPanel.getGameEngine().getGameBoard());
                 //lock mouvement button
                 //proc progress bar
             }
         });
+        mine.setBounds(160, 30, 120, 40);
         this.add(mine);
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.setColor(Color.LIGHT_GRAY);
+        g.drawLine(20, 10, this.getWidth()-20, 10);
     }
 }

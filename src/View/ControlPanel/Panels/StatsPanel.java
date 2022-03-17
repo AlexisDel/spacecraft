@@ -20,22 +20,25 @@ public class StatsPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        g.setFont(new Font("TimesRoman", Font.PLAIN, 12));
-        g.drawString("Stats", 10, 20);
+        g.setColor(Color.LIGHT_GRAY);
+        g.drawLine(20, 10, this.getWidth()-20, 10);
 
-        g.drawString("HP : ", 10, 30);
-        int nbHeart = controlPanel.getSelectedItem().getHealthPoints() / 20;
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 16));
+
+        g.drawString("HP : ", 20, 30);
+        int nbHeart = controlPanel.getSelectedItem().getHealthPoints() / 50;
         for(int i = 0; i < nbHeart; i++){
-            g.drawImage(ImageManager.getControlPanelAssets("Heart"), (40+i*16), 20, null);
+            g.drawImage(ImageManager.getControlPanelAssets("Heart"), (55+i*16), 18, null);
         }
 
         if (controlPanel.getSelectedItem() instanceof Entity){
             Entity entity = (Entity) controlPanel.getSelectedItem();
 
-            g.drawString("AD : ", 10, 40);
+            g.drawString("AD : ", 20, 50);
             int nbSword = entity.getAttackDamage() / 10;
             for(int i = 0; i < nbSword; i++){
-                g.drawImage(ImageManager.getControlPanelAssets("Sword"), (40+i*16), 50, null);
+                g.drawImage(ImageManager.getControlPanelAssets("Sword"), (55+i*16), 38, null);
             }
 
         }
