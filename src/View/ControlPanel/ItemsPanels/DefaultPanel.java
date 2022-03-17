@@ -12,13 +12,11 @@ public class DefaultPanel extends JPanel {
         //TODO clean this mess up
         this.setLayout(new BorderLayout());
         Label welcome= new Label("                 WELCOME TO SPACECRAFT");
-        welcome.setBackground(Color.WHITE);
         this.add(welcome, BorderLayout.NORTH);
         JPanel col = new JPanel();
         GridLayout lay =new GridLayout(11, 0);
         lay.setVgap(25);
         col.setLayout(lay);
-        col.setBackground(Color.WHITE);
         Label camera= new Label("      To move the camera: DRAG AND DROP");
         Label zoom=   new Label("          To zoom: UP & DOWN ARROW KEYS");
         Label click=  new Label("       Click on entities to interact with them");

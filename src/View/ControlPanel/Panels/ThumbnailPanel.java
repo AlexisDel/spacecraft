@@ -1,11 +1,9 @@
 package View.ControlPanel.Panels;
 
-import View.ImageManager;
-
 import javax.swing.*;
 import java.awt.*;
 
-import static View.ImageManager.THUMBNAIL_SIZE;
+import static View.ImageManager.*;
 
 public class ThumbnailPanel extends JPanel {
 
@@ -18,7 +16,9 @@ public class ThumbnailPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(ImageManager.getThumbnail(name), this.getWidth()/2-THUMBNAIL_SIZE/2,this.getHeight()/2-THUMBNAIL_SIZE/2,null);
+        g.drawImage(controlPanelBGTop, 0, 0, null);;
+        g.drawImage(getThumbnail(name), this.getWidth()/2-100/2,this.getHeight()/2-THUMBNAIL_SIZE/2,null);
+        g.drawImage(thumbnailBorder, this.getWidth()/2-BORDER_SIZE/2, this.getHeight()/2-BORDER_SIZE/2, null);
 
     }
 }

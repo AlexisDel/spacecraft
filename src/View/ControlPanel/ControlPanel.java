@@ -2,6 +2,7 @@ package View.ControlPanel;
 
 import Model.GameEngine;
 import Model.Layer1.Entities.Actions.Action;
+import Model.Layer1.Entities.Actions.Mouvements.Movement;
 import Model.Layer1.Entities.Alien;
 import Model.Layer1.Entities.Entity;
 import Model.Layer1.Entities.SpaceMarine;
@@ -9,7 +10,6 @@ import Model.Layer1.InteractiveItem;
 import Model.Layer1.Structures.Meteorite;
 import Model.Layer1.Structures.Spaceship;
 import Model.Layer1.Structures.Structure;
-import Model.Layer1.Entities.Actions.Mouvements.Movement;
 import View.ControlPanel.ItemsPanels.*;
 
 import javax.swing.*;
@@ -36,12 +36,11 @@ public class ControlPanel extends JPanel {
 
         this.waitingAction=Action.NONE;
         /**init selected entity to first entity on the board, it needs a non null displayPanel*/
-        this.selectedItem =this.gameEngine.getGameBoard().getEntities().get(0);
+        this.selectedItem = this.gameEngine.getGameBoard().getEntities().get(0);
 
         /**set own dimensions and initialize the sizes of sub JPanels: displayPanel and statsPanel*/
         this.setLayout(cardLayout);
         this.setPreferredSize(new Dimension(CONTROL_PANEL_WIDTH, CONTROL_PANEL_HEIGHT));
-        this.setBackground(Color.WHITE);
         this.setDoubleBuffered(true);
 
         /**adds the display panel*/
@@ -138,6 +137,5 @@ public class ControlPanel extends JPanel {
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        this.repaint();
     }
 }

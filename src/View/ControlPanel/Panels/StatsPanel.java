@@ -19,6 +19,8 @@ public class StatsPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        g.drawImage(ImageManager.controlPanelBGMid1, 0, 0, null);
+
         g.drawString("HP : ", 10, 10);
         int nbHeart = controlPanel.getSelectedItem().getHealthPoints() / 20;
         for(int i = 0; i < nbHeart; i++){
