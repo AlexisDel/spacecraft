@@ -1,16 +1,19 @@
-import Controller.BoardController;
-import Model.GameEngine;
-import View.GameView;
+import Launcher.LauncherWindow;
+import View.ImageManager;
 
 import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
-        GameEngine gameEngine = new GameEngine();
-        GameView gameView = new GameView(gameEngine);
-        BoardController boardController = new BoardController(gameView);
+    public static void main(String[] args) {
 
-        gameView.setBoardController(boardController);
+        // Chargement des images
+        try {
+            new ImageManager();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        new LauncherWindow();
     }
 }

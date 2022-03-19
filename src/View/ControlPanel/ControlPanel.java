@@ -33,6 +33,7 @@ public class ControlPanel extends JPanel {
 
     public ControlPanel(GameEngine gameEngine){
         this.gameEngine = gameEngine;
+        this.setDoubleBuffered(true);
 
         this.setBackground(Color.GRAY);
 

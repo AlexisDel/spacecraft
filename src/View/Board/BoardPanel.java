@@ -4,6 +4,7 @@ import Model.GameEngine;
 import Model.Layer0.Mountain;
 import Model.Layer1.Entities.Entity;
 import Model.Layer1.Structures.Structure;
+import View.ImageManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,9 +46,6 @@ public class BoardPanel extends JPanel {
         // All the drawing from this component will be done in an offscreen painting buffer
         // tl;dr : improves game's rendering performance
         this.setDoubleBuffered(true);
-
-        // Layer 0
-        this.setBackground(new Color(234, 138, 54));
     }
 
     public void paintComponent(Graphics g){
@@ -60,9 +58,12 @@ public class BoardPanel extends JPanel {
 
         g2.translate(-displayX, -displayY);
 
+        //Layer 0
+        g.drawImage(ImageManager.getTileImage("Sand"), 0, 0,null);
+
         //TODO : dessiner si afficher
 
-        // Sand layer
+        // Mountain layer
         for (Mountain mountain : gameEngine.getGameBoard().getMountains()){
                 mountain.getView().getTileView().draw(g2);
         }

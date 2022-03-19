@@ -2,8 +2,7 @@ package View;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 public class ImageManager {
 
@@ -26,6 +25,7 @@ public class ImageManager {
     public static Image alienEastTile;
     public static Image alienWestTile;
     public static Image meteoriteTile;
+    public static Image sandTile;
 
     public static Image rock;
 
@@ -33,6 +33,10 @@ public class ImageManager {
     public static Image sword;
 
     public static Image thumbnailBorder;
+
+    public static Image launcherBackground;
+    public static Image launcherLogo;
+    public static Image startButton;
 
     public ImageManager() throws IOException {
         thumbnailAlien = ImageIO.read(new File("./resources/alien.jpeg")).getScaledInstance(THUMBNAIL_SIZE, THUMBNAIL_SIZE, Image.SCALE_SMOOTH);
@@ -42,6 +46,7 @@ public class ImageManager {
 
         spaceShipTile = ImageIO.read(new File("resources/BoardAssets/spaceship.png"));
         meteoriteTile = ImageIO.read(new File("resources/BoardAssets/meteorite.png"));
+        sandTile = ImageIO.read(new File("resources/BoardAssets/sand.png"));
         spaceMarineNorthTile = ImageIO.read(new File("resources/BoardAssets/SpaceMarineN.png"));
         spaceMarineSouthTile = ImageIO.read(new File("resources/BoardAssets/SpaceMarineS.png"));
         spaceMarineEastTile = ImageIO.read(new File("resources/BoardAssets/SpaceMarineE.png"));
@@ -58,12 +63,18 @@ public class ImageManager {
         sword = ImageIO.read(new File("resources/ControlPanelAssets/sword.png"));
         thumbnailBorder = ImageIO.read(new File("resources/ControlPanelAssets/border.png"));
 
+        launcherBackground = ImageIO.read(new File("resources/LauncherAssets/background.png"));
+        launcherLogo = ImageIO.read(new File("resources/LauncherAssets/logo.png"));
+        startButton = ImageIO.read(new File("resources/LauncherAssets/start.png"));
+
+        createFont();
     }
 
     public static Image getTileImage(String ressourceName){
         switch (ressourceName){
             case "Spaceship" : return spaceShipTile;
             case "Meteorite" : return meteoriteTile;
+            case "Sand" : return sandTile;
             case "SpaceMarineNORTH": return spaceMarineNorthTile;
             case "SpaceMarineSOUTH": return spaceMarineSouthTile;
             case "SpaceMarineWEST": return spaceMarineWestTile;
@@ -92,5 +103,23 @@ public class ImageManager {
             case "Sword" : return sword;
         }
         return null;
+    }
+
+    private static Font ttfBase = null;
+    public static Font zeroTwosFont = null;
+    private static InputStream myStream = null;
+    private static final String FONT_PATH = "resources/ZEROTWOS.TTF";
+
+    public Font createFont() {
+        try {
+            myStream = new BufferedInputStream(
+                    new FileInputStream(FONT_PATH));
+            ttfBase = Font.createFont(Font.PLAIN, myStream);
+            zeroTwosFont = ttfBase.deriveFont(Font.PLAIN, 12);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.err.println("Font not loaded.");
+        }
+        return zeroTwosFont;
     }
 }

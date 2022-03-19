@@ -4,9 +4,9 @@ public class GameConstants {
 
     /** Hauteur du terrain de jeu */
     // 40 * 2^n
-    public static final int BOARD_SIZE = 320;
+    public static final int BOARD_SIZE = 160;
     /** Dimension d'une montagne en nombre de case */
-    public static final int MOUNTAIN_SIZE = 16;
+    public static final int MOUNTAIN_SIZE = 8;
 
     /** Rayon autour des SpaceMarines représentant la peur des Aliens*/
     public static final int fearOfSpaceMarines = 8;
@@ -25,6 +25,18 @@ public class GameConstants {
      * (doit être ≥ à SPACESHIP_WIDTH+2 & SPACESHIP_HEIGHT+2) */
     public static final int SPACESHIP_LANDING_ZONE = 16;
 
+    public static int NB_SPACEMARINES;
+    public static int NB_ALIENS;
     /** Nombre de météorites placés sur la map au début d'une partie*/
-    public static final int NBR_METEORITES=20;
+    public static int NB_METEORITES;
+    public static int NB_MOUNTAINS;
+    public static int POURCENT_MOUNTAINS;
+
+    public GameConstants(int nbSpaceMarines, int nbAliens, int nbMeteorites, int nbMountains, int prMountain) {
+        NB_SPACEMARINES = nbSpaceMarines;
+        NB_ALIENS = nbAliens;
+        NB_METEORITES = nbMeteorites;
+        NB_MOUNTAINS = nbMountains;
+        POURCENT_MOUNTAINS = prMountain;
+    }
 }

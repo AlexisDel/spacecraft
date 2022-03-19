@@ -22,6 +22,7 @@ public class ScorePanel extends JPanel {
     private int initialRocks;
 
     public ScorePanel(GameEngine gameEngine){
+        this.setDoubleBuffered(true);
         this.gameBoard= gameEngine.getGameBoard();
 
         this.setBackground(Color.RED);

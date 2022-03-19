@@ -11,8 +11,6 @@ import static Model.GameConstants.MOUNTAIN_SIZE;
 public class RandomLandGeneration {
     private final ArrayList<Mountain> board;
 
-    private static final int nbMountains = 4;
-    private static int pourcent = 20;
     private final int borneMax;
     private final int borneMin;
     private final int dimH =  (GameConstants.BOARD_SIZE/ MOUNTAIN_SIZE);
@@ -26,7 +24,7 @@ public class RandomLandGeneration {
      */
     public RandomLandGeneration() {
         // Calcul des bornes pour les probabilités
-        int[] probs = this.probas(pourcent);
+        int[] probs = this.probas(GameConstants.POURCENT_MOUNTAINS);
         this.borneMax = probs[1];
         this.borneMin = probs[0];
         this.board = new ArrayList<>();
@@ -49,7 +47,7 @@ public class RandomLandGeneration {
     int[] probas(int pourcent) {
         assert pourcent <= 100;
         int[] res = new int[2];
-        res[0] = pourcent*dimH*dimW - 100* RandomLandGeneration.nbMountains;
+        res[0] = pourcent*dimH*dimW - 100 * GameConstants.NB_MOUNTAINS;
         res[1] = pourcent*dimH*dimW;
         return res;
     }
@@ -88,7 +86,7 @@ public class RandomLandGeneration {
         // On veut ensuite générer aléatoirement un relief dans la map
 
         int newX, newY;
-        for (int i = 0; i < nbMountains; i++) {
+        for (int i = 0; i < GameConstants.NB_MOUNTAINS; i++) {
             newX = this.rand.nextInt(dimH - 2) + 1;
             newY = this.rand.nextInt(dimW - 2) + 1;
             // Le relief doit être à une case vide

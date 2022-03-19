@@ -41,7 +41,7 @@ public class GameBoard {
         this.AlienView = new HitBoard(this);
         structures = new ArrayList<>();
         entities = new ArrayList<>();
-        this.initLand(10, 3, NBR_METEORITES);
+        this.initLand(NB_ALIENS, NB_SPACEMARINES, NB_METEORITES);
         }
 
     /**

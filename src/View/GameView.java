@@ -8,7 +8,6 @@ import View.ControlPanel.ScorePanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 
 import static java.lang.Thread.sleep;
 
@@ -22,12 +21,6 @@ public class GameView extends JFrame implements Runnable{
     private GameEngine gameEngine;
 
     public GameView(GameEngine gameEngine) {
-
-        try {
-            new ImageManager();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         this.gameEngine = gameEngine;
 
@@ -50,6 +43,7 @@ public class GameView extends JFrame implements Runnable{
         displayUpdateThread.start();
 
         this.pack();
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 
