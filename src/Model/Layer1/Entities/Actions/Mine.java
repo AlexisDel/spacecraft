@@ -22,31 +22,29 @@ public class Mine extends Thread{
         // Météorite à détruire
         Meteorite meteorite = this.choseMeteorite();
         // Tant que la météorite à des HP
-        while(meteorite != null && meteorite.getHealthPoints() > 0){
-            System.out.println("MINNNINNNNNNGGGGGG BITCHHH");
-            // On mine
-            System.out.println("hp 1 : " + meteorite.getHealthPoints());
-            int rocks= meteorite.mined(miner.getAttackDamage());
-            System.out.println("hp 2 : " + meteorite.getHealthPoints());
-            // On gagne des cailloux
-            this.miner.setRocks(this.miner.getRocks()+rocks);
-            // On fait une pause
-            try {
-                //mine once then stop for cooldown
-                sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        if(meteorite != null){
+            while (meteorite.getHealthPoints() > 0) {
+                // On mine
+                meteorite.mined(50);
+                // On gagne des cailloux
+                this.miner.setRocks(this.miner.getRocks() + 1);
+                // On fait une pause
+                try {
+                    //mine once then stop for cooldown
+                    sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            // La météorite n'as plus de vie, on la supprime
+            this.gameboard.getStructures().remove(meteorite);
+            for (int i = 0; i < meteorite.getDimension().height; i++) {
+                for (int j = 0; j < meteorite.getDimension().width; j++) {
+                    this.gameboard.getHitbox().empty(new Point(meteorite.getCoordinate().x + i, meteorite.getCoordinate().y + j));
+                    this.gameboard.getAlienView().empty(new Point(meteorite.getCoordinate().x + i, meteorite.getCoordinate().y + j));
+                }
             }
         }
-        // La météorite n'as plus de vie, on la supprime
-        this.gameboard.getStructures().remove(meteorite);
-        for(int i = 0; i < meteorite.getDimension().height; i++){
-            for(int j = 0; j < meteorite.getDimension().width; j++){
-                this.gameboard.getHitbox().empty(new Point(meteorite.getCoordinate().x + i,meteorite.getCoordinate().y + j));
-                this.gameboard.getAlienView().empty(new Point(meteorite.getCoordinate().x + i,meteorite.getCoordinate().y + j));
-            }
-        }
-        //todo : supprimer des HitBoxs
     }
 
     /**

@@ -159,10 +159,11 @@ public class BinaryHeap {
      */
     public String toString()
     {
-        String s = "nHeap = |";
+        StringBuilder s = new StringBuilder("nHeap = |");
         for (int i = 0; i < heapSize; i++)
-            s += i + " : " + heap[i].getF() +" | ";
-        return s;
+
+            s.append(heap[i].toString()).append(" | ");
+        return s.toString();
     }
     /**
      *  This method returns the max element of the heap.

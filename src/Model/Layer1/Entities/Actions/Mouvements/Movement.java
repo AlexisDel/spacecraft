@@ -46,7 +46,7 @@ public class Movement extends Thread{
             while (!entity.getCoordinate().equals(destination) && entity.getIsMoving()) {
                 ArrayList<Point> track;
                 // On calcul le chemin
-                track = shortestPath.AStar(new Node(entity.getCoordinate()), new Node(destination), this.gameBoard.getHitbox());
+                track = shortestPath.AStar(new Node(entity.getCoordinate()), new Node(destination), this.gameBoard.getHitbox(), false);
                 // Pour chaque étapes du chemin trouvé
                 for (int i = 0; i < track.size() - 1 && entity.getIsMoving(); i++) {
                     // Si c'est un alien qui bouge

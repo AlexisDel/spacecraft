@@ -1,5 +1,6 @@
 package Model.Layer1.Entities.Actions.Mouvements.Algos;
 
+import Model.GameConstants;
 import Model.Layer1.Entities.Actions.Mouvements.Direction;
 import Model.Layer1.Entities.Actions.Mouvements.HitBoard;
 
@@ -7,6 +8,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import static java.lang.Math.cos;
 import static java.lang.Math.pow;
 
 /**
@@ -31,7 +33,7 @@ public class ShortestPath {
      * @return
      */
     private double heuristic(Node p1, Node p2){
-        return pow((p1.getPosx() - p2.getPosx()), 2) + pow((p1.getPosy() - p2.getPosy()), 2);
+        return Math.sqrt(pow((p1.getPosx() - p2.getPosx()), 2) + pow((p1.getPosy() - p2.getPosy()), 2));
     }
 
     /**
@@ -40,7 +42,16 @@ public class ShortestPath {
      * @param end
      * @return
      */
-    public ArrayList<Point> AStar(Node start, Node end, HitBoard hitBoard){
+    public ArrayList<Point> AStar(Node start, Node end, HitBoard hitBoard, boolean verbose){
+        // Tableau représentant l'appartenance d'un Noeud à Open et à Close
+        Double[][] TabInOpen = new Double[GameConstants.BOARD_SIZE][GameConstants.BOARD_SIZE];
+        Boolean[][] TabInClose = new Boolean[GameConstants.BOARD_SIZE][GameConstants.BOARD_SIZE];
+        for(int i = 0; i < GameConstants.BOARD_SIZE; i++){
+            for(int j = 0; j < GameConstants.BOARD_SIZE; j++){
+                TabInClose[i][j] = false;
+                TabInOpen[i][j] = -1.0;
+            }
+        }
         // Initialisation de start
         start.setH(heuristic(start, end));
         start.setG(0);
@@ -49,63 +60,124 @@ public class ShortestPath {
         // Initialisation de Open et Close
         BinaryHeap Open = new BinaryHeap(100000);
         BinaryHeap Close = new BinaryHeap(100000);
+        if(verbose)
+            System.out.println("ajout de " + start + " à Open");
         Open.insert(start);
+        TabInOpen[start.getPosx()][start.getPosy()] = start.getG();
         // Tant que la recherche continue
+        int cpt = 0;
         while(!Open.isEmpty()){
+            cpt++;
             // On cherche le noeud de plus petite fvalue dans open : currentNode
             Node currentNode = Open.findMin();
             // On retire currentNode de Open
+            if(verbose)
+                System.out.println("currentNode = " + currentNode + "et est sorti de Open et mis dans Close");
             Open.delete(0);
+            TabInOpen[currentNode.getPosx()][currentNode.getPosy()] = -1.0;
             // Si on trouve l'arrivée, alors on arrête
             if(currentNode.equals(end)){
                 end = currentNode;
                 break;
             }
-            // On ajoute le noeud courrant à close
+            // On ajoute le noeud courant à close
             Close.insert(currentNode);
+            TabInClose[currentNode.getPosx()][currentNode.getPosy()] = true;
             for(Node child : currentNode.getChild(hitBoard)){
+                if(verbose)
+                    System.out.println("Open : ");
+                if(verbose)
+                    System.out.println(Open);
+                if(verbose)
+                    System.out.println("Close : ");
+                if(verbose)
+                    System.out.println(Close);
+                if(verbose)
+                    System.out.println("un fils : " + child);
                 double cost = currentNode.getG() + 1;
+                if(verbose)
+                    System.out.println("le coup courrant est :" + cost);
                 // Pose pour potentiellement retirer l'enfant des listes
-                int posOpen = 0;
                 boolean notInOpen = true;
-                boolean notInClose = true;
+                boolean notInClose;
                 ///////////////////////////////////////////////
                 // Si child est dans la liste Open, et à une plus grande G-value, on l'enlève de Open
-                boolean flag1 = true;
+                /*
                 for(int i = 0; i < Open.getHeapSize(); i++){
                     if(Open.getHeap()[i].equals(child)){
                         notInOpen = false;
                         if(Open.getHeap()[i].getG() > cost){
-                            posOpen = i;
-                            flag1 = false;
+                            Open.getHeap()[i].setG(cost);
+                            Open.getHeap()[i].setF(cost + Open.getHeap()[i].getH());
+                            Open.getHeap()[i].setParent(currentNode);
+                            if(verbose)
+                                System.out.println(Open.getHeap()[i] + " vient d'être mis à jour");
+                        }
+                        else if(Open.getHeap()[i].getG() < cost){
+                            currentNode.setG(Open.getHeap()[i].getG() + 1);
+                            currentNode.setF(currentNode.getG() + currentNode.getH());
+                            currentNode.setParent(Open.getHeap()[i]);
+                            if(verbose)
+                                System.out.println(currentNode + " vient d'être mis à jour");
+                        }
+                        break;
+                    }
+                }
+
+                 */
+                if(TabInOpen[child.getPosx()][child.getPosy()] > -1.){
+                    notInOpen = false;
+                    for(int i = 0; i < Open.getHeapSize(); i++){
+                        if(Open.getHeap()[i].equals(child)){
+                            if(Open.getHeap()[i].getG() > cost){
+                                Open.getHeap()[i].setG(cost);
+                                Open.getHeap()[i].setF(cost + Open.getHeap()[i].getH());
+                                Open.getHeap()[i].setParent(currentNode);
+                                if(verbose)
+                                    System.out.println(Open.getHeap()[i] + " vient d'être mis à jour");
+                            }
+                            else if(Open.getHeap()[i].getG() < cost){
+                                currentNode.setG(Open.getHeap()[i].getG() + 1);
+                                currentNode.setF(currentNode.getG() + currentNode.getH());
+                                currentNode.setParent(Open.getHeap()[i]);
+                                if(verbose)
+                                    System.out.println(currentNode + " vient d'être mis à jour");
+                            }
+                            break;
                         }
                     }
                 }
-                if(!flag1) {
-                    Open.delete(posOpen);
-                    notInOpen = true;
-                }
                 //////////////////////////////////////////////
                 // On regarde si child est dans Close
+                /*
                 for(int i = 0; i < Close.getHeapSize(); i++){
                     if(Close.getHeap()[i].equals(child)){
                         notInClose = false;
                         break;
                     }
                 }
+                */
+                notInClose = !TabInClose[child.getPosx()][child.getPosy()];
                 //////////////////////////////////////////////
                 // Si l'enfant est ni dans Open ni dans Close
                 if(notInOpen && notInClose){
                     // On calcul les heuristiques de child
                     child.setH(this.heuristic(child, end));
                     child.setG(currentNode.getG() + 1);
-                    child.setF(child.getH() + child.getH());
+                    child.setF(child.getH() + child.getG());
                     // On fixe le parent
                     child.setParent(currentNode);
                     Open.insert(child);
+                    TabInOpen[child.getPosx()][child.getPosy()] = child.getG();
+                    if(verbose)
+                        System.out.println(child + " est inséré dans Open");
                 }
             }
+            if(verbose)
+                System.out.println("//////////////////////////////////////////////////////////////////");
         }
+        if(verbose)
+            System.out.println("nombre de tour de boucle : " + cpt);
         return this.backtrack(start, end);
     }
 
@@ -170,17 +242,17 @@ public class ShortestPath {
         ShortestPath sp = new ShortestPath(hb1);
         Node start = new Node(0,0);
         Node end = new Node(1,0);
-        ArrayList<Point>test = sp.AStar(start, end, hb1);
+        ArrayList<Point>test = sp.AStar(start, end, hb1, false);
         for(int i = 0; i < n; i++){
             for(int j = 0; j < n; j++){
-                if(test.contains(new Point(i, j))){
+                if(test.contains(new Point(j, i))){
                     System.out.print("C ");
                 }
-                else if(hb1.isEmpty(i, j)){
+                else if(hb1.isEmpty(j, i)){
                     System.out.print(". ");
                 }
                 else{
-                    System.out.print("M ");
+                    System.out.print("$ ");
                 }
             }
             System.out.println();
@@ -199,18 +271,18 @@ public class ShortestPath {
         sp = new ShortestPath(hb2);
         start = new Node(3,3);
         end = new Node(2,1);
-        test = sp.AStar(start, end, hb2);
+        test = sp.AStar(start, end, hb2, false);
         System.out.println(test);
         for(int i = 0; i < n; i++){
             for(int j = 0; j < n; j++){
-                if(test.contains(new Point(i, j))){
+                if(test.contains(new Point(j, i))){
                     System.out.print("C ");
                 }
-                else if(hb2.isEmpty(i, j)){
+                else if(hb2.isEmpty(j, i)){
                     System.out.print(". ");
                 }
                 else{
-                    System.out.print("M ");
+                    System.out.print("$ ");
                 }
             }
             System.out.println();
@@ -226,18 +298,18 @@ public class ShortestPath {
         sp = new ShortestPath((hb3));
         start=  new Node(0,0);
         end = new Node(0,0);
-        test = sp.AStar(start, end, hb3);
+        test = sp.AStar(start, end, hb3, false);
         System.out.println(test);
         for(int i = 0; i < n; i++){
             for(int j = 0; j < n; j++){
-                if(test.contains(new Point(i, j))){
+                if(test.contains(new Point(j, i))){
                     System.out.print("C ");
                 }
-                else if(hb3.isEmpty(i, j)){
+                else if(hb3.isEmpty(j, i)){
                     System.out.print(". ");
                 }
                 else{
-                    System.out.print("M ");
+                    System.out.print("$ ");
                 }
             }
             System.out.println();
@@ -294,17 +366,17 @@ public class ShortestPath {
         sp = new ShortestPath(hb4);
         start = new Node(1,4);
         end = new Node(8,0);
-        test = sp.AStar(start, end, hb4);
+        test = sp.AStar(start, end, hb4, false);
         for(int i = 0; i < n; i++){
             for(int j = 0; j < n; j++){
-                if(test.contains(new Point(i, j))){
+                if(test.contains(new Point(j, i))){
                     System.out.print("C ");
                 }
-                else if(hb4.isEmpty(i, j)){
+                else if(hb4.isEmpty(j, i)){
                     System.out.print(". ");
                 }
                 else{
-                    System.out.print("M ");
+                    System.out.print("$ ");
                 }
             }
             System.out.println();
@@ -329,21 +401,88 @@ public class ShortestPath {
         start = new Node(4,2);
         end = new Node(1,5);
         sp = new ShortestPath(hb5);
-        test = sp.AStar(start, end, hb5);
+        test = sp.AStar(start, end, hb5, false);
         for(int i = 0; i < n; i++){
             for(int j = 0; j < n; j++){
-                if(test.contains(new Point(i, j))){
+                if(test.contains(new Point(j, i))){
                     System.out.print("C ");
                 }
-                else if(hb5.isEmpty(i, j)){
+                else if(hb5.isEmpty(j, i)){
                     System.out.print(". ");
                 }
                 else{
-                    System.out.print("M ");
+                    System.out.print("$ ");
                 }
             }
             System.out.println();
         }
+
+        System.out.println("////////////////");
+
+        //---------------------------------
+
+        n = 12;
+
+        HitBoard hb6 = new HitBoard(n);
+
+        hb6.fill(new Point(2,1));
+        hb6.fill(new Point(2,2));
+        hb6.fill(new Point(2,3));
+        hb6.fill(new Point(2,4));
+        hb6.fill(new Point(2,5));
+
+        hb6.fill(new Point(3,1));
+        hb6.fill(new Point(4,1));
+        hb6.fill(new Point(5,1));
+        hb6.fill(new Point(6,1));
+        hb6.fill(new Point(7,1));
+        hb6.fill(new Point(8,1));
+        hb6.fill(new Point(9,1));
+
+        hb6.fill(new Point(2,6));
+        hb6.fill(new Point(3,6));
+        hb6.fill(new Point(4,6));
+        hb6.fill(new Point(5,6));
+        hb6.fill(new Point(6,6));
+        hb6.fill(new Point(7,6));
+        hb6.fill(new Point(8,6));
+        hb6.fill(new Point(9,6));
+
+        hb6.fill(new Point(9,6));
+        hb6.fill(new Point(9,7));
+        hb6.fill(new Point(9,8));
+        hb6.fill(new Point(9,9));
+        hb6.fill(new Point(9,10));
+
+        hb6.fill(new Point(0,8));
+        hb6.fill(new Point(1,8));
+        hb6.fill(new Point(2,8));
+        hb6.fill(new Point(3,8));
+        hb6.fill(new Point(4,8));
+        hb6.fill(new Point(5,8));
+        hb6.fill(new Point(6,8));
+
+
+        System.out.println(hb6);
+        sp = new ShortestPath(hb6);
+        start = new Node(4,3);
+        end = new Node(0,7);
+        test = sp.AStar(start, end, hb6, false);
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                if(test.contains(new Point(j, i))){
+                    System.out.print("C ");
+                }
+                else if(hb6.isEmpty(j, i)){
+                    System.out.print(". ");
+                }
+                else{
+                    System.out.print("$ ");
+                }
+            }
+            System.out.println();
+        }
+        System.out.println("////////////////");
 
 
     }
