@@ -24,14 +24,14 @@ public class Mine extends Thread{
         // Tant que la météorite à des HP
         if(meteorite != null){
             while (meteorite.getHealthPoints() > 0) {
-                // On mine
+                // On mine et on get les cailloux obtenu à chaque coup
                 int minedrocks= meteorite.mined(50);
                 // On gagne des cailloux
                 this.miner.setRocks(this.miner.getRocks() + minedrocks );
                 // On fait une pause
                 try {
                     //mine once then stop for cooldown
-                    sleep(500);
+                    sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

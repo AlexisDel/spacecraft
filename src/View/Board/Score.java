@@ -23,7 +23,7 @@ public class Score {
     public void initRocks(){
         for(Structure structure: gameBoard.getStructures()){
             if(structure instanceof Meteorite){
-                this.initialRocks+= ((Meteorite) structure).getRocks();
+                this.initialRocks+=  structure.getHealthPoints();
             }
         }
     }

@@ -167,7 +167,6 @@ public class GameBoard {
                 int meteoriteY = rand.nextInt(GameConstants.BOARD_SIZE);
                 boolean isThisPlaceBigEnough = true;
                 // Verifier que la zone trouvée est assez grande
-                //Todo : remplacer 2 par meteoritesSize ?
                 for (int i1 = 0; i1 < 2; i1++) {
                     for (int j1 = 0; j1 < 2; j1++) {
                         //ici on fixe la taille des méteorites à 2 et on verifie que le space de 2x2 soit bien dans la mp
@@ -180,8 +179,8 @@ public class GameBoard {
                 //Si on a trouvé une cordonnée
                 if (isThisPlaceBigEnough){
                     //On crée les méteorites et on les place  dans la map
-                    //todo : de même
-                     int randHealth= rand.nextInt(200)+50;
+                     int randHealth= rand.nextInt(5)+1;
+                     randHealth*=100;
                     structures.add(new Meteorite(new Point(meteoriteX, meteoriteY), new Dimension(2, 2),randHealth));
                     //On ajoute chaque case occupée par le méteorite dans la hitbox et la AlienView
                     for (int i2 = 0; i2 < 2; i2++) {
