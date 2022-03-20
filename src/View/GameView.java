@@ -4,10 +4,10 @@ import Controller.BoardController;
 import Model.GameEngine;
 import View.Board.BoardPanel;
 import View.ControlPanel.ControlPanel;
-import View.ControlPanel.ScorePanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 import static java.lang.Thread.sleep;
 
@@ -16,11 +16,24 @@ public class GameView extends JFrame implements Runnable{
     private Thread displayUpdateThread;
     private BoardPanel boardPanel;
     private ControlPanel controlPanel;
-    private ScorePanel scorePanel;
 
     private GameEngine gameEngine;
 
     public GameView(GameEngine gameEngine) {
+
+        try {
+            new ImageManager();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            new FontManager();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (FontFormatException e) {
+            e.printStackTrace();
+        }
 
         this.gameEngine = gameEngine;
 
@@ -31,13 +44,7 @@ public class GameView extends JFrame implements Runnable{
 
         /** adds the control panel to the window*/
         controlPanel = new ControlPanel(gameEngine);
-        scorePanel= new ScorePanel(gameEngine);
-
-        JPanel rightPanel = new JPanel(new BorderLayout());
-        rightPanel.add(controlPanel,BorderLayout.NORTH);
-        rightPanel.add(scorePanel, BorderLayout.SOUTH);
-
-        this.add(rightPanel, BorderLayout.EAST);
+        this.add(controlPanel, BorderLayout.EAST);
 
         displayUpdateThread = new Thread(this);
         displayUpdateThread.start();
@@ -58,7 +65,6 @@ public class GameView extends JFrame implements Runnable{
         while(true){
             boardPanel.repaint();
             controlPanel.repaint();
-            scorePanel.repaint();
             try {
                 sleep(1000/ViewConstants.FPS);
             } catch (InterruptedException e) {

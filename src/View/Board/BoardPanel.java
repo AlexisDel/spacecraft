@@ -4,6 +4,7 @@ import Model.GameEngine;
 import Model.Layer0.Mountain;
 import Model.Layer1.Entities.Entity;
 import Model.Layer1.Structures.Structure;
+import View.FontManager;
 import View.ImageManager;
 
 import javax.swing.*;
@@ -33,12 +34,18 @@ public class BoardPanel extends JPanel {
     // Moteur du jeu
     private GameEngine gameEngine;
 
+    //Le score
+    private Score score;
+    private Timer timer;
+
     /**
      * Constructeur
      * @param gameEngine moteur du jeu, utilisé pour dessiner les éléments du jeu dans la fenêtre
      */
     public BoardPanel(GameEngine gameEngine) {
         this.gameEngine = gameEngine;
+        this.score= new Score(gameEngine);
+        this.timer= new Timer();
 
         /** Paramètre de l'affichage du terrain de jeu */
         this.setPreferredSize(new Dimension(BOARD_PANEL_WIDTH, BOARD_PANEL_HEIGHT));
@@ -48,9 +55,37 @@ public class BoardPanel extends JPanel {
         this.setDoubleBuffered(true);
     }
 
+    /**
+     * Cette méthode dessine le score en haut à gauche du tableau de jeu
+     * @param g
+     */
+    public void drawScore(Graphics2D g){
+        int maxPoints=this.score.getInitialRocks();
+        int playerPoints=this.score.getPlayersRocks();
+        g.setFont(FontManager.Dune2000);
+        g.setColor(Color.WHITE);
+        String score= playerPoints+" / "+maxPoints;
+        int scoreWidth= g.getFontMetrics(FontManager.Dune2000).stringWidth(score);
+        g.drawString(score,40,15);
+        g.drawImage(ImageManager.rock, 40+scoreWidth+4,0,this);
+    }
+
+    public void drawTimer(Graphics2D g){
+        long elapsedTime = timer.getTime();
+        long elapsedMs = elapsedTime%1000;
+        long elapsedSeconds = elapsedTime / 1000;
+        long secondsDisplay = elapsedSeconds % 60;
+        long elapsedMinutes = elapsedSeconds / 60;
+
+        g.setFont(FontManager.Dune2000);
+        g.setColor(Color.WHITE);
+        g.drawString(elapsedMinutes+":"+secondsDisplay+":"+elapsedMs,500,15);
+    }
+
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
+        Graphics2D gscore= (Graphics2D)g.create();
 
         g2.translate(zoomX, zoomY);
         g2.scale(zoomFactor, zoomFactor);
@@ -77,8 +112,12 @@ public class BoardPanel extends JPanel {
                 entity.getView().getTileView().draw(g2);
         }
 
+        drawScore(gscore);
+        drawTimer(gscore);
+
         // Dispose of this graphics context and release any system ressources that it is using
         g2.dispose();
+
     }
 
 

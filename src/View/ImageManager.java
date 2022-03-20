@@ -57,7 +57,7 @@ public class ImageManager {
         alienEastTile = ImageIO.read(new File("resources/BoardAssets/AlienE.png"));
         alienWestTile = ImageIO.read(new File("resources/BoardAssets/AlienW.png"));
 
-        rock=ImageIO.read(new File("resources/ScorePanelAssets/rock.png")).getScaledInstance(50,50,Image.SCALE_SMOOTH);
+        rock=ImageIO.read(new File("resources/rock.png")).getScaledInstance(25,25,Image.SCALE_SMOOTH);
 
         heart = ImageIO.read(new File("resources/ControlPanelAssets/heart.png"));
         sword = ImageIO.read(new File("resources/ControlPanelAssets/sword.png"));
