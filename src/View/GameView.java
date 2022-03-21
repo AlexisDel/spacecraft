@@ -1,9 +1,11 @@
 package View;
 
 import Controller.BoardController;
+import Model.GameConstants;
 import Model.GameEngine;
 import View.Board.BoardPanel;
 import View.ControlPanel.ControlPanel;
+import View.LeaderBoard.LeaderBoardPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -62,7 +64,7 @@ public class GameView extends JFrame implements Runnable{
 
     @Override
     public void run() {
-        while(true){
+        while(!gameEngine.getGameBoard().isGameOver()){
             boardPanel.repaint();
             controlPanel.repaint();
             try {
@@ -70,6 +72,12 @@ public class GameView extends JFrame implements Runnable{
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+        }
+        this.dispose();
+        try {
+            new LeaderBoardPanel(GameConstants.PLAYER_NAME, (int)gameEngine.getGameBoard().getTimer().getTime());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

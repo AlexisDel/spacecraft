@@ -9,6 +9,8 @@ import Model.Layer1.Structures.Meteorite;
 import Model.Layer1.Structures.Spaceship;
 import Model.Layer1.Structures.Structure;
 import Model.Layer1.Entities.Actions.Mouvements.HitBoard;
+import Model.GameBoardAddOns.Score;
+import Model.GameBoardAddOns.Timer;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -31,6 +33,10 @@ public class GameBoard {
     HitBoard hitbox;
     /** Tableau 2D de booléens désignant le monde selon les aliens avec leur peur des spaceMarines*/
     HitBoard AlienView;
+    /** Le score qui s'affiche en haut du tableau de jeu: il décrit combien de roches le joueur a capturé*/
+    Score score;
+    /** Le Timer qui s'affiche en haut du tableau de jeu*/
+    Timer timer;
 
     /**
      * Constructeur, initialise les différentes couches qui composent notre terrain de jeu
@@ -42,6 +48,8 @@ public class GameBoard {
         structures = new ArrayList<>();
         entities = new ArrayList<>();
         this.initLand(NB_ALIENS, NB_SPACEMARINES, NB_METEORITES);
+        this.score= new Score(this);
+        this.timer= new Timer();
         }
 
     /**
@@ -64,6 +72,18 @@ public class GameBoard {
     public ArrayList<Entity> getEntities() {
         return entities;
     }
+    /** Getter pour le score du joueur */
+    public Score getScore() {
+        return score;
+    }
+    /** Getter pour le Timer du joueur */
+    public Timer getTimer() {
+        return timer;
+    }
+
+    public boolean isGameOver(){
+        return this.score.getPlayersRocks()==this.score.getInitialRocks();
+    }
 
     /**
      * renvoie si un point est dans la map ou non
@@ -71,6 +91,7 @@ public class GameBoard {
      * @param y
      * @return
      */
+
     public boolean isInBoard(int x, int y){
         return x >= 0 && y >= 0 && x < BOARD_SIZE && y < BOARD_SIZE;
     }

@@ -1,4 +1,4 @@
-package View.Board;
+package Model.GameBoardAddOns;
 
 public class Timer {
     private long startTime;
