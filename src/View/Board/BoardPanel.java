@@ -2,6 +2,7 @@ package View.Board;
 
 import Model.GameBoardAddOns.Score;
 import Model.GameBoardAddOns.Timer;
+import Model.GameConstants;
 import Model.GameEngine;
 import Model.Layer0.Mountain;
 import Model.Layer1.Entities.Entity;
@@ -20,26 +21,23 @@ import static View.ViewConstants.*;
  */
 public class BoardPanel extends JPanel {
 
-    private int zoomFactor = 1;
-    private int zoomInterval = 1;
-
-    // Position de la fenêtre d'affichage
-    private int displayX = 0;
-    private int displayY = 0;
-
-    int viewPortSize = BOARD_PANEL_WIDTH;
-
-    private int cameraX = 0;
-    private int cameraY = 0;
-    private int centerX = BOARD_PANEL_WIDTH/2;
-    private int centerY = BOARD_PANEL_HEIGHT/2;
-
     // Moteur du jeu
     private GameEngine gameEngine;
 
     //Le score
     private Score score;
     private Timer timer;
+
+    // Controleurs du zoom
+    int evol = 0;
+    final int evolMax = 3;
+    // Dimension du zoom
+    int dimension = BOARD_PANEL_WIDTH;
+    // Decalages
+    int decalageX = 0;
+    int decalageY = 0;
+    int milieuX = dimension/2;
+    int milieuY = dimension/2;
 
     /**
      * Constructeur
@@ -90,9 +88,10 @@ public class BoardPanel extends JPanel {
         Graphics2D g2 = (Graphics2D)g;
         Graphics2D gScore = (Graphics2D)g.create();
 
-        g2.scale(zoomFactor, zoomFactor);
+        g2.scale(Math.pow(2, evol), Math.pow(2, evol));
 
-        //g2.translate(centerX, centerY);
+        g2.translate(-(dimension - dimension/Math.pow(2, evol))/2, -(dimension - dimension/Math.pow(2, evol))/2);
+        g2.translate(decalageX, decalageY);
 
         //Layer 0
         g.drawImage(ImageManager.getTileImage("Sand"), 0, 0,null);
@@ -127,33 +126,76 @@ public class BoardPanel extends JPanel {
      * @param mouseX coordonnée en abscisse du curseur dans le repère de la fenêtre lors du clic
      * @param mouseY coordonnée en ordonné du curseur dans le repère de la fenêtre lors du clic
      */
+
     public Point getTileFromClick(int mouseX, int mouseY) {
-
-        int x = ((mouseX / zoomFactor) + cameraX) / TILE_SIZE;
-        int y = ((mouseY / zoomFactor) + cameraY) / TILE_SIZE;
-
+        double x = (((double )mouseX)/dimension)*dimension/Math.pow(2, evol) + (dimension - dimension/Math.pow(2, evol))/2 - decalageX;
+        double y = (((double )mouseY)/dimension)*dimension/Math.pow(2, evol) + (dimension - dimension/Math.pow(2, evol))/2 - decalageY;
         System.out.println("("+x+", "+y+")");
-        return new Point(x,y);
+        System.out.println("decalage : " + decalageX + " " + decalageY);
+        return new Point((int) ((x/dimension)*GameConstants.BOARD_SIZE),(int) ((y/dimension)*GameConstants.BOARD_SIZE));
     }
 
     /* --------------------- Déplacement/Zoom de l'affichage ----------------------- */
 
+    // todo : faire zoomOut quand la fenêtre sort un peu (avec modification de decalageX et decalageY)
     public void zoomOut(int  mouseX, int mouseY) {
-        if (zoomFactor > 1) {
-            zoomFactor-=zoomInterval;
+        if(evol > 0) {
+            int newXGauche = (int) (milieuX - decalageX - dimension/Math.pow(2, evol));
+            int newYGauche = (int) (milieuY - decalageY - dimension/Math.pow(2, evol));
+            int newXDroite = (int) (milieuX - decalageX + dimension/Math.pow(2, evol));
+            int newYDroite = (int) (milieuY - decalageY + dimension/Math.pow(2, evol));
+            // On regarde si le dezoom sort par la gauche (x < 0)
+            if(newXGauche < 0){
+                System.out.println("yo1");
+                // On regarde si le dezoom sort par le haut (y < 0)
+                if(newYGauche < 0){
+                    decalageY += newYGauche;
+                }
+                // On regarde si le dezoom sort par le bas (y >= dimension)
+                else if(newYDroite >= dimension){
+                    decalageY -= dimension - newYDroite;
+                }
+                decalageX += newXGauche;
+            }
+            // On regarde si le dezoom sort par la droite (x >= dimension)
+            else if(newXDroite > dimension){
+                // On regarde si le dezoom sort par le haut (y < 0)
+                if(newYGauche < 0){
+                    decalageY += newYGauche;
+                }
+                // On regarde si le dezoom sort par le bas (y >= dimension)
+                else if(newYDroite > dimension){
+                    decalageY -= dimension - newYDroite;
+                }
+                decalageX -= dimension - newXDroite;
+            }
+            // On regarde si le dezoom sort par le haut (y < 0)
+            else if(newYGauche < 0){
+                decalageY += newYGauche;
+            }
+            // On regarde si le dezoom sort par le bas (y >= dimension)
+            else if(newYDroite > dimension){
+                decalageY -= dimension - newYDroite;
+            }
+            evol--;
         }
     }
 
     public void zoomIn(int  mouseX, int mouseY){
-        if (zoomFactor < 10){
-            zoomFactor+=zoomInterval;
-        }
+         if(evol < evolMax)
+            evol++;
     }
 
     public void moveViewportX(int x){
-        centerX+=x;
+        double newX = x/Math.pow(1.5, evol);
+        if(milieuX + decalageX + dimension/Math.pow(2, evol + 1) + newX < dimension && milieuX + decalageX - dimension/Math.pow(2, evol + 1) + newX >= 0){
+            decalageX+=newX;
+        }
     }
     public void moveViewportY(int y){
-        centerY+=y;
+        double newY = y/Math.pow(1.5, evol);
+        if(milieuY + decalageY + dimension/Math.pow(2, evol + 1) + newY < dimension && milieuY + decalageY - dimension/Math.pow(2, evol + 1) + newY >= 0){
+            decalageY+=newY;
+        }
     }
 }
