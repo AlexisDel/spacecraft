@@ -121,8 +121,6 @@ public class BoardPanel extends JPanel {
 
     }
 
-
-
     /**
      * Méthode appelée lorsque l'utilisateur clique sur le terrain
      * Retourne les coordonnées du point cliqué sur la map.
@@ -164,20 +162,11 @@ public class BoardPanel extends JPanel {
     }
 
     public void moveViewportX(int x){
-        /*
-        if (cameraX-x >= 0 && cameraX+viewPortSize-x <= BOARD_PANEL_WIDTH){
-            displayX-=x;
-            cameraX-=x;
-            System.out.println(cameraX);
-        }
-        */
+        //displayX-=x;
+        //cameraX-=x;
     }
     public void moveViewportY(int y){
-        /*
-        if (cameraY-y >= 0 && cameraY+viewPortSize-y <= BOARD_PANEL_HEIGHT) {
-            displayY -= y;
-            cameraY -= y;
-        }
-        */
+        //displayY -= y;
+        //cameraY -= y;
     }
 }

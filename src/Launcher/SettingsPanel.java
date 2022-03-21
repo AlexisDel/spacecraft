@@ -2,6 +2,7 @@ package Launcher;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
 import static View.ImageManager.zeroTwosFont;
 
@@ -17,12 +18,27 @@ public class SettingsPanel extends JPanel {
     private JTextField nbMountainField;
     private JLabel pourcentMountainText;
     private JSlider pourcentMountainSlider;
-
+    private JLabel playerNameText;
+    private JTextField playerNameField;
+    private JLabel seedText;
+    private JTextField seedField;
 
     public SettingsPanel() {
 
         this.setOpaque(false);
-        this.setLayout(new GridLayout(5,2));
+        this.setLayout(new GridLayout(7,2));
+
+        playerNameText = new JLabel("Player : ", JLabel.CENTER);
+        playerNameText.setForeground(Color.WHITE);
+        playerNameText.setFont(zeroTwosFont);
+        playerNameField = new JTextField("Pepito");
+        playerNameField.setFont(zeroTwosFont);
+        playerNameField.setForeground(Color.WHITE);
+        playerNameField.setBorder(BorderFactory.createEmptyBorder());
+        playerNameField.setCaretColor(Color.WHITE);
+        playerNameField.setOpaque(false);
+        this.add(playerNameText);
+        this.add(playerNameField);
 
         nbSpaceMarineText = new JLabel("SpaceMarines : ", JLabel.CENTER);
         nbSpaceMarineText.setForeground(Color.WHITE);
@@ -79,6 +95,18 @@ public class SettingsPanel extends JPanel {
         pourcentMountainSlider.setOpaque(false);
         this.add(pourcentMountainText);
         this.add(pourcentMountainSlider);
+
+        seedText = new JLabel("Seed : ", JLabel.CENTER);
+        seedText.setForeground(Color.WHITE);
+        seedText.setFont(zeroTwosFont);
+        seedField = new JTextField(Long.toString(new Random().nextLong()));
+        seedField.setFont(zeroTwosFont);
+        seedField.setForeground(Color.WHITE);
+        seedField.setBorder(BorderFactory.createEmptyBorder());
+        seedField.setCaretColor(Color.WHITE);
+        seedField.setOpaque(false);
+        this.add(seedText);
+        this.add(seedField);
     }
 
     public int getNbSpaceMarines(){
@@ -99,5 +127,13 @@ public class SettingsPanel extends JPanel {
 
     public int getPourcentMountain(){
         return pourcentMountainSlider.getValue();
+    }
+
+    public String getPlayerName() {
+        return playerNameField.getText();
+    }
+
+    public long getSeed(){
+        return Long.parseLong(seedField.getText());
     }
 }

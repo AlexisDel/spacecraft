@@ -178,11 +178,10 @@ public class GameBoard {
                 }
                 //Si on a trouvé une cordonnée
                 if (isThisPlaceBigEnough){
-                    //On crée les méteorites et on les place  dans la map
-                     int randHealth= rand.nextInt(5)+1;
-                     randHealth*=100;
+                    //On crée les meteorites et on les place dans la map
+                     int randHealth= rand.nextInt(200)+50;
                     structures.add(new Meteorite(new Point(meteoriteX, meteoriteY), new Dimension(2, 2),randHealth));
-                    //On ajoute chaque case occupée par le méteorite dans la hitbox et la AlienView
+                    //On ajoute chaque case occupée par le meteorite dans la hit-box et la AlienView
                     for (int i2 = 0; i2 < 2; i2++) {
                         for (int j = 0; j < 2; j++) {
                             this.hitbox.fill(new Point(meteoriteX + i2, meteoriteY + j));

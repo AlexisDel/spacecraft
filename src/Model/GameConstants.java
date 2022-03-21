@@ -32,11 +32,16 @@ public class GameConstants {
     public static int NB_MOUNTAINS;
     public static int POURCENT_MOUNTAINS;
 
-    public GameConstants(int nbSpaceMarines, int nbAliens, int nbMeteorites, int nbMountains, int prMountain) {
+    public static String PLAYER_NAME;
+    public static long SEED;
+
+    public GameConstants(int nbSpaceMarines, int nbAliens, int nbMeteorites, int nbMountains, int prMountain, String playerName, long seed) {
         NB_SPACEMARINES = nbSpaceMarines;
         NB_ALIENS = nbAliens;
         NB_METEORITES = nbMeteorites;
         NB_MOUNTAINS = nbMountains;
         POURCENT_MOUNTAINS = prMountain;
+        PLAYER_NAME = playerName;
+        SEED = seed;
     }
 }

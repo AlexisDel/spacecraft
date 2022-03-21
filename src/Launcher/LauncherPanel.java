@@ -29,7 +29,7 @@ public class LauncherPanel extends JPanel {
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new GameConstants(settingsPanel.getNbSpaceMarines(), settingsPanel.getNbAliens(), settingsPanel.getNbMeteorites(), settingsPanel.getNbMountains(), settingsPanel.getPourcentMountain());
+                new GameConstants(settingsPanel.getNbSpaceMarines(), settingsPanel.getNbAliens(), settingsPanel.getNbMeteorites(), settingsPanel.getNbMountains(), settingsPanel.getPourcentMountain(), settingsPanel.getPlayerName(), settingsPanel.getSeed());
                 GameEngine gameEngine = new GameEngine();
                 GameView gameView = new GameView(gameEngine);
                 BoardController boardController = new BoardController(gameView);

@@ -26,7 +26,7 @@ public class ActionPanel extends JPanel {
                 controlPanel.setWaitingAction(MOVE);
             }
         });
-        move.setBounds(20, 30, 120, 40);
+        move.setBounds(12, 30, 84, 40);
         this.add(move);
 
         JButton mine = new JButton("Mine");
@@ -40,8 +40,18 @@ public class ActionPanel extends JPanel {
                 //proc progress bar
             }
         });
-        mine.setBounds(160, 30, 120, 40);
+        mine.setBounds(108, 30, 84, 40);
         this.add(mine);
+
+        JButton attack = new JButton("Attack");
+        attack.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Thomas est petit");
+            }
+        });
+        attack.setBounds(204, 30, 84, 40);
+        this.add(attack);
     }
 
     @Override
