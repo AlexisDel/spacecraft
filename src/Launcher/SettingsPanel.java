@@ -76,7 +76,7 @@ public class SettingsPanel extends JPanel {
         this.add(nbMeteoriteText);
         this.add(nbMeteoriteField);
 
-        nbMountainText = new JLabel("Montagnes : ", JLabel.CENTER);
+        nbMountainText = new JLabel("Mountains : ", JLabel.CENTER);
         nbMountainText.setForeground(Color.WHITE);
         nbMountainText.setFont(zeroTwosFont);
         nbMountainField = new JTextField("5");
@@ -88,10 +88,10 @@ public class SettingsPanel extends JPanel {
         this.add(nbMountainText);
         this.add(nbMountainField);
 
-        pourcentMountainText = new JLabel(" % Montagnes : ", JLabel.CENTER);
+        pourcentMountainText = new JLabel(" % Mountain : ", JLabel.CENTER);
         pourcentMountainText.setForeground(Color.WHITE);
         pourcentMountainText.setFont(zeroTwosFont);
-        pourcentMountainSlider = new JSlider(10, 50);
+        pourcentMountainSlider = new JSlider(0, 40);
         pourcentMountainSlider.setOpaque(false);
         this.add(pourcentMountainText);
         this.add(pourcentMountainSlider);

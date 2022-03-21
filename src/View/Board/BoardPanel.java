@@ -143,10 +143,9 @@ public class BoardPanel extends JPanel {
             zoomFactor-=zoomInterval;
             zoomX = mouseX;
             zoomY = mouseY;
-            int viewPortSizeX = BOARD_PANEL_WIDTH / zoomFactor;
-            int viewPortSizeY = BOARD_PANEL_HEIGHT / zoomFactor;
-            cameraX = (BOARD_PANEL_WIDTH - viewPortSizeX) * mouseX/BOARD_PANEL_WIDTH;
-            cameraY = (BOARD_PANEL_HEIGHT - viewPortSizeY) * mouseY/BOARD_PANEL_HEIGHT;
+            viewPortSize = BOARD_PANEL_WIDTH / zoomFactor;
+            cameraX = (BOARD_PANEL_WIDTH - viewPortSize) * mouseX/BOARD_PANEL_WIDTH;
+            cameraY = (BOARD_PANEL_HEIGHT - viewPortSize) * mouseY/BOARD_PANEL_HEIGHT;
         }
     }
 
@@ -162,11 +161,11 @@ public class BoardPanel extends JPanel {
     }
 
     public void moveViewportX(int x){
-        //displayX-=x;
-        //cameraX-=x;
+        displayX-=x;
+        cameraX-=x;
     }
     public void moveViewportY(int y){
-        //displayY -= y;
-        //cameraY -= y;
+        displayY -= y;
+        cameraY -= y;
     }
 }
