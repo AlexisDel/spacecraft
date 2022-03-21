@@ -1,6 +1,7 @@
 package Model.Layer1.Entities.Actions;
 
 import Model.GameBoard;
+import Model.GameConstants;
 import Model.Layer1.Entities.Entity;
 import Model.Layer1.Structures.Meteorite;
 import Model.Layer1.Structures.Structure;
@@ -25,13 +26,13 @@ public class Mine extends Thread{
         if(meteorite != null){
             while (meteorite.getHealthPoints() > 0) {
                 // On mine et on get les cailloux obtenu à chaque coup
-                int minedrocks= meteorite.mined(50);
+                int minedrocks = meteorite.mined(GameConstants.damages);
                 // On gagne des cailloux
-                this.miner.setRocks(this.miner.getRocks() + minedrocks );
+                this.miner.setRocks(this.miner.getRocks() + 1);
                 // On fait une pause
                 try {
                     //mine once then stop for cooldown
-                    sleep(1000);
+                    sleep(GameConstants.SpaceMarineDPS);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

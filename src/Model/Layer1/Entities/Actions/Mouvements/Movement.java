@@ -72,6 +72,7 @@ public class Movement extends Thread{
                                 e.printStackTrace();
                             }
                         }
+                        // Si on cherche une météorite, alors si on se trouve proche d'une météorire, on s'y rend
                         if(this.lookingForMeteorite){
                             Meteorite tmp = this.findMeteorite();
                             if (tmp != null) {
@@ -197,7 +198,7 @@ public class Movement extends Thread{
      */
     private Meteorite findMeteorite() {
         // Pour chaque structure
-        for (Structure structure : this.gameBoard.getStructures()) {
+        for (Structure structure : (ArrayList<Structure>) this.gameBoard.getStructures().clone()) {
             // Si c'est une météorite
             if(structure instanceof Meteorite){
                 // Si elle est à une distance euclienne inférieur à 2 de l'Alien

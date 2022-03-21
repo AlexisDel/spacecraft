@@ -1,6 +1,7 @@
 package Model.GameBoardAddOns;
 
 import Model.GameBoard;
+import Model.GameConstants;
 import Model.GameEngine;
 import Model.Layer1.Entities.Entity;
 import Model.Layer1.Entities.SpaceMarine;
@@ -23,7 +24,8 @@ public class Score {
     public void initRocks(){
         for(Structure structure: gameBoard.getStructures()){
             if(structure instanceof Meteorite){
-                this.initialRocks+=  structure.getHealthPoints();
+                System.out.println(structure.getHealthPoints() + " " + structure.getHealthPoints()/GameConstants.HP + " " + GameConstants.HP);
+                this.initialRocks+=  structure.getHealthPoints()/GameConstants.damages;
             }
         }
     }

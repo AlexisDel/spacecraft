@@ -1,7 +1,9 @@
 package View.ControlPanel.Panels;
 
 import Model.Layer1.Entities.Actions.Mine;
+import Model.Layer1.Entities.Actions.Mouvements.Fight;
 import Model.Layer1.Entities.Entity;
+import Model.Layer1.Entities.SpaceMarine;
 import View.ControlPanel.ControlPanel;
 
 import javax.swing.*;
@@ -47,7 +49,7 @@ public class ActionPanel extends JPanel {
         attack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Thomas est petit");
+                new Fight((SpaceMarine) controlPanel.getSelectedItem(), controlPanel.getGameEngine().getGameBoard());
             }
         });
         attack.setBounds(204, 30, 84, 40);

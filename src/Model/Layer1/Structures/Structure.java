@@ -51,10 +51,11 @@ public abstract class Structure extends InteractiveItem {
         this.occupants.remove(e);
     }
 
-
-
-
-
+    /**
+     * méthode renvoyant si un point est adjacent à this
+     * @param p
+     * @return
+     */
     public boolean isAjdacent(Point p){
         for(int i = 0 ; i < this.getDimension().width; i++){
             if(new Point( this.getCoordinate().x - 1, i + this.getCoordinate().y).equals(p)){

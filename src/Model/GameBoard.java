@@ -160,7 +160,7 @@ public class GameBoard {
                 newX = rand.nextInt(BOARD_SIZE);
                 newY = rand.nextInt(BOARD_SIZE);
             }
-            Alien tempAlien = new Alien(new Point(newX,newY), 150);
+            Alien tempAlien = new Alien(new Point(newX,newY), 200);
             entities.add(tempAlien);
             this.AlienView.fill(new Point(newX, newY));
             AlienMovements am = new AlienMovements(tempAlien, this.AlienView, this);
@@ -200,7 +200,8 @@ public class GameBoard {
                 //Si on a trouvé une cordonnée
                 if (isThisPlaceBigEnough){
                     //On crée les meteorites et on les place dans la map
-                     int randHealth= rand.nextInt(200)+50;
+                     int randHealth= rand.nextInt(3)+1;
+                     randHealth *= HP;
                     structures.add(new Meteorite(new Point(meteoriteX, meteoriteY), new Dimension(2, 2),randHealth));
                     //On ajoute chaque case occupée par le meteorite dans la hit-box et la AlienView
                     for (int i2 = 0; i2 < 2; i2++) {

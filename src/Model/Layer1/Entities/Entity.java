@@ -81,4 +81,23 @@ public abstract class Entity extends InteractiveItem {
         return AttackDamage;
     }
 
+    public boolean isAjdacent(Point p){
+        for(int i = 0 ; i < this.getDimension().width; i++){
+            if(new Point( this.getCoordinate().x - 1, i + this.getCoordinate().y).equals(p)){
+                return true;
+            }
+            if(new Point( this.getCoordinate().x + this.getDimension().height, i + this.getCoordinate().y).equals(p)){
+                return true;
+            }
+        }
+        for(int i = 0 ; i < this.getDimension().height; i++){
+            if(new Point(i + this.getCoordinate().x, this.getCoordinate().y - 1).equals(p)){
+                return true;
+            }
+            if(new Point(i + this.getCoordinate().x, this.getCoordinate().y + this.getDimension().width).equals(p)){
+                return true;
+            }
+        }
+        return false;
+    }
 }

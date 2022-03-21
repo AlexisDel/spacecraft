@@ -35,6 +35,11 @@ public class GameConstants {
     public static String PLAYER_NAME;
     public static long SEED;
 
+    /** Constantes pour la vie des entitées et les attaques*/
+    public static int HP = 100;
+    public static int damages = 50;
+    public static int SpaceMarineDPS = 500;
+
     public GameConstants(int nbSpaceMarines, int nbAliens, int nbMeteorites, int nbMountains, int prMountain, String playerName, long seed) {
         NB_SPACEMARINES = nbSpaceMarines;
         NB_ALIENS = nbAliens;
