@@ -100,7 +100,7 @@ public class GameBoard {
                 // Ajoute le vaisseau sur la carte
                 int shipX = (SPACESHIP_LANDING_ZONE - SPACESHIP_WIDTH) / 2;
                 int shipY = (SPACESHIP_LANDING_ZONE - SPACESHIP_HEIGHT) / 2;
-                structures.add(new Spaceship(new Point(areaX+shipX,areaY+shipY), new Dimension(SPACESHIP_WIDTH, SPACESHIP_HEIGHT), 1000, 10));
+                structures.add(new Spaceship(new Point(areaX+shipX,areaY+shipY), new Dimension(SPACESHIP_WIDTH, SPACESHIP_HEIGHT), 600, 10));
                 for(int i = shipX; i < shipX+SPACESHIP_WIDTH; i++){
                     for(int j = shipY; j < shipY+SPACESHIP_HEIGHT; j++){
                         this.hitbox.fill(new Point(areaX + i, areaY + j));

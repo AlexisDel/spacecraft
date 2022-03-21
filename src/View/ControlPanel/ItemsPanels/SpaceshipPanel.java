@@ -9,7 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class SpaceshipPanel extends JPanel {
-    private String[] description={"Coolest and fastest SpaceShip out there","","",""};
+    private String[] description={"Coolest and fastest SpaceShip out there.","","",""};
             //"Get half of the rocks", "to activate"};
 
     public SpaceshipPanel(ControlPanel controlPanel) {

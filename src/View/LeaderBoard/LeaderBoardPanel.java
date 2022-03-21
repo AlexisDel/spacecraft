@@ -1,14 +1,24 @@
-package LeaderBoard;
+package View.LeaderBoard;
 
 import javax.swing.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class LeaderBoardPanel extends JPanel {
 
-    /*public void endGame(int finalScore) throws IOException {
+    public LeaderBoardPanel(String user, int finalScore) throws IOException{
         List<String> scores = retrieveScores();
         addNewScore(finalScore, scores);
         writeScores(scores);
         showLeaderBoard(scores);
+
+        //drawPanel();
+
     }
 
     private List<String> retrieveScores() throws IOException {
@@ -52,5 +62,5 @@ public class LeaderBoardPanel extends JPanel {
             i++;
         }
         System.out.println("*** TOP 5 LEADERBOARD ***");
-    }*/
+    }
 }
