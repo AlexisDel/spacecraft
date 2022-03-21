@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class AlienPanel extends JPanel {
+    private String[] description = {"Evil creatures that eat rocks","They plague Mars surface", "ADVICE:", "Use deadly force"};
 
     public AlienPanel(ControlPanel controlPanel) {
         this.setLayout(new GridLayout(3,1));
@@ -18,6 +19,6 @@ public class AlienPanel extends JPanel {
         statsActions.add(new StatsPanel(controlPanel),BorderLayout.NORTH);
 
         this.add(statsActions);
-        this.add(new DescriptionPanel());
+        this.add(new DescriptionPanel(description));
     }
 }

@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class SpaceMarinePanel extends JPanel {
+    private String[] description= {"A legendary intergalactic hero you control", "SpaceMarines are world conquerers","Their mission is to get all the rocks in Mars","Achieve this goal by ANY means!"};
 
     public SpaceMarinePanel(ControlPanel controlPanel){
         this.setLayout(new GridLayout(3,1));
@@ -20,6 +21,6 @@ public class SpaceMarinePanel extends JPanel {
         statsActions.add(new ActionPanel(controlPanel));
 
         this.add(statsActions);
-        this.add(new DescriptionPanel());
+        this.add(new DescriptionPanel(description));
     }
 }

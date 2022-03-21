@@ -9,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class SpaceshipPanel extends JPanel {
+    private String[] description={"Coolest and fastest SpaceShip out there","","",""};
+            //"Get half of the rocks", "to activate"};
 
     public SpaceshipPanel(ControlPanel controlPanel) {
         this.setLayout(new GridLayout(3,1));
@@ -18,6 +20,6 @@ public class SpaceshipPanel extends JPanel {
         statsActions.add(new StatsPanel(controlPanel),BorderLayout.NORTH);
 
         this.add(statsActions);
-        this.add(new DescriptionPanel());
+        this.add(new DescriptionPanel(description));
     }
 }
