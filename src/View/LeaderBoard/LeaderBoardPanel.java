@@ -12,13 +12,21 @@ import java.util.List;
 public class LeaderBoardPanel extends JPanel {
 
     public LeaderBoardPanel(String user, int finalScore) throws IOException{
+        BestScore currentBestScore = new BestScore(user,finalScore);
+
         List<String> scores = retrieveScores();
-        addNewScore(finalScore, scores);
+        addNewScore(currentBestScore, scores);
         writeScores(scores);
         showLeaderBoard(scores);
 
         //drawPanel();
 
+    }
+
+    private int decode(String s){
+        String[] tempScore=s.split("_");
+        int res= Integer.parseInt(tempScore[1]);
+        return res;
     }
 
     private List<String> retrieveScores() throws IOException {
@@ -33,16 +41,16 @@ public class LeaderBoardPanel extends JPanel {
         return scores;
     }
 
-    private void addNewScore(int finalScore, List<String> scores) {
+    private void addNewScore(BestScore currentBestScore, List<String> scores) {
         boolean foundSpotForNewScore = false;
         int i = 0;
         while (!foundSpotForNewScore && i < scores.size()) {
-            if (finalScore <= Integer.parseInt(scores.get(i))) {
+            if (currentBestScore.getScore() <= decode(scores.get(i))) {
                 foundSpotForNewScore = true;
             }
             i++;
         }
-        scores.add(i, String.valueOf(finalScore));
+        scores.add(i, currentBestScore.getEncoded());
     }
 
     private void writeScores(List<String> scores) throws IOException {

@@ -1,4 +1,4 @@
-package View.Board;
+package Model.GameBoardAddOns;
 
 import Model.GameBoard;
 import Model.GameEngine;
@@ -15,8 +15,8 @@ public class Score {
     private int rocksSM;
     private int initialRocks;
 
-    public Score(GameEngine gameEngine){
-        this.gameBoard= gameEngine.getGameBoard();
+    public Score(GameBoard gameBoard){
+        this.gameBoard= gameBoard;
         initRocks();
     }
 

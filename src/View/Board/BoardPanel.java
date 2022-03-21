@@ -1,5 +1,7 @@
 package View.Board;
 
+import Model.GameBoardAddOns.Score;
+import Model.GameBoardAddOns.Timer;
 import Model.GameEngine;
 import Model.Layer0.Mountain;
 import Model.Layer1.Entities.Entity;
@@ -45,8 +47,8 @@ public class BoardPanel extends JPanel {
      */
     public BoardPanel(GameEngine gameEngine) {
         this.gameEngine = gameEngine;
-        this.score= new Score(gameEngine);
-        this.timer= new Timer();
+        this.score= gameEngine.getGameBoard().getScore();
+        this.timer= gameEngine.getGameBoard().getTimer();
 
         /** Paramètre de l'affichage du terrain de jeu */
         this.setPreferredSize(new Dimension(BOARD_PANEL_WIDTH, BOARD_PANEL_HEIGHT));
