@@ -38,6 +38,24 @@ public class ImageManager {
     public static Image launcherLogo;
     public static Image startButton;
 
+
+    public static Image mountain0;
+    public static Image mountain1;
+    public static Image mountain2;
+    public static Image mountain3;
+    public static Image mountain4;
+    public static Image mountain5;
+    public static Image mountain6;
+    public static Image mountain7;
+    public static Image mountain8;
+    public static Image mountain9;
+    public static Image mountain10;
+    public static Image mountain11;
+    public static Image mountain12;
+    public static Image mountain13;
+    public static Image mountain14;
+    public static Image mountain15;
+
     public ImageManager() throws IOException {
         thumbnailAlien = ImageIO.read(new File("./resources/alien.jpeg")).getScaledInstance(THUMBNAIL_SIZE, THUMBNAIL_SIZE, Image.SCALE_SMOOTH);
         thumbnailSpaceMarine = ImageIO.read(new File("./resources/space_marine.jpg")).getScaledInstance(THUMBNAIL_SIZE, THUMBNAIL_SIZE, Image.SCALE_SMOOTH);
@@ -67,6 +85,24 @@ public class ImageManager {
         launcherLogo = ImageIO.read(new File("resources/LauncherAssets/logo.png"));
         startButton = ImageIO.read(new File("resources/LauncherAssets/start.png"));
 
+        mountain0 = ImageIO.read(new File("resources/BoardAssets/Mountain_0.png"));
+        mountain1 = ImageIO.read(new File("resources/BoardAssets/Mountain_1.png"));
+        mountain2 = ImageIO.read(new File("resources/BoardAssets/Mountain_2.png"));
+        mountain3 = ImageIO.read(new File("resources/BoardAssets/Mountain_3.png"));
+        mountain4 = ImageIO.read(new File("resources/BoardAssets/Mountain_4.png"));
+        mountain5 = ImageIO.read(new File("resources/BoardAssets/Mountain_5.png"));
+        mountain6 = ImageIO.read(new File("resources/BoardAssets/Mountain_6.png"));
+        mountain7 = ImageIO.read(new File("resources/BoardAssets/Mountain_7.png"));
+        mountain8 = ImageIO.read(new File("resources/BoardAssets/Mountain_8.png"));
+        mountain9 = ImageIO.read(new File("resources/BoardAssets/Mountain_9.png"));
+        mountain10 = ImageIO.read(new File("resources/BoardAssets/Mountain_10.png"));
+        mountain11 = ImageIO.read(new File("resources/BoardAssets/Mountain_11.png"));
+        mountain12 = ImageIO.read(new File("resources/BoardAssets/Mountain_12.png"));
+        mountain13 = ImageIO.read(new File("resources/BoardAssets/Mountain_13.png"));
+        mountain14 = ImageIO.read(new File("resources/BoardAssets/Mountain_14.png"));
+        mountain15 = ImageIO.read(new File("resources/BoardAssets/Mountain_15.png"));
+
+
         createFont();
     }
 
@@ -83,6 +119,22 @@ public class ImageManager {
             case "AlienSOUTH": return alienSouthTile;
             case "AlienWEST": return alienWestTile;
             case "AlienEAST": return alienEastTile;
+            case "Mountain_0": return mountain0;
+            case "Mountain_1": return mountain1;
+            case "Mountain_2": return mountain2;
+            case "Mountain_3": return mountain3;
+            case "Mountain_4": return mountain4;
+            case "Mountain_5": return mountain5;
+            case "Mountain_6": return mountain6;
+            case "Mountain_7": return mountain7;
+            case "Mountain_8": return mountain8;
+            case "Mountain_9": return mountain9;
+            case "Mountain_10": return mountain10;
+            case "Mountain_11": return mountain11;
+            case "Mountain_12": return mountain12;
+            case "Mountain_13": return mountain13;
+            case "Mountain_14": return mountain14;
+            case "Mountain_15": return mountain15;
         }
         return null;
     }

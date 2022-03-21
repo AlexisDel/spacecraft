@@ -9,7 +9,7 @@ import static View.ImageManager.THUMBNAIL_SIZE;
 
 public class DefaultPanel extends JPanel {
     public DefaultPanel() {
-        //TODO clean this mess up
+
         this.setLayout(new BorderLayout());
         Label welcome= new Label("                 WELCOME TO SPACECRAFT");
         this.add(welcome, BorderLayout.NORTH);
@@ -31,6 +31,7 @@ public class DefaultPanel extends JPanel {
 
     @Override
     public void paintComponent(Graphics g){
+        super.paintComponent(g);
         g.drawImage(ImageManager.thumbnailMars, this.getWidth()/2-THUMBNAIL_SIZE/2,this.getHeight()/8-THUMBNAIL_SIZE/2+20,null);
     }
 }

@@ -99,11 +99,10 @@ public class RandomLandGeneration {
         // Appel à la fonction clear mountains qui rend le graph formé par la grille convexe.
         this.clearMountains(mountains);
         // On applique à board la génération effectuée
-
         for (int i = 0; i < dimH; i++) {
             for (int j = 0; j < dimW; j++) {
                 if (mountains.get(i).get(j).equals(Color.color.mountain)) {
-                    this.board.add(new Mountain(new Point((int) (i* MOUNTAIN_SIZE), (int) (j* MOUNTAIN_SIZE))));
+                    this.board.add(new Mountain(new Point((int) (i* MOUNTAIN_SIZE), (int) (j* MOUNTAIN_SIZE)), mountainType(mountains, i, j)));
                 }
             }
         }
@@ -467,6 +466,26 @@ public class RandomLandGeneration {
             System.out.println("");
         }
     }
+    private int mountainType(ArrayList<ArrayList<Color.color>> mountains, int i, int j){
+        int res = 0;
+        if(isInBoard(new Point(i - 1, j)) && mountains.get(i - 1).get(j) == Color.color.mountain){
+            res += 1;
+        }
+        if(isInBoard(new Point(i, j + 1)) && mountains.get(i).get(j + 1) == Color.color.mountain){
+            res += 2;
+
+        }
+        if(isInBoard(new Point(i + 1, j)) && mountains.get(i + 1).get(j) == Color.color.mountain){
+            res += 4;
+
+        }
+        if(isInBoard(new Point(i, j - 1)) && mountains.get(i).get(j - 1) == Color.color.mountain){
+            res += 8;
+
+        }
+        return res;
+    }
+
 }
 
 class Color {
