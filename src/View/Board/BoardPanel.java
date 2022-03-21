@@ -9,6 +9,7 @@ import View.ImageManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 import static View.ViewConstants.*;
 
@@ -104,11 +105,11 @@ public class BoardPanel extends JPanel {
         }
 
         // Structure layer
-        for (Structure structure : gameEngine.getGameBoard().getStructures()){
+        for (Structure structure : (ArrayList<Structure>)gameEngine.getGameBoard().getStructures().clone()){
                 structure.getView().getTileView().draw(g2);
         }
         // Entity layer
-        for (Entity entity : gameEngine.getGameBoard().getEntities()){
+        for (Entity entity : (ArrayList<Entity>)gameEngine.getGameBoard().getEntities().clone()){
                 entity.getView().getTileView().draw(g2);
         }
 

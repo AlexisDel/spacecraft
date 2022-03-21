@@ -7,5 +7,6 @@ public class AlienView extends ItemView{
 
     public AlienView(Alien alien) {
         this.tileView = new AlienTile(alien);
+        this.description="Bad MFS eats your rocks, KILL HIM";
     }
 }
