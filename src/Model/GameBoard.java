@@ -81,12 +81,17 @@ public class GameBoard {
         return timer;
     }
 
+    public boolean isGameOver(){
+        return this.score.getPlayersRocks()==this.score.getInitialRocks();
+    }
+
     /**
      * renvoie si un point est dans la map ou non
      * @param x
      * @param y
      * @return
      */
+
     public boolean isInBoard(int x, int y){
         return x >= 0 && y >= 0 && x < BOARD_SIZE && y < BOARD_SIZE;
     }
