@@ -153,6 +153,7 @@ public class ImageManager {
         switch (ressourceName){
             case "Heart" : return heart;
             case "Sword" : return sword;
+            case "Rock": return rock;
         }
         return null;
     }
