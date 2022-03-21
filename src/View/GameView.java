@@ -5,7 +5,8 @@ import Model.GameConstants;
 import Model.GameEngine;
 import View.Board.BoardPanel;
 import View.ControlPanel.ControlPanel;
-import View.LeaderBoard.LeaderBoardPanel;
+import View.LeaderBoard.LeaderBoard;
+import View.LeaderBoard.LeaderboardWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -75,7 +76,8 @@ public class GameView extends JFrame implements Runnable{
         }
         this.dispose();
         try {
-            new LeaderBoardPanel(GameConstants.PLAYER_NAME, (int)gameEngine.getGameBoard().getTimer().getTime());
+
+            new LeaderboardWindow(new LeaderBoard(GameConstants.PLAYER_NAME, (int)gameEngine.getGameBoard().getTimer().getTime()));
         } catch (IOException e) {
             e.printStackTrace();
         }

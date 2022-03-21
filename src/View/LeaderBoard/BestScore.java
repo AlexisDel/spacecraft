@@ -19,4 +19,10 @@ public class BestScore {
     public String getEncoded(){
         return username+"_"+score;
     }
+
+    @Override
+    public String toString() {
+        return username+"_"+score;
+    }
 }
+
