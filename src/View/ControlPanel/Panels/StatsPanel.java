@@ -41,7 +41,8 @@ public class StatsPanel extends JPanel {
                 g.drawImage(ImageManager.getControlPanelAssets("Sword"), (55+i*16), 38, null);
             }
 
-            g.drawImage(ImageManager.getControlPanelAssets("Rock").getScaledInstance(20, 20, Image.SCALE_SMOOTH), 20, 60, null);
+            g.drawImage(ImageManager.getControlPanelAssets("Rock").getScaledInstance(20, 20, Image.SCALE_SMOOTH), 20, 55, null);
+            g.drawString(": "+entity.getRocks(), 46, 70);
 
         }
     }
