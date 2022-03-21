@@ -31,8 +31,8 @@ public class BoardPanel extends JPanel {
 
     private int cameraX = 0;
     private int cameraY = 0;
-    private int zoomX = 0;
-    private int zoomY = 0;
+    private int centerX = BOARD_PANEL_WIDTH/2;
+    private int centerY = BOARD_PANEL_HEIGHT/2;
 
     // Moteur du jeu
     private GameEngine gameEngine;
@@ -88,13 +88,11 @@ public class BoardPanel extends JPanel {
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
-        Graphics2D gscore= (Graphics2D)g.create();
+        Graphics2D gScore = (Graphics2D)g.create();
 
-        g2.translate(zoomX, zoomY);
         g2.scale(zoomFactor, zoomFactor);
-        g2.translate(-zoomX, -zoomY);
 
-        g2.translate(-displayX, -displayY);
+        //g2.translate(centerX, centerY);
 
         //Layer 0
         g.drawImage(ImageManager.getTileImage("Sand"), 0, 0,null);
@@ -115,8 +113,8 @@ public class BoardPanel extends JPanel {
                 entity.getView().getTileView().draw(g2);
         }
 
-        drawScore(gscore);
-        drawTimer(gscore);
+        drawScore(gScore);
+        drawTimer(gScore);
 
         // Dispose of this graphics context and release any system ressources that it is using
         g2.dispose();
@@ -143,31 +141,19 @@ public class BoardPanel extends JPanel {
     public void zoomOut(int  mouseX, int mouseY) {
         if (zoomFactor > 1) {
             zoomFactor-=zoomInterval;
-            zoomX = mouseX;
-            zoomY = mouseY;
-            viewPortSize = BOARD_PANEL_WIDTH / zoomFactor;
-            cameraX = (BOARD_PANEL_WIDTH - viewPortSize) * mouseX/BOARD_PANEL_WIDTH;
-            cameraY = (BOARD_PANEL_HEIGHT - viewPortSize) * mouseY/BOARD_PANEL_HEIGHT;
         }
     }
 
     public void zoomIn(int  mouseX, int mouseY){
         if (zoomFactor < 10){
             zoomFactor+=zoomInterval;
-            zoomX = mouseX;
-            zoomY = mouseY;
-            viewPortSize = BOARD_PANEL_WIDTH / zoomFactor;
-            cameraX = (BOARD_PANEL_WIDTH - viewPortSize) * mouseX/BOARD_PANEL_WIDTH;
-            cameraY = (BOARD_PANEL_HEIGHT - viewPortSize) * mouseY/BOARD_PANEL_HEIGHT;
         }
     }
 
     public void moveViewportX(int x){
-        displayX-=x;
-        cameraX-=x;
+        centerX+=x;
     }
     public void moveViewportY(int y){
-        displayY -= y;
-        cameraY -= y;
+        centerY+=y;
     }
 }
