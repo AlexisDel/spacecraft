@@ -23,7 +23,13 @@ public class LeaderBoardPanel extends JPanel {
 
         for(BestScore score: leaderBoard.getTop5()){
             g.drawString(score.getUsername(), 50,100+y);
-            String time= ((score.getScore()/1000)%60)/60+":"+(score.getScore()/1000)%60+":"+score.getScore()%1000;
+            long elapsedTime = score.getScore();
+            long elapsedMs = elapsedTime%1000;
+            long elapsedSeconds = elapsedTime / 1000;
+            long secondsDisplay = elapsedSeconds % 60;
+            long elapsedMinutes = elapsedSeconds / 60;
+
+            String time= elapsedMinutes+":"+secondsDisplay+":"+elapsedMs;
             g.drawString(time, 200,100+y);
 
             y+=50;
