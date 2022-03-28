@@ -135,6 +135,7 @@ public class SettingsPanel extends JPanel {
     }
 
     public long getSeed(){
+        // Don't try to understand
         if(Integer.valueOf(seedField.getText().hashCode()).hashCode() == 679121765)
             return 3;
         return Long.parseLong(seedField.getText());
