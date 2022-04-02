@@ -2,6 +2,8 @@ package Launcher;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Random;
 import java.io.*;
 
@@ -23,11 +25,13 @@ public class SettingsPanel extends JPanel {
     private JTextField playerNameField;
     private JLabel seedText;
     private JTextField seedField;
+    private JLabel clearScore;
+    private JButton clearScoreButton;
 
     public SettingsPanel() {
 
         this.setOpaque(false);
-        this.setLayout(new GridLayout(7,2));
+        this.setLayout(new GridLayout(8,2));
 
         playerNameText = new JLabel("Player : ", JLabel.CENTER);
         playerNameText.setForeground(Color.WHITE);
@@ -108,6 +112,35 @@ public class SettingsPanel extends JPanel {
         seedField.setOpaque(false);
         this.add(seedText);
         this.add(seedField);
+
+        clearScore = new JLabel("Reset leaderboard:", JLabel.CENTER);
+        clearScore.setForeground(Color.WHITE);
+        clearScore.setFont(zeroTwosFont);
+        clearScoreButton= new JButton("[CLEAR]");
+        clearScoreButton.setForeground(Color.WHITE);
+        clearScoreButton.setFont(zeroTwosFont);
+        clearScoreButton.setBorderPainted(false);
+        clearScoreButton.setContentAreaFilled(false);
+        clearScoreButton.setFocusPainted(false);
+        clearScoreButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    FileWriter writer = new FileWriter(new File("./resources/score.txt"));
+                    writer.write("");
+                    writer.close();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+
+                System.out.println("hello world");
+                clearScoreButton.setEnabled(false);
+
+            }
+        });
+        this.add(clearScore);
+        this.add(clearScoreButton);
+
     }
 
     public int getNbSpaceMarines(){

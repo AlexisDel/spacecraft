@@ -26,7 +26,7 @@ public class Mine extends Thread{
         if(meteorite != null){
             while (meteorite.getHealthPoints() > 0) {
                 // On mine et on get les cailloux obtenu à chaque coup
-                int minedrocks = meteorite.mined(GameConstants.damages);
+                meteorite.mined(GameConstants.damages);
                 // On gagne des cailloux
                 this.miner.setRocks(this.miner.getRocks() + 1);
                 // On fait une pause

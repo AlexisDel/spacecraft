@@ -1,8 +1,5 @@
 package View.LeaderBoard;
 
-import Model.GameBoardAddOns.Score;
-
-import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,7 +57,6 @@ public class LeaderBoard {
         writer.write(outputScores);
         writer.close();
     }
-
 
     public List<BestScore> getTop5(){
         List<BestScore> top5= new ArrayList<>();
