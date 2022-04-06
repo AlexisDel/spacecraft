@@ -1,10 +1,10 @@
 package Launcher;
 
-import Controller.BoardController;
-import Model.GameConstants;
-import Model.GameEngine;
-import View.GameView;
-import View.ImageManager;
+import Game.Controller.BoardController;
+import Game.Model.GameConstants;
+import Game.Model.GameEngine;
+import Game.View.GameView;
+import Game.View.RessourceManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,17 +15,27 @@ public class LauncherPanel extends JPanel {
 
     public LauncherPanel(JFrame window) {
         this.setPreferredSize(new Dimension(320, 480));
-        this.setLayout(new GridLayout(3,1));
+        this.setLayout(new GridBagLayout());
 
-        this.add(new JLabel(new ImageIcon(ImageManager.launcherLogo)));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.weighty = 1;
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        this.add(new JLabel(new ImageIcon(RessourceManager.ImageManager.launcherLogo)), gbc);
 
         SettingsPanel settingsPanel = new SettingsPanel();
-        this.add(settingsPanel);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        this.add(settingsPanel, gbc);
 
-        JButton start = new JButton(new ImageIcon(ImageManager.startButton));
+        JButton start = new JButton(new ImageIcon(RessourceManager.ImageManager.startButton));
         start.setBorderPainted(false);
         start.setContentAreaFilled(false);
         start.setFocusPainted(false);
+        start.setRolloverIcon(new ImageIcon(RessourceManager.ImageManager.clickedStartButton));
+        start.setPressedIcon(new ImageIcon(RessourceManager.ImageManager.clickedStartButton));
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -37,13 +47,15 @@ public class LauncherPanel extends JPanel {
                 window.dispose();
             }
         });
-        this.add(start);
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        this.add(start, gbc);
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(ImageManager.launcherBackground, 0, 0, null);
+        g.drawImage(RessourceManager.ImageManager.launcherBackground, 0, 0, null);
 
     }
 }

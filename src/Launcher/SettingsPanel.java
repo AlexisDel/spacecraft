@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.Random;
 import java.io.*;
 
-import static View.ImageManager.zeroTwosFont;
+import static Game.View.RessourceManager.FontManager.zeroTwos_12;
 
 public class SettingsPanel extends JPanel {
 
@@ -35,9 +35,9 @@ public class SettingsPanel extends JPanel {
 
         playerNameText = new JLabel("Player : ", JLabel.CENTER);
         playerNameText.setForeground(Color.WHITE);
-        playerNameText.setFont(zeroTwosFont);
+        playerNameText.setFont(zeroTwos_12);
         playerNameField = new JTextField("Pepito");
-        playerNameField.setFont(zeroTwosFont);
+        playerNameField.setFont(zeroTwos_12);
         playerNameField.setForeground(Color.WHITE);
         playerNameField.setBorder(BorderFactory.createEmptyBorder());
         playerNameField.setCaretColor(Color.WHITE);
@@ -47,9 +47,9 @@ public class SettingsPanel extends JPanel {
 
         nbSpaceMarineText = new JLabel("SpaceMarines : ", JLabel.CENTER);
         nbSpaceMarineText.setForeground(Color.WHITE);
-        nbSpaceMarineText.setFont(zeroTwosFont);
+        nbSpaceMarineText.setFont(zeroTwos_12);
         nbSpaceMarineField = new JTextField("3");
-        nbSpaceMarineField.setFont(zeroTwosFont);
+        nbSpaceMarineField.setFont(zeroTwos_12);
         nbSpaceMarineField.setForeground(Color.WHITE);
         nbSpaceMarineField.setBorder(BorderFactory.createEmptyBorder());
         nbSpaceMarineField.setCaretColor(Color.WHITE);
@@ -59,9 +59,9 @@ public class SettingsPanel extends JPanel {
 
         nbAlienText = new JLabel("Aliens : ", JLabel.CENTER);
         nbAlienText.setForeground(Color.WHITE);
-        nbAlienText.setFont(zeroTwosFont);
+        nbAlienText.setFont(zeroTwos_12);
         nbAlienField = new JTextField("3");
-        nbAlienField.setFont(zeroTwosFont);
+        nbAlienField.setFont(zeroTwos_12);
         nbAlienField.setForeground(Color.WHITE);
         nbAlienField.setBorder(BorderFactory.createEmptyBorder());
         nbAlienField.setCaretColor(Color.WHITE);
@@ -71,9 +71,9 @@ public class SettingsPanel extends JPanel {
 
         nbMeteoriteText = new JLabel("Meteorites : ", JLabel.CENTER);
         nbMeteoriteText.setForeground(Color.WHITE);
-        nbMeteoriteText.setFont(zeroTwosFont);
+        nbMeteoriteText.setFont(zeroTwos_12);
         nbMeteoriteField = new JTextField("3");
-        nbMeteoriteField.setFont(zeroTwosFont);
+        nbMeteoriteField.setFont(zeroTwos_12);
         nbMeteoriteField.setForeground(Color.WHITE);
         nbMeteoriteField.setBorder(BorderFactory.createEmptyBorder());
         nbMeteoriteField.setCaretColor(Color.WHITE);
@@ -83,9 +83,9 @@ public class SettingsPanel extends JPanel {
 
         nbMountainText = new JLabel("Mountains : ", JLabel.CENTER);
         nbMountainText.setForeground(Color.WHITE);
-        nbMountainText.setFont(zeroTwosFont);
+        nbMountainText.setFont(zeroTwos_12);
         nbMountainField = new JTextField("5");
-        nbMountainField.setFont(zeroTwosFont);
+        nbMountainField.setFont(zeroTwos_12);
         nbMountainField.setForeground(Color.WHITE);
         nbMountainField.setBorder(BorderFactory.createEmptyBorder());
         nbMountainField.setCaretColor(Color.WHITE);
@@ -95,7 +95,7 @@ public class SettingsPanel extends JPanel {
 
         pourcentMountainText = new JLabel(" % Mountain : ", JLabel.CENTER);
         pourcentMountainText.setForeground(Color.WHITE);
-        pourcentMountainText.setFont(zeroTwosFont);
+        pourcentMountainText.setFont(zeroTwos_12);
         pourcentMountainSlider = new JSlider(0, 40);
         pourcentMountainSlider.setOpaque(false);
         this.add(pourcentMountainText);
@@ -103,9 +103,9 @@ public class SettingsPanel extends JPanel {
 
         seedText = new JLabel("Seed : ", JLabel.CENTER);
         seedText.setForeground(Color.WHITE);
-        seedText.setFont(zeroTwosFont);
+        seedText.setFont(zeroTwos_12);
         seedField = new JTextField(Long.toString(new Random().nextLong()));
-        seedField.setFont(zeroTwosFont);
+        seedField.setFont(zeroTwos_12);
         seedField.setForeground(Color.WHITE);
         seedField.setBorder(BorderFactory.createEmptyBorder());
         seedField.setCaretColor(Color.WHITE);
@@ -115,10 +115,10 @@ public class SettingsPanel extends JPanel {
 
         clearScore = new JLabel("Reset leaderboard:", JLabel.CENTER);
         clearScore.setForeground(Color.WHITE);
-        clearScore.setFont(zeroTwosFont);
+        clearScore.setFont(zeroTwos_12);
         clearScoreButton= new JButton("[CLEAR]");
         clearScoreButton.setForeground(Color.WHITE);
-        clearScoreButton.setFont(zeroTwosFont);
+        clearScoreButton.setFont(zeroTwos_12);
         clearScoreButton.setBorderPainted(false);
         clearScoreButton.setContentAreaFilled(false);
         clearScoreButton.setFocusPainted(false);
@@ -132,8 +132,6 @@ public class SettingsPanel extends JPanel {
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
-
-                System.out.println("hello world");
                 clearScoreButton.setEnabled(false);
 
             }
