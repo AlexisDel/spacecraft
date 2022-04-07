@@ -8,9 +8,8 @@ import java.awt.event.*;
 public class BoardController implements MouseListener, MouseMotionListener, MouseWheelListener {
 
     private Point mousePt;
-    int mouseDraggedThresholdX = 0;
-    int mouseDraggedThresholdY = 0;
 
+    // Pointeur vers la gameView
     GameView gameView;
 
     public BoardController(GameView gameView) {
@@ -19,9 +18,12 @@ public class BoardController implements MouseListener, MouseMotionListener, Mous
     }
 
     @Override
+    /**
+     * Méthode appelée lorsque l'utilisateur clic sur l'affichage
+     */
     public void mouseClicked(MouseEvent e) {
-        // Récupère les coordonnées de la case sur laquelle le joueur a cliqué et les transmet au control panel
         try {
+            // Récupère les coordonnées de la case sur laquelle le joueur a cliqué et les transmet au control panel
             gameView.getControlPanel().SelectItem(gameView.getBoardPanel().getTileFromClick(e.getX(), e.getY()));
         } catch (InterruptedException interruptedException) {
             interruptedException.printStackTrace();
@@ -30,6 +32,8 @@ public class BoardController implements MouseListener, MouseMotionListener, Mous
 
     @Override
     public void mousePressed(MouseEvent e) {
+        // Sauvegarde la position de la souris au moment à l'utilisateur clic sur le terrain
+        // Cette variable sert d'ancre pour le drag and move
         mousePt = e.getPoint();
     }
 
@@ -49,12 +53,8 @@ public class BoardController implements MouseListener, MouseMotionListener, Mous
 
     @Override
     /**
-     * Ici on utilise un système de seuil afin de prendre en compte le déplacement de la souris
-     * seulement après qu'une certaine distance soit parcouru.
-     * Cette distance minimum parcourue est pondéré par le niveau de zoom, cela permet d'avoir un déplacement
-     * homogène sur la carte independent du niveau de zoom
-     * Autrement dit un déplacement de 5 cm avec la souris décalera la fenêtre d'affichage du même nombre de cases
-     * que l'on soit au zoom maximum ou minimum.
+     * Méthode appelée quand l'utilisateur fait glisser sa souris
+     * ce qui correspond dans notre jeu au déplacement de la caméra
      */
     public void mouseDragged(MouseEvent e) {
         // Déplacement de la souris en x
@@ -62,10 +62,11 @@ public class BoardController implements MouseListener, MouseMotionListener, Mous
         // Déplacement de la souris en y
         int dy = (e.getY() - mousePt.y);
 
+        // Déclenche le déplacement de la caméra dans vue
         gameView.getBoardPanel().moveViewportX(dx);
         gameView.getBoardPanel().moveViewportY(dy);
 
-        // Réinitialise la position de la souris
+        // Réinitialise la position de la souris (l'ancre)
         mousePt = e.getPoint();
     }
 
@@ -75,12 +76,20 @@ public class BoardController implements MouseListener, MouseMotionListener, Mous
     }
 
     @Override
+    /**
+     * Méthode appelée quand l'utilisateur utilise sa mollette
+     * ce qui correspond dans notre jeu au zoom de la caméra
+     */
     public void mouseWheelMoved(MouseWheelEvent e) {
+        // "Tirage" de la mollette
         if (e.getWheelRotation() > 0) {
-            gameView.getBoardPanel().zoomOut(e.getX(), e.getY());
+            // De zoom
+            gameView.getBoardPanel().zoomOut();
         }
+        // "Poussée" de la mollette
         if (e.getWheelRotation() < 0) {
-            gameView.getBoardPanel().zoomIn(e.getX(), e.getY());
+            // Zoom
+            gameView.getBoardPanel().zoomIn();
         }
     }
 }

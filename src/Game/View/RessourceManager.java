@@ -5,6 +5,9 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Classe static responsable du chargement et de l'accès aux ressources graphique (images, polices)
+ */
 public class RessourceManager {
 
     public RessourceManager() throws IOException, FontFormatException {
@@ -14,10 +17,11 @@ public class RessourceManager {
 
     public static class ImageManager {
 
+        // Taille en pixel de l'image dans le panneau de contrôle représentant l'entité sélectionné
         public static int THUMBNAIL_SIZE = 140;
+        // Taille en pixel du cadre entourant la thumbnail
         public static int BORDER_SIZE = 160;
 
-        public static Image thumbnailMars;
         public static Image thumbnailAlien;
         public static Image thumbnailSpaceMarine;
         public static Image thumbnailSpaceship;
@@ -65,54 +69,64 @@ public class RessourceManager {
         public static Image mountain14;
         public static Image mountain15;
 
+        /**
+         * Constructeur du gestionnaire d'image
+         * Il charge en mémoire toutes les images nécessaires à l'affichage du jeu, launcher et leaderboard
+         * @throws IOException
+         */
         public ImageManager() throws IOException {
             thumbnailAlien = ImageIO.read(new File("./resources/ControlPanelAssets/alien.jpeg")).getScaledInstance(THUMBNAIL_SIZE, THUMBNAIL_SIZE, Image.SCALE_SMOOTH);
             thumbnailSpaceMarine = ImageIO.read(new File("./resources/ControlPanelAssets/space_marine.jpg")).getScaledInstance(THUMBNAIL_SIZE, THUMBNAIL_SIZE, Image.SCALE_SMOOTH);
             thumbnailSpaceship = ImageIO.read(new File("./resources/ControlPanelAssets/spaceship.jpg")).getScaledInstance(THUMBNAIL_SIZE, THUMBNAIL_SIZE, Image.SCALE_SMOOTH);
             thumbnailMeteorite = ImageIO.read(new File("./resources/ControlPanelAssets/meteorite.jpg")).getScaledInstance(THUMBNAIL_SIZE, THUMBNAIL_SIZE, Image.SCALE_SMOOTH);
-            rock = ImageIO.read(new File("resources/ControlPanelAssets/rock.png")).getScaledInstance(25,25,Image.SCALE_SMOOTH);
+            rock = ImageIO.read(new File("./resources/ControlPanelAssets/rock.png")).getScaledInstance(25,25,Image.SCALE_SMOOTH);
 
 
-            spaceShipTile = ImageIO.read(new File("resources/BoardAssets/spaceship.png"));
-            meteoriteTile = ImageIO.read(new File("resources/BoardAssets/meteorite.png"));
-            sandTile = ImageIO.read(new File("resources/BoardAssets/sand.png"));
-            spaceMarineNorthTile = ImageIO.read(new File("resources/BoardAssets/SpaceMarineN.png"));
-            spaceMarineSouthTile = ImageIO.read(new File("resources/BoardAssets/SpaceMarineS.png"));
-            spaceMarineEastTile = ImageIO.read(new File("resources/BoardAssets/SpaceMarineE.png"));
-            spaceMarineWestTile = ImageIO.read(new File("resources/BoardAssets/SpaceMarineW.png"));
+            spaceShipTile = ImageIO.read(new File("./resources/BoardAssets/spaceship.png"));
+            meteoriteTile = ImageIO.read(new File("./resources/BoardAssets/meteorite.png"));
+            sandTile = ImageIO.read(new File("./resources/BoardAssets/sand.png"));
+            spaceMarineNorthTile = ImageIO.read(new File("./resources/BoardAssets/SpaceMarineN.png"));
+            spaceMarineSouthTile = ImageIO.read(new File("./resources/BoardAssets/SpaceMarineS.png"));
+            spaceMarineEastTile = ImageIO.read(new File("./resources/BoardAssets/SpaceMarineE.png"));
+            spaceMarineWestTile = ImageIO.read(new File("./resources/BoardAssets/SpaceMarineW.png"));
 
-            alienNorthTile = ImageIO.read(new File("resources/BoardAssets/AlienN.png"));
-            alienSouthTile = ImageIO.read(new File("resources/BoardAssets/AlienS.png"));
-            alienEastTile = ImageIO.read(new File("resources/BoardAssets/AlienE.png"));
-            alienWestTile = ImageIO.read(new File("resources/BoardAssets/AlienW.png"));
+            alienNorthTile = ImageIO.read(new File("./resources/BoardAssets/AlienN.png"));
+            alienSouthTile = ImageIO.read(new File("./resources/BoardAssets/AlienS.png"));
+            alienEastTile = ImageIO.read(new File("./resources/BoardAssets/AlienE.png"));
+            alienWestTile = ImageIO.read(new File("./resources/BoardAssets/AlienW.png"));
 
-            heart = ImageIO.read(new File("resources/ControlPanelAssets/heart.png"));
-            sword = ImageIO.read(new File("resources/ControlPanelAssets/sword.png"));
-            thumbnailBorder = ImageIO.read(new File("resources/ControlPanelAssets/border.png"));
+            heart = ImageIO.read(new File("./resources/ControlPanelAssets/heart.png"));
+            sword = ImageIO.read(new File("./resources/ControlPanelAssets/sword.png"));
+            thumbnailBorder = ImageIO.read(new File("./resources/ControlPanelAssets/border.png"));
 
-            launcherBackground = ImageIO.read(new File("resources/LauncherAssets/background.png"));
-            launcherLogo = ImageIO.read(new File("resources/LauncherAssets/logo.png"));
-            startButton = ImageIO.read(new File("resources/LauncherAssets/start.png"));
-            clickedStartButton = ImageIO.read(new File("resources/LauncherAssets/start_clicked.png"));
+            launcherBackground = ImageIO.read(new File("./resources/LauncherAssets/background.png"));
+            launcherLogo = ImageIO.read(new File("./resources/LauncherAssets/logo.png"));
+            startButton = ImageIO.read(new File("./resources/LauncherAssets/start.png"));
+            clickedStartButton = ImageIO.read(new File("./resources/LauncherAssets/start_clicked.png"));
 
-            mountain0 = ImageIO.read(new File("resources/BoardAssets/Mountain_0.png"));
-            mountain1 = ImageIO.read(new File("resources/BoardAssets/Mountain_1.png"));
-            mountain2 = ImageIO.read(new File("resources/BoardAssets/Mountain_2.png"));
-            mountain3 = ImageIO.read(new File("resources/BoardAssets/Mountain_3.png"));
-            mountain4 = ImageIO.read(new File("resources/BoardAssets/Mountain_4.png"));
-            mountain5 = ImageIO.read(new File("resources/BoardAssets/Mountain_5.png"));
-            mountain6 = ImageIO.read(new File("resources/BoardAssets/Mountain_6.png"));
-            mountain7 = ImageIO.read(new File("resources/BoardAssets/Mountain_7.png"));
-            mountain8 = ImageIO.read(new File("resources/BoardAssets/Mountain_8.png"));
-            mountain9 = ImageIO.read(new File("resources/BoardAssets/Mountain_9.png"));
-            mountain10 = ImageIO.read(new File("resources/BoardAssets/Mountain_10.png"));
-            mountain11 = ImageIO.read(new File("resources/BoardAssets/Mountain_11.png"));
-            mountain12 = ImageIO.read(new File("resources/BoardAssets/Mountain_12.png"));
-            mountain13 = ImageIO.read(new File("resources/BoardAssets/Mountain_13.png"));
-            mountain14 = ImageIO.read(new File("resources/BoardAssets/Mountain_14.png"));
-            mountain15 = ImageIO.read(new File("resources/BoardAssets/Mountain_15.png"));
+            mountain0 = ImageIO.read(new File("./resources/BoardAssets/Mountain_0.png"));
+            mountain1 = ImageIO.read(new File("./resources/BoardAssets/Mountain_1.png"));
+            mountain2 = ImageIO.read(new File("./resources/BoardAssets/Mountain_2.png"));
+            mountain3 = ImageIO.read(new File("./resources/BoardAssets/Mountain_3.png"));
+            mountain4 = ImageIO.read(new File("./resources/BoardAssets/Mountain_4.png"));
+            mountain5 = ImageIO.read(new File("./resources/BoardAssets/Mountain_5.png"));
+            mountain6 = ImageIO.read(new File("./resources/BoardAssets/Mountain_6.png"));
+            mountain7 = ImageIO.read(new File("./resources/BoardAssets/Mountain_7.png"));
+            mountain8 = ImageIO.read(new File("./resources/BoardAssets/Mountain_8.png"));
+            mountain9 = ImageIO.read(new File("./resources/BoardAssets/Mountain_9.png"));
+            mountain10 = ImageIO.read(new File("./resources/BoardAssets/Mountain_10.png"));
+            mountain11 = ImageIO.read(new File("./resources/BoardAssets/Mountain_11.png"));
+            mountain12 = ImageIO.read(new File("./resources/BoardAssets/Mountain_12.png"));
+            mountain13 = ImageIO.read(new File("./resources/BoardAssets/Mountain_13.png"));
+            mountain14 = ImageIO.read(new File("./resources/BoardAssets/Mountain_14.png"));
+            mountain15 = ImageIO.read(new File("./resources/BoardAssets/Mountain_15.png"));
         }
 
+        /**
+         * Renvoie l'image affichée sur le terrain associé à un élément du jeu
+         * @param ressourceName nom de la classe l'élément
+         * @return
+         */
         public static Image getTileImage(String ressourceName){
             switch (ressourceName){
                 case "Spaceship" : return spaceShipTile;
@@ -146,6 +160,11 @@ public class RessourceManager {
             return null;
         }
 
+        /**
+         * Renvoie l'image affichée dans le panneau de contrôle associé à un élément du jeu
+         * @param ressourceName nom de la classe l'élément
+         * @return
+         */
         public static Image getThumbnail(String ressourceName){
             switch (ressourceName){
                 case "Spaceship" : return thumbnailSpaceship;
@@ -172,6 +191,12 @@ public class RessourceManager {
         public static Font zeroTwos_12;
 
 
+        /**
+         ** Constructeur du gestionnaire de police d'écriture
+         * Il charge en mémoire toutes les polices nécessaires à l'affichage du jeu, launcher et leaderboard
+         * @throws IOException
+         * @throws FontFormatException
+         */
         public FontManager() throws IOException, FontFormatException {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 

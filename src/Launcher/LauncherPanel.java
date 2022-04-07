@@ -15,23 +15,29 @@ import java.io.IOException;
 public class LauncherPanel extends JPanel {
 
     public LauncherPanel(JFrame window) {
+        // Configuration de la fenêtre
         this.setPreferredSize(new Dimension(320, 480));
         this.setLayout(new GridBagLayout());
 
+        // Configuration de l'agencement des éléments affiché dans la fenêtre
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.anchor = GridBagConstraints.NORTH;
         gbc.weighty = 1;
 
+        // Affichage du logo
         gbc.gridx = 0;
         gbc.gridy = 0;
         this.add(new JLabel(new ImageIcon(RessourceManager.ImageManager.launcherLogo)), gbc);
 
+        // Affichage du panneau dans lequel l'utilisateur change les paramètres du jeu
         SettingsPanel settingsPanel = new SettingsPanel();
         gbc.gridx = 0;
         gbc.gridy = 1;
         this.add(settingsPanel, gbc);
 
+        // Affichage du bouton start permettant de lancer le jeu
         JButton start = new JButton(new ImageIcon(RessourceManager.ImageManager.startButton));
+        // Configuration du bouton start
         start.setBorderPainted(false);
         start.setContentAreaFilled(false);
         start.setFocusPainted(false);
@@ -40,9 +46,14 @@ public class LauncherPanel extends JPanel {
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                // Récupération des paramètres entrée dans le launcher par l'utilisateur
                 new GameConstants(settingsPanel.getNbSpaceMarines(), settingsPanel.getNbAliens(), settingsPanel.getNbMeteorites(), settingsPanel.getNbMountains(), settingsPanel.getDifficulty(), settingsPanel.getPlayerName(), settingsPanel.getSeed());
+
+                // Lancement du jeu
                 GameEngine gameEngine = new GameEngine();
                 GameView gameView = null;
+
                 try {
                     gameView = new GameView(gameEngine);
                 } catch (IOException ioException) {
@@ -50,6 +61,8 @@ public class LauncherPanel extends JPanel {
                 }
                 BoardController boardController = new BoardController(gameView);
                 gameView.setBoardController(boardController);
+
+                // Fermeture du launcher
                 window.dispose();
             }
         });
@@ -61,6 +74,7 @@ public class LauncherPanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        // Dessin de l'arrière-plan
         g.drawImage(RessourceManager.ImageManager.launcherBackground, 0, 0, null);
 
     }

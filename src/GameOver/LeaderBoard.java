@@ -74,12 +74,12 @@ public class LeaderBoard {
                 i++;
             }
         }
-        //On ajoute le score a la position trouvee
+        //On ajoute le score à la position trouve
         scores.add(i, currentBestScore);
     }
 
     /**
-     *  Écrit les scores de la List en parametre dans le score.txt
+     *  Écrit les scores de la List en paramètre dans le score.txt
      * @param scores une ArrayList
      * @throws IOException dans le cas ou un fichier ne peut pas s'ouvrir
      */
