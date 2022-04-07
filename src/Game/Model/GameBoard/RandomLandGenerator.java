@@ -420,7 +420,7 @@ public class RandomLandGenerator {
      *
      * @param mountains
      * @param start
-     * @param end       todo : faire une meilleure fonction de reliemant
+     * @param end
      */
     public void dig(ArrayList<ArrayList<Color.color>> mountains, Point start, Point end) {
         for (int i = Math.min(start.x, end.x); i < Math.max(start.x, end.x) +  1; i++) {

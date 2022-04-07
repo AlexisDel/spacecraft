@@ -45,8 +45,8 @@ public class Fight extends Thread{
         }
     }
     /**
-     * méthode renvoyant une météorite proche
-     * @return
+     * méthode renvoyant un alien proche
+     * @return un alien
      */
     private Alien choseAlien(){
         Alien res = null;

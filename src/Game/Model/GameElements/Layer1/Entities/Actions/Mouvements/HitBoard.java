@@ -17,7 +17,7 @@ public class HitBoard {
 
     /**
      * constructeur
-     * @param gb
+     * @param gb de la classe GameBoard
      */
     public HitBoard(GameBoard gb){
         this.dim = GameConstants.BOARD_SIZE;

@@ -101,29 +101,6 @@ public class ShortestPath {
                 boolean notInClose;
                 ///////////////////////////////////////////////
                 // Si child est dans la liste Open, et à une plus grande G-value, on l'enlève de Open
-                /*
-                for(int i = 0; i < Open.getHeapSize(); i++){
-                    if(Open.getHeap()[i].equals(child)){
-                        notInOpen = false;
-                        if(Open.getHeap()[i].getG() > cost){
-                            Open.getHeap()[i].setG(cost);
-                            Open.getHeap()[i].setF(cost + Open.getHeap()[i].getH());
-                            Open.getHeap()[i].setParent(currentNode);
-                            if(verbose)
-                                System.out.println(Open.getHeap()[i] + " vient d'être mis à jour");
-                        }
-                        else if(Open.getHeap()[i].getG() < cost){
-                            currentNode.setG(Open.getHeap()[i].getG() + 1);
-                            currentNode.setF(currentNode.getG() + currentNode.getH());
-                            currentNode.setParent(Open.getHeap()[i]);
-                            if(verbose)
-                                System.out.println(currentNode + " vient d'être mis à jour");
-                        }
-                        break;
-                    }
-                }
-
-                 */
                 if(TabInOpen[child.getPosx()][child.getPosy()] > -1.){
                     notInOpen = false;
                     for(int i = 0; i < Open.getHeapSize(); i++){
@@ -148,14 +125,6 @@ public class ShortestPath {
                 }
                 //////////////////////////////////////////////
                 // On regarde si child est dans Close
-                /*
-                for(int i = 0; i < Close.getHeapSize(); i++){
-                    if(Close.getHeap()[i].equals(child)){
-                        notInClose = false;
-                        break;
-                    }
-                }
-                */
                 notInClose = !TabInClose[child.getPosx()][child.getPosy()];
                 //////////////////////////////////////////////
                 // Si l'enfant est ni dans Open ni dans Close
