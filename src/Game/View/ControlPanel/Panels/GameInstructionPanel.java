@@ -5,10 +5,15 @@ import Game.View.RessourceManager;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Panneau utilisé dans le DefautPanel pour afficher les instructions au début du jeu à l'utilisateur
+ */
 public class GameInstructionPanel extends JPanel {
 
+    /**Constructeur*/
     public GameInstructionPanel() {
         this.setDoubleBuffered(true);
+        //On choisi un box layout
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setPreferredSize(this.getPreferredSize());
 

@@ -8,6 +8,9 @@ import Game.View.ControlPanel.Panels.ThumbnailPanel;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Control Panel des Aliens
+ */
 public class AlienPanel extends JPanel {
     private String[] description = {"Evil creatures they are.", "Eating rocks they do.", "ADVICE:", "Deadly force on them you should use."};
 
