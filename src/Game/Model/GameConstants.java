@@ -30,7 +30,7 @@ public class GameConstants {
     /** Nombre de météorites placés sur la map au début d'une partie*/
     public static int NB_METEORITES;
     public static int NB_MOUNTAINS;
-    public static int POURCENT_MOUNTAINS;
+    public static int POURCENT_MOUNTAINS = 20;
 
     public static String PLAYER_NAME;
     public static long SEED;

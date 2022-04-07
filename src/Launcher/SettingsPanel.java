@@ -100,9 +100,22 @@ public class SettingsPanel extends JPanel {
         DifficultySlider = new JSlider(4, 32);
         DifficultySlider.setMinorTickSpacing(4);
         DifficultySlider.setMajorTickSpacing(4);
-        DifficultySlider.setPaintTicks(true);
         DifficultySlider.setSnapToTicks(true);
         DifficultySlider.setOpaque(false);
+
+        //Create the label table
+        Hashtable labelTable = new Hashtable();
+        JLabel Hard = new JLabel("Hard");
+        Hard.setForeground(Color.WHITE);
+        Hard.setFont(zeroTwos_12);
+        labelTable.put(4, Hard);
+        JLabel Easy = new JLabel("Easy");
+        Easy.setForeground(Color.WHITE);
+        Easy.setFont(zeroTwos_12);
+        labelTable.put(32, Easy);
+        DifficultySlider.setLabelTable( labelTable );
+        DifficultySlider.setPaintLabels(true);
+
         this.add(DifficultyText);
         this.add(DifficultySlider);
 
