@@ -124,7 +124,7 @@ public class ShortestPath {
                     }
                 }
                 //////////////////////////////////////////////
-                // On regarde si child est dans Close
+                // On regarde si child est dans Close :
                 notInClose = !TabInClose[child.getPosx()][child.getPosy()];
                 //////////////////////////////////////////////
                 // Si l'enfant est ni dans Open ni dans Close
