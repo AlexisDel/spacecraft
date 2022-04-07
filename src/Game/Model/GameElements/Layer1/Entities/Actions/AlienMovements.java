@@ -56,11 +56,9 @@ public class AlienMovements extends Thread{
             if(movement.getGotMeteorite()){
                 // On mine une fois puis on lance un mouvement sans recherche de météorite
                 // On mine
-                System.out.println(movement.getMeteorite().getHealthPoints());
                 movement.getMeteorite().mined(GameConstants.damages);
                 // On gagne des cailloux
                 this.alien.setRocks(this.alien.getRocks()+1);
-                System.out.println("alien rocks : " + this.alien.getRocks());
                 // On lance une fois sans chercher de météorite
                 lookingForMeteorite = false;
             }
