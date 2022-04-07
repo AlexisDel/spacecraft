@@ -9,7 +9,7 @@ public class GameConstants {
     public static final int MOUNTAIN_SIZE = 8;
 
     /** Rayon autour des SpaceMarines représentant la peur des Aliens*/
-    public static final int fearOfSpaceMarines = 8;
+    public static int fearOfSpaceMarines;
     /** Rayon de vision des Aliens pour repérer une météorite*/
     public static final int alienRadar = 16;
 
@@ -40,12 +40,12 @@ public class GameConstants {
     public static int damages = 50;
     public static int SpaceMarineDPS = 500;
 
-    public GameConstants(int nbSpaceMarines, int nbAliens, int nbMeteorites, int nbMountains, int prMountain, String playerName, long seed) {
+    public GameConstants(int nbSpaceMarines, int nbAliens, int nbMeteorites, int nbMountains, int difficulty, String playerName, long seed) {
         NB_SPACEMARINES = nbSpaceMarines;
         NB_ALIENS = nbAliens;
         NB_METEORITES = nbMeteorites;
         NB_MOUNTAINS = nbMountains;
-        POURCENT_MOUNTAINS = prMountain;
+        fearOfSpaceMarines = difficulty;
         PLAYER_NAME = playerName;
         SEED = seed;
     }

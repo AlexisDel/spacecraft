@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Hashtable;
 import java.util.Random;
 import java.io.*;
 
@@ -19,8 +20,8 @@ public class SettingsPanel extends JPanel {
     private JTextField nbMeteoriteField;
     private JLabel nbMountainText;
     private JTextField nbMountainField;
-    private JLabel pourcentMountainText;
-    private JSlider pourcentMountainSlider;
+    private JLabel DifficultyText;
+    private JSlider DifficultySlider;
     private JLabel playerNameText;
     private JTextField playerNameField;
     private JLabel seedText;
@@ -93,13 +94,17 @@ public class SettingsPanel extends JPanel {
         this.add(nbMountainText);
         this.add(nbMountainField);
 
-        pourcentMountainText = new JLabel(" % Mountain : ", JLabel.CENTER);
-        pourcentMountainText.setForeground(Color.WHITE);
-        pourcentMountainText.setFont(zeroTwos_12);
-        pourcentMountainSlider = new JSlider(0, 40);
-        pourcentMountainSlider.setOpaque(false);
-        this.add(pourcentMountainText);
-        this.add(pourcentMountainSlider);
+        DifficultyText = new JLabel(" Difficulty : ", JLabel.CENTER);
+        DifficultyText.setForeground(Color.WHITE);
+        DifficultyText.setFont(zeroTwos_12);
+        DifficultySlider = new JSlider(4, 32);
+        DifficultySlider.setMinorTickSpacing(4);
+        DifficultySlider.setMajorTickSpacing(4);
+        DifficultySlider.setPaintTicks(true);
+        DifficultySlider.setSnapToTicks(true);
+        DifficultySlider.setOpaque(false);
+        this.add(DifficultyText);
+        this.add(DifficultySlider);
 
         seedText = new JLabel("Seed : ", JLabel.CENTER);
         seedText.setForeground(Color.WHITE);
@@ -157,8 +162,8 @@ public class SettingsPanel extends JPanel {
         return Integer.parseInt(nbMountainField.getText());
     }
 
-    public int getPourcentMountain(){
-        return pourcentMountainSlider.getValue();
+    public int getDifficulty(){
+        return DifficultySlider.getValue();
     }
 
     public String getPlayerName() {
