@@ -8,8 +8,10 @@ import Game.View.ControlPanel.GameControlPanel;
 import GameOver.LeaderBoard;
 import GameOver.LeaderboardWindow;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 
 import static java.lang.Thread.sleep;
@@ -22,7 +24,7 @@ public class GameView extends JFrame implements Runnable{
 
     private GameEngine gameEngine;
 
-    public GameView(GameEngine gameEngine) {
+    public GameView(GameEngine gameEngine) throws IOException {
 
         this.gameEngine = gameEngine;
 
@@ -37,7 +39,7 @@ public class GameView extends JFrame implements Runnable{
 
         displayUpdateThread = new Thread(this);
         displayUpdateThread.start();
-
+        this.setIconImage(ImageIO.read(new File("resources/logo_spacemarines.png")));
         this.pack();
         this.setLocationRelativeTo(null);
         this.setVisible(true);

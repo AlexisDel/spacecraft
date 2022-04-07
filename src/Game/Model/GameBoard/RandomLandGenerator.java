@@ -484,7 +484,7 @@ public class RandomLandGenerator {
         return res;
     }
 
-    class Color {
+    static class Color {
         enum color {notseen, seen, mountain}
 
         color c;

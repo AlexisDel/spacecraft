@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class LauncherPanel extends JPanel {
 
@@ -41,7 +42,12 @@ public class LauncherPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 new GameConstants(settingsPanel.getNbSpaceMarines(), settingsPanel.getNbAliens(), settingsPanel.getNbMeteorites(), settingsPanel.getNbMountains(), settingsPanel.getDifficulty(), settingsPanel.getPlayerName(), settingsPanel.getSeed());
                 GameEngine gameEngine = new GameEngine();
-                GameView gameView = new GameView(gameEngine);
+                GameView gameView = null;
+                try {
+                    gameView = new GameView(gameEngine);
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
                 BoardController boardController = new BoardController(gameView);
                 gameView.setBoardController(boardController);
                 window.dispose();

@@ -24,7 +24,6 @@ public abstract class Entity extends InteractiveGameElement {
      * @param healthPoints points de vie de l'entité
      */
 
-    // TODO fix le gameBoard
     public Entity(String name,Point coordinate, Dimension dimension, int healthPoints) {
         super(name, coordinate, dimension, healthPoints);
         this.AttackDamage=50;
