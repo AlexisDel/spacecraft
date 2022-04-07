@@ -37,6 +37,7 @@ public class LauncherPanel extends JPanel {
 
         // Affichage du bouton start permettant de lancer le jeu
         JButton start = new JButton(new ImageIcon(RessourceManager.ImageManager.startButton));
+
         // Configuration du bouton start
         start.setBorderPainted(false);
         start.setContentAreaFilled(false);

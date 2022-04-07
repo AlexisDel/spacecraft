@@ -143,8 +143,6 @@ public class GameBoardPanel extends JPanel {
     public Point getTileFromClick(int mouseX, int mouseY) {
         double x = (((double )mouseX)/dimension)*dimension/Math.pow(2, evol) + (dimension - dimension/Math.pow(2, evol))/2 - decalageX;
         double y = (((double )mouseY)/dimension)*dimension/Math.pow(2, evol) + (dimension - dimension/Math.pow(2, evol))/2 - decalageY;
-        System.out.println("("+x+", "+y+")");
-        System.out.println("decalage : " + decalageX + " " + decalageY);
         return new Point((int) ((x/dimension)*GameConstants.BOARD_SIZE),(int) ((y/dimension)*GameConstants.BOARD_SIZE));
     }
 
@@ -161,7 +159,6 @@ public class GameBoardPanel extends JPanel {
             int newYDroite = (int) (milieuY - decalageY + dimension/Math.pow(2, evol));
             // On regarde si le dezoom sort par la gauche (x < 0)
             if(newXGauche < 0){
-                System.out.println("yo1");
                 // On regarde si le dezoom sort par le haut (y < 0)
                 if(newYGauche < 0){
                     decalageY += newYGauche;
