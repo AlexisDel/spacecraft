@@ -4,6 +4,9 @@ import Game.Model.GameElements.GameElement;
 
 import java.awt.*;
 
+/**
+ * Cette classe décrit les GameElements avec lesquels l'utilisateur peut intéragir
+ */
 public class InteractiveGameElement extends GameElement {
 
     /**Attributes*/
@@ -29,7 +32,5 @@ public class InteractiveGameElement extends GameElement {
     public void setHealthPoints(int healthPoints) {
         this.healthPoints = healthPoints;
     }
-
-    public String getName(){ return this.name;}
 
 }

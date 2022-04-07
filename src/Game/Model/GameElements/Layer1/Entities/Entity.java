@@ -64,14 +64,26 @@ public abstract class Entity extends InteractiveGameElement {
         return this.isMoving;
     }
 
+    /**
+     * getter de l'attribut direction
+     * @return
+     */
     public Direction getDirection() {
         return direction;
     }
 
+    /**
+     * getter de l'attribut rocks
+     * @return
+     */
     public int getRocks() {
         return rocks;
     }
 
+    /**
+     * setter de l'attribut rocks
+     * @param rocks
+     */
     public void setRocks(int rocks) {
         this.rocks = rocks;
     }
@@ -80,6 +92,12 @@ public abstract class Entity extends InteractiveGameElement {
         return AttackDamage;
     }
 
+    /**
+     * Vérifie si l'entité est adjacente à une coordonnée donnée
+     * On est adjacent si on est à coté mais pas en diagonale de la coordonnée donnée.
+     * @param p
+     * @return
+     */
     public boolean isAjdacent(Point p){
         for(int i = 0 ; i < this.getDimension().width; i++){
             if(new Point( this.getCoordinate().x - 1, i + this.getCoordinate().y).equals(p)){

@@ -17,6 +17,11 @@ public class Fight extends Thread{
     // gameboard
     GameBoard gameboard;
 
+    /**
+     * Constructeur d'une fight
+     * @param spacemarine le space marine qui va rentrer en combat avec un alien adjacent
+     * @param gameBoard le tableau de jeu
+     */
     public Fight(SpaceMarine spacemarine, GameBoard gameBoard){
         this.spacemarine = spacemarine;
         this.gameboard = gameBoard;
@@ -24,9 +29,14 @@ public class Fight extends Thread{
         this.start();
     }
 
+    /**
+     * Cette méthode execute la boucle du thread de la classe
+     */
     @Override
     public void run(){
+        //si on a un alien
         if(this.alien != null){
+            //Tant qu'il n'est pas mort
             while (this.alien.getHealthPoints() > 0) {
                 this.alien.setHealthPoints(this.alien.getHealthPoints() - GameConstants.damages);
                 try {
@@ -45,8 +55,8 @@ public class Fight extends Thread{
         }
     }
     /**
-     * méthode renvoyant un alien proche
-     * @return un alien
+     * méthode renvoyant un Alien proche
+     * @return
      */
     private Alien choseAlien(){
         Alien res = null;

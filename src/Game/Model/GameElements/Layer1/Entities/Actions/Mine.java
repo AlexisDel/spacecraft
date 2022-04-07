@@ -8,16 +8,28 @@ import Game.Model.GameElements.Layer1.Structures.Structure;
 
 import java.awt.*;
 
+/**
+ * Cette classe est chargé de creer une thread qui fait qu'un Space Marine ou un Alien mine une météorite
+ */
 public class Mine extends Thread{
+    /** Attributs */
     private Entity miner;
     private GameBoard gameboard;
 
+    /**
+     * Constructeur
+     * @param miner un Alien ou un SpaceMarine
+     * @param gameBoard le tableau de jeu
+     */
     public Mine(Entity miner, GameBoard gameBoard){
         this.miner= miner;
         this.gameboard=gameBoard;
         this.start();
     }
 
+    /**
+     * Cette méthode contient la boucle du thread qui execute l'action de minage
+     */
     @Override
     public void run(){
         // Météorite à détruire
